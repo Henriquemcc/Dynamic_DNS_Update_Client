@@ -1,5 +1,7 @@
 package dynamic.dns.update.client
 
-fun main() {
+import dynamic.dns.update.client.graphic.MainMenu
 
+fun main() {
+    MainMenu()
 }

@@ -12,10 +12,10 @@ abstract class Host(
 
     override fun toString(): String {
         val stringBuilder = StringBuilder()
-        stringBuilder.appendLine(super.toString())
-        stringBuilder.appendLine("hostname = $hostname")
-        stringBuilder.appendLine("enableIPv4 = $enableIPv4")
-        stringBuilder.appendLine("enableIPv6 = $enableIPv6")
+        stringBuilder.append(super.toString())
+        stringBuilder.append(", hostname = $hostname")
+        stringBuilder.append(", enableIPv4 = $enableIPv4")
+        stringBuilder.append(", enableIPv6 = $enableIPv6")
         return stringBuilder.toString()
     }
 

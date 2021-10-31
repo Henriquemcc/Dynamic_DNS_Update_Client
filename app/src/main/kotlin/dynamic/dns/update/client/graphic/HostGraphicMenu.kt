@@ -8,8 +8,8 @@ import javax.swing.JPanel
 
 class HostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : GraphicMenu(previousGraphicMenu) {
 
-    override val jFrame = initializeJFrame()
     override val title: String = "Host menu"
+    override val jFrame = initializeJFrame()
 
     override fun initializeJFrame(): JFrame {
         val jFrame = super.initializeJFrame()
@@ -26,7 +26,7 @@ class HostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : GraphicMenu(pr
 
     private fun initializeJButtonDuckDnsSubdomain(): JButton {
         val jButton = JButton("Duck DNS subdomain")
-        jButton.addActionListener{
+        jButton.addActionListener {
             isVisible = false
             nextGraphicMenu = DuckDnsHostMainGraphicMenu(this)
         }

@@ -81,4 +81,11 @@ class DuckDnsSubdomain(
             throw FailedToUpdateIPv6AddressException()
         }
     }
+
+    override fun toString(): String {
+        val stringBuilder = StringBuilder()
+        stringBuilder.append(super.toString())
+        stringBuilder.append(", token = $token")
+        return stringBuilder.toString()
+    }
 }

@@ -5,7 +5,7 @@ import dynamic.dns.update.client.console.common.menu.ConsoleMenu
 
 class DuckDnsHostMainConsoleMenu : ConsoleMenu("Duck DNS subdomain menu", listOf(
     ConsoleButton("Show subdomains") {
-
+        DuckDnsHostListSubdomainsMenu()
     },
     ConsoleButton("Add a subdomain") {
 

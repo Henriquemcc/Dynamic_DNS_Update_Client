@@ -2,7 +2,7 @@ package dynamic.dns.update.client.graphic.duckdns
 
 import dynamic.dns.update.client.controller.HostsController
 import dynamic.dns.update.client.graphic.HintJTextField
-import dynamic.dns.update.client.graphic.Menu
+import dynamic.dns.update.client.graphic.GraphicMenu
 import dynamic.dns.update.client.graphic.defaultFont
 import dynamic.dns.update.client.model.DuckDnsSubdomain
 import java.awt.Color
@@ -13,7 +13,7 @@ import java.time.Duration
 import java.util.concurrent.TimeUnit
 import javax.swing.*
 
-class DuckDnsCreateHostMenu(previousMenu: Menu? = null) : Menu(previousMenu) {
+class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : GraphicMenu(previousGraphicMenu) {
 
     /// Token
     private fun initializeJTextFieldToken(): JTextField {
@@ -155,7 +155,7 @@ class DuckDnsCreateHostMenu(previousMenu: Menu? = null) : Menu(previousMenu) {
 
                 HostsController.add(host)
                 jFrame.dispatchEvent(WindowEvent(jFrame, WindowEvent.WINDOW_CLOSING))
-                (previousMenu as? DuckDnsHostMainMenu)?.fireTableDataChanged()
+                (previousGraphicMenu as? DuckDnsHostMainGraphicMenu)?.fireTableDataChanged()
             }
 
         }

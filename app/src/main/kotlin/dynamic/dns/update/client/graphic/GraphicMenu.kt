@@ -4,10 +4,10 @@ import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
 import javax.swing.JFrame
 
-abstract class Menu (val previousMenu: Menu?) {
+abstract class GraphicMenu (val previousGraphicMenu: GraphicMenu?) {
     
     protected abstract val jFrame: JFrame
-    protected var nextMenu: Menu? = null
+    protected var nextGraphicMenu: GraphicMenu? = null
     abstract val title: String
 
     var isVisible: Boolean
@@ -25,7 +25,7 @@ abstract class Menu (val previousMenu: Menu?) {
         jFrame.addWindowListener(
             object : WindowAdapter() {
                 override fun windowClosed(e: WindowEvent?) {
-                    previousMenu?.isVisible = true
+                    previousGraphicMenu?.isVisible = true
                     super.windowClosed(e)
                 }
             }

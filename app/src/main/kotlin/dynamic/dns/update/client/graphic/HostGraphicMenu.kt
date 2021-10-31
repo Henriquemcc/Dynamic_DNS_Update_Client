@@ -1,12 +1,12 @@
 package dynamic.dns.update.client.graphic
 
-import dynamic.dns.update.client.graphic.duckdns.DuckDnsHostMainMenu
+import dynamic.dns.update.client.graphic.duckdns.DuckDnsHostMainGraphicMenu
 import java.awt.GridLayout
 import javax.swing.JButton
 import javax.swing.JFrame
 import javax.swing.JPanel
 
-class HostMenu(previousMenu: Menu? = null) : Menu(previousMenu) {
+class HostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : GraphicMenu(previousGraphicMenu) {
 
     override val jFrame = initializeJFrame()
     override val title: String = "Host menu"
@@ -28,7 +28,7 @@ class HostMenu(previousMenu: Menu? = null) : Menu(previousMenu) {
         val jButton = JButton("Duck DNS subdomain")
         jButton.addActionListener{
             isVisible = false
-            nextMenu = DuckDnsHostMainMenu(this)
+            nextGraphicMenu = DuckDnsHostMainGraphicMenu(this)
         }
         return jButton
     }

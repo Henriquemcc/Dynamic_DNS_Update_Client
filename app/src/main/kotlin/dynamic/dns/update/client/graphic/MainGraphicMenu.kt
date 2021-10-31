@@ -6,7 +6,7 @@ import javax.swing.JButton
 import javax.swing.JFrame
 import javax.swing.JPanel
 
-class MainMenu(previousMenu: Menu? = null) : Menu(previousMenu)
+class MainGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : GraphicMenu(previousGraphicMenu)
 {
     override val jFrame: JFrame = initializeJFrame()
     override val title: String = "Main menu"
@@ -30,7 +30,7 @@ class MainMenu(previousMenu: Menu? = null) : Menu(previousMenu)
         val jButton = JButton("Host menu")
         jButton.addActionListener {
             isVisible = false
-            nextMenu = HostMenu(this)
+            nextGraphicMenu = HostGraphicMenu(this)
         }
         return jButton
     }

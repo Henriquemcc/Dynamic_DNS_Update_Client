@@ -1,14 +1,14 @@
 package dynamic.dns.update.client.graphic.duckdns
 
 import dynamic.dns.update.client.controller.HostsController
-import dynamic.dns.update.client.graphic.Menu
+import dynamic.dns.update.client.graphic.GraphicMenu
 import dynamic.dns.update.client.graphic.defaultFont
 import dynamic.dns.update.client.graphic.getConfirmation
 import java.awt.FlowLayout
 import java.awt.GridLayout
 import javax.swing.*
 
-class DuckDnsHostMainMenu(previousMenu: Menu? = null) : Menu(previousMenu) {
+class DuckDnsHostMainGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : GraphicMenu(previousGraphicMenu) {
 
     private val tableModel: DuckDnsSubdomainTableModel = DuckDnsSubdomainTableModel()
     private val jTable: JTable = initializeJTable()
@@ -41,7 +41,7 @@ class DuckDnsHostMainMenu(previousMenu: Menu? = null) : Menu(previousMenu) {
     private fun initializeJButtonCreate(): JButton {
         val jButton = JButton("Create")
         jButton.addActionListener {
-            DuckDnsCreateHostMenu(this)
+            DuckDnsCreateHostGraphicMenu(this)
             isVisible = false
         }
         return jButton
@@ -63,7 +63,7 @@ class DuckDnsHostMainMenu(previousMenu: Menu? = null) : Menu(previousMenu) {
         jButton.addActionListener {
                 val selectedRow = jTable.selectedRow
                 val oldDuckDnsSubdomain = duckDnsHosts[selectedRow]
-                nextMenu = DuckDnsUpdateHostMenu(this, oldDuckDnsSubdomain)
+                nextGraphicMenu = DuckDnsUpdateHostGraphicMenu(this, oldDuckDnsSubdomain)
                 fireTableDataChanged()
                 isVisible = false
         }

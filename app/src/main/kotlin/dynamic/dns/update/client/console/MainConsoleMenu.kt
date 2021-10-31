@@ -9,9 +9,9 @@ class MainConsoleMenu : ConsoleMenu("Main menu", listOf(
         HostConsoleMenu()
     },
     ConsoleButton("Perform host update") {
-
+        HostsController.performUpdate()
     },
     ConsoleButton("Perform host update in infinite looping") {
-
+        HostsController.performUpdate(true)
     }
 ))

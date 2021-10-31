@@ -1,15 +1,12 @@
 package dynamic.dns.update.client.controller
 
 import dynamic.dns.update.client.model.Host
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.io.ObjectInputStream
-import java.io.ObjectOutputStream
+import java.io.*
 import java.nio.file.Paths
 
 object HostsController : MutableList<Host> {
 
-    private val file = Paths.get(System.getProperty("user.home"), ".duckdnsipupdater", "hosts").toFile()
+    private val file = Paths.get(System.getProperty("user.home"), ".dynamic_dns_ip_updater", "hosts").toFile()
     private var list = ArrayList<Host>()
 
     init {
@@ -17,33 +14,60 @@ object HostsController : MutableList<Host> {
     }
 
     private fun createFile() {
-        if (!file.parentFile.exists()) {
-            file.parentFile.mkdirs()
+        try {
+            if (!file.parentFile.exists()) {
+                file.parentFile.mkdirs()
+            }
+            if (!file.exists()) {
+                file.createNewFile()
+            }
         }
-        if (!file.exists()) {
-            file.createNewFile()
+        catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
     private fun saveToFile() {
         createFile()
-        val fileOutputStream = FileOutputStream(file)
-        val objectOutputStream = ObjectOutputStream(fileOutputStream)
-        objectOutputStream.writeObject(list)
-        objectOutputStream.close()
-        fileOutputStream.close()
+
+        var fileOutputStream: FileOutputStream? = null
+        var objectOutputStream: ObjectOutputStream? = null
+
+        try {
+            fileOutputStream = FileOutputStream(file)
+            objectOutputStream = ObjectOutputStream(fileOutputStream)
+            objectOutputStream.writeObject(list)
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+        }
+        finally {
+            objectOutputStream?.close()
+            fileOutputStream?.close()
+        }
+
     }
 
     private fun loadFromFile() {
-        createFile()
-        val fileInputStream = FileInputStream(file)
-        val objectInputStream = ObjectInputStream(fileInputStream)
-        val readObject = objectInputStream.readObject()
-        if (readObject is ArrayList<*>) {
-            list = readObject.filterIsInstance<Host>() as ArrayList<Host>
+        var fileInputStream: FileInputStream? = null
+        var objectInputStream: ObjectInputStream? = null
+        try {
+            fileInputStream = FileInputStream(file)
+            objectInputStream = ObjectInputStream(fileInputStream)
+            val readObject = objectInputStream.readObject()
+            if (readObject is ArrayList<*>) {
+                list = readObject.filterIsInstance<Host>() as ArrayList<Host>
+            }
+            objectInputStream.close()
+            fileInputStream.close()
         }
-        objectInputStream.close()
-        fileInputStream.close()
+        catch (e: Exception) {
+            e.printStackTrace()
+        }
+        finally {
+            objectInputStream?.close()
+            fileInputStream?.close()
+        }
     }
 
     override val size: Int

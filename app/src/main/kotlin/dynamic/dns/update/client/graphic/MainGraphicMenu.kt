@@ -6,8 +6,7 @@ import javax.swing.JButton
 import javax.swing.JFrame
 import javax.swing.JPanel
 
-class MainGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : GraphicMenu(previousGraphicMenu)
-{
+class MainGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : GraphicMenu(previousGraphicMenu) {
     override val jFrame: JFrame = initializeJFrame()
     override val title: String = "Main menu"
 

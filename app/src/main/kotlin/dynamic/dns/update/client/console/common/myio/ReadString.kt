@@ -1,9 +1,7 @@
 package dynamic.dns.update.client.console.common.myio
 
-fun readString(instructionMessage: String? = null): String
-{
-    if (instructionMessage != null)
-    {
+fun readString(instructionMessage: String? = null): String {
+    if (instructionMessage != null) {
         print(instructionMessage)
     }
 

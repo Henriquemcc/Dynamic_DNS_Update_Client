@@ -1,8 +1,8 @@
 package dynamic.dns.update.client.graphic.duckdns
 
 import dynamic.dns.update.client.controller.HostsController
-import dynamic.dns.update.client.graphic.HintJTextField
 import dynamic.dns.update.client.graphic.GraphicMenu
+import dynamic.dns.update.client.graphic.HintJTextField
 import dynamic.dns.update.client.graphic.defaultFont
 import dynamic.dns.update.client.model.DuckDnsSubdomain
 import java.awt.Color
@@ -57,7 +57,8 @@ class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : G
         return jCheckBox
     }
 
-    private val jCheckBoxIpProtocols : HashMap<StandardProtocolFamily, JCheckBox> = initializeJCheckBoxsEnableIpProtocol()
+    private val jCheckBoxIpProtocols: HashMap<StandardProtocolFamily, JCheckBox> =
+        initializeJCheckBoxsEnableIpProtocol()
     /// End: Enable IP protocol
 
     /// Duration
@@ -94,11 +95,11 @@ class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : G
         jTextFields[TimeUnit.DAYS] = initializeJTextFieldDelayDurationDays()
         jTextFields[TimeUnit.HOURS] = initializeJTextFieldDelayDurationHours()
         jTextFields[TimeUnit.MINUTES] = initializeJTextFieldDelayDurationMinutes()
-        jTextFields[TimeUnit.SECONDS] =  initializeJTextFieldDelayDurationSeconds()
+        jTextFields[TimeUnit.SECONDS] = initializeJTextFieldDelayDurationSeconds()
         return jTextFields
     }
 
-    private val jTextFieldsDuration : HashMap<TimeUnit, JTextField> = initializeJTextFieldsDuration()
+    private val jTextFieldsDuration: HashMap<TimeUnit, JTextField> = initializeJTextFieldsDuration()
     /// End: Duration
 
     /// Title
@@ -151,7 +152,8 @@ class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : G
                     jTextFieldHost.text,
                     jCheckBoxIpProtocols[StandardProtocolFamily.INET]?.isSelected == true,
                     jCheckBoxIpProtocols[StandardProtocolFamily.INET6]?.isSelected == true, duration,
-                    jTextFieldToken.text)
+                    jTextFieldToken.text
+                )
 
                 HostsController.add(host)
                 jFrame.dispatchEvent(WindowEvent(jFrame, WindowEvent.WINDOW_CLOSING))

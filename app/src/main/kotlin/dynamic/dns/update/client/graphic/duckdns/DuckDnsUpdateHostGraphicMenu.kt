@@ -12,7 +12,10 @@ import java.time.Duration
 import java.util.concurrent.TimeUnit
 import javax.swing.*
 
-class DuckDnsUpdateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null, private val oldDuckDnsSubdomain: DuckDnsSubdomain) : GraphicMenu(previousGraphicMenu) {
+class DuckDnsUpdateHostGraphicMenu(
+    previousGraphicMenu: GraphicMenu? = null,
+    private val oldDuckDnsSubdomain: DuckDnsSubdomain
+) : GraphicMenu(previousGraphicMenu) {
 
     /// Token
     private fun initializeJTextFieldToken(): JTextField {
@@ -56,19 +59,20 @@ class DuckDnsUpdateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null, pri
         return jCheckBox
     }
 
-    private val jCheckBoxIpProtocols : HashMap<StandardProtocolFamily, JCheckBox> = initializeJCheckBoxsEnableIpProtocol()
+    private val jCheckBoxIpProtocols: HashMap<StandardProtocolFamily, JCheckBox> =
+        initializeJCheckBoxsEnableIpProtocol()
     /// End: Enable IP protocol
 
     /// Duration
     private fun initializeJTextFieldDelayDurationDays(): JTextField {
-        val jTextField = JTextField((oldDuckDnsSubdomain.updateDelayTime.seconds / 60 / 60 / 24 ).toString())
+        val jTextField = JTextField((oldDuckDnsSubdomain.updateDelayTime.seconds / 60 / 60 / 24).toString())
         jTextField.font = defaultFont
         jTextField.isEditable = true
         return jTextField
     }
 
     private fun initializeJTextFieldDelayDurationHours(): JTextField {
-        val jTextField = JTextField(((oldDuckDnsSubdomain.updateDelayTime.seconds / 60 / 60 ) % 24).toString())
+        val jTextField = JTextField(((oldDuckDnsSubdomain.updateDelayTime.seconds / 60 / 60) % 24).toString())
         jTextField.font = defaultFont
         jTextField.isEditable = true
         return jTextField
@@ -93,7 +97,7 @@ class DuckDnsUpdateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null, pri
         jTextFields[TimeUnit.DAYS] = initializeJTextFieldDelayDurationDays()
         jTextFields[TimeUnit.HOURS] = initializeJTextFieldDelayDurationHours()
         jTextFields[TimeUnit.MINUTES] = initializeJTextFieldDelayDurationMinutes()
-        jTextFields[TimeUnit.SECONDS] =  initializeJTextFieldDelayDurationSeconds()
+        jTextFields[TimeUnit.SECONDS] = initializeJTextFieldDelayDurationSeconds()
         return jTextFields
     }
 
@@ -150,7 +154,8 @@ class DuckDnsUpdateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null, pri
                     jTextFieldHost.text,
                     jCheckBoxIpProtocols[StandardProtocolFamily.INET]?.isSelected == true,
                     jCheckBoxIpProtocols[StandardProtocolFamily.INET6]?.isSelected == true, duration,
-                    jTextFieldToken.text)
+                    jTextFieldToken.text
+                )
 
                 HostsController.remove(oldDuckDnsSubdomain)
                 HostsController.add(host)

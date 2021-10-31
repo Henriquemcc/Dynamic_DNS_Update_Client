@@ -1,7 +1,10 @@
 package dynamic.dns.update.client.controller
 
 import dynamic.dns.update.client.model.Host
-import java.io.*
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.ObjectInputStream
+import java.io.ObjectOutputStream
 import java.nio.file.Paths
 
 object HostsController : MutableList<Host> {
@@ -21,8 +24,7 @@ object HostsController : MutableList<Host> {
             if (!file.exists()) {
                 file.createNewFile()
             }
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
@@ -37,11 +39,9 @@ object HostsController : MutableList<Host> {
             fileOutputStream = FileOutputStream(file)
             objectOutputStream = ObjectOutputStream(fileOutputStream)
             objectOutputStream.writeObject(list)
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             e.printStackTrace()
-        }
-        finally {
+        } finally {
             objectOutputStream?.close()
             fileOutputStream?.close()
         }
@@ -60,11 +60,9 @@ object HostsController : MutableList<Host> {
             }
             objectInputStream.close()
             fileInputStream.close()
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             e.printStackTrace()
-        }
-        finally {
+        } finally {
             objectInputStream?.close()
             fileInputStream?.close()
         }
@@ -118,7 +116,7 @@ object HostsController : MutableList<Host> {
 
     override fun addAll(index: Int, elements: Collection<Host>): Boolean {
         var success = false
-        if(list.addAll(index, elements)) {
+        if (list.addAll(index, elements)) {
             saveToFile()
             success = true
         }
@@ -127,7 +125,7 @@ object HostsController : MutableList<Host> {
 
     override fun addAll(elements: Collection<Host>): Boolean {
         var success = false
-        if(list.addAll(elements)) {
+        if (list.addAll(elements)) {
             saveToFile()
             success = true
         }

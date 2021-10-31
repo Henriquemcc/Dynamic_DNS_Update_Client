@@ -4,8 +4,8 @@ import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
 import javax.swing.JFrame
 
-abstract class GraphicMenu (val previousGraphicMenu: GraphicMenu?) {
-    
+abstract class GraphicMenu(val previousGraphicMenu: GraphicMenu?) {
+
     protected abstract val jFrame: JFrame
     protected var nextGraphicMenu: GraphicMenu? = null
     abstract val title: String

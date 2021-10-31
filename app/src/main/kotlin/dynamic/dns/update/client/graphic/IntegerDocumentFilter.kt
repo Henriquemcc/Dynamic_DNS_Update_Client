@@ -1,6 +1,5 @@
 package dynamic.dns.update.client.graphic
 
-import java.lang.NumberFormatException
 import javax.swing.text.AttributeSet
 import javax.swing.text.DocumentFilter
 
@@ -13,7 +12,7 @@ class IntegerDocumentFilter : DocumentFilter() {
             stringBuilder.insert(offset, string)
         }
 
-        if (test(stringBuilder.toString())){
+        if (test(stringBuilder.toString())) {
             super.insertString(fb, offset, string, attr)
         }
     }
@@ -22,12 +21,12 @@ class IntegerDocumentFilter : DocumentFilter() {
 
         val document = fb?.document
         val stringBuilder = StringBuilder()
-        if (document != null){
+        if (document != null) {
             stringBuilder.append(document.getText(0, document.length))
             stringBuilder.replace(offset, offset + length, text)
         }
 
-        if (test(stringBuilder.toString())){
+        if (test(stringBuilder.toString())) {
             super.replace(fb, offset, length, text, attrs)
         }
     }

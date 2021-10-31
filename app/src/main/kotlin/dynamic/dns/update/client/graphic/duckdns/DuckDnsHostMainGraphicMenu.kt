@@ -61,11 +61,11 @@ class DuckDnsHostMainGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : Gra
     private fun initializeJButtonUpdate(): JButton {
         val jButton = JButton("Update")
         jButton.addActionListener {
-                val selectedRow = jTable.selectedRow
-                val oldDuckDnsSubdomain = duckDnsHosts[selectedRow]
-                nextGraphicMenu = DuckDnsUpdateHostGraphicMenu(this, oldDuckDnsSubdomain)
-                fireTableDataChanged()
-                isVisible = false
+            val selectedRow = jTable.selectedRow
+            val oldDuckDnsSubdomain = duckDnsHosts[selectedRow]
+            nextGraphicMenu = DuckDnsUpdateHostGraphicMenu(this, oldDuckDnsSubdomain)
+            fireTableDataChanged()
+            isVisible = false
         }
         return jButton
     }
@@ -73,12 +73,12 @@ class DuckDnsHostMainGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : Gra
     private fun initializeJButtonDelete(): JButton {
         val jButton = JButton("Delete")
         jButton.addActionListener {
-                val selectedRow = jTable.selectedRow
-                val removedDuckDnsSubdomain = duckDnsHosts[selectedRow]
-                if (getConfirmation("Would you like to remove $removedDuckDnsSubdomain?")) {
-                    HostsController.remove(removedDuckDnsSubdomain)
-                    fireTableDataChanged()
-                }
+            val selectedRow = jTable.selectedRow
+            val removedDuckDnsSubdomain = duckDnsHosts[selectedRow]
+            if (getConfirmation("Would you like to remove $removedDuckDnsSubdomain?")) {
+                HostsController.remove(removedDuckDnsSubdomain)
+                fireTableDataChanged()
+            }
         }
         return jButton
     }

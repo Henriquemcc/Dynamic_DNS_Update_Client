@@ -3,7 +3,12 @@ package dynamic.dns.update.client.model
 import java.io.Serializable
 import java.time.Duration
 
-abstract class Host(val hostname: String = "", val enableIPv4: Boolean = true, val enableIPv6: Boolean = true, val updateDelayTime: Duration) : Serializable {
+abstract class Host(
+    val hostname: String = "",
+    val enableIPv4: Boolean = true,
+    val enableIPv6: Boolean = true,
+    val updateDelayTime: Duration
+) : Serializable {
 
     override fun toString(): String {
         val stringBuilder = StringBuilder()

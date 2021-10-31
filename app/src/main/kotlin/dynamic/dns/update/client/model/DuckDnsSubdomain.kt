@@ -10,7 +10,13 @@ import java.net.URL
 import java.time.Duration
 import javax.net.ssl.HttpsURLConnection
 
-class DuckDnsSubdomain(hostname: String = "", enableIPv4: Boolean = true, enableIPv6: Boolean = true, updateDelayTime: Duration, val token: String) : Host(hostname, enableIPv4, enableIPv6, updateDelayTime) {
+class DuckDnsSubdomain(
+    hostname: String = "",
+    enableIPv4: Boolean = true,
+    enableIPv6: Boolean = true,
+    updateDelayTime: Duration,
+    val token: String
+) : Host(hostname, enableIPv4, enableIPv6, updateDelayTime) {
 
     private val subdomainName: String
         get() = hostname.lowercase().substring(0, hostname.lowercase().lastIndexOf(".duckdns.org"))

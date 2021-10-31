@@ -7,7 +7,8 @@ open class ConsoleMenu(
     title: String? = null,
     private val options: List<ConsoleOption>,
     private val optionsText: ConsoleText = ConsoleText("Options: "),
-    private val exitText: ConsoleText = ConsoleText("Exit")) {
+    private val exitText: ConsoleText = ConsoleText("Exit")
+) {
 
     private fun getButtons(): List<ConsoleButton> = options.filterIsInstance<ConsoleButton>()
 
@@ -46,7 +47,7 @@ open class ConsoleMenu(
             selectedButton = getInput()
 
             if (selectedButton != 0) {
-                getButtons()[selectedButton-1].onPressed()
+                getButtons()[selectedButton - 1].onPressed()
             }
         }
     }

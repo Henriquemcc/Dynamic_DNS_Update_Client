@@ -4,7 +4,8 @@ import java.awt.event.FocusEvent
 import java.awt.event.FocusListener
 import javax.swing.JTextField
 
-class HintJTextField(private val hint: String, private var showingHint: Boolean = true) : JTextField(hint), FocusListener {
+class HintJTextField(private val hint: String, private var showingHint: Boolean = true) : JTextField(hint),
+    FocusListener {
 
     init {
         super.addFocusListener(this)

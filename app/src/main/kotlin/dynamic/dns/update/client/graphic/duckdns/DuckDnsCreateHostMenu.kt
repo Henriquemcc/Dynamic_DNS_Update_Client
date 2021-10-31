@@ -7,6 +7,7 @@ import dynamic.dns.update.client.graphic.defaultFont
 import dynamic.dns.update.client.model.DuckDnsSubdomain
 import java.awt.Color
 import java.awt.GridLayout
+import java.awt.event.WindowEvent
 import java.net.StandardProtocolFamily
 import java.time.Duration
 import java.util.concurrent.TimeUnit
@@ -14,12 +15,164 @@ import javax.swing.*
 
 class DuckDnsCreateHostMenu(previousMenu: Menu? = null) : Menu(previousMenu) {
 
+    /// Token
+    private fun initializeJTextFieldToken(): JTextField {
+        val jTextField = HintJTextField("Token")
+        jTextField.font = defaultFont
+        jTextField.isEditable = true
+        return jTextField
+    }
+
+    private val jTextFieldToken: JTextField = initializeJTextFieldToken()
+    /// End: Token
+
+    /// Host
+    private fun initializeJTextFieldHost(): JTextField {
+        val jTextField = HintJTextField("Host")
+        jTextField.font = defaultFont
+        jTextField.isEditable = true
+        return jTextField
+    }
+
+    private var jTextFieldHost: JTextField = initializeJTextFieldHost()
+    /// End: Host
+
+    /// Enable IP protocol
+    private fun initializeJCheckBoxEnableIPv4(): JCheckBox {
+        val jCheckBox = JCheckBox("Enable IPv4", true)
+        jCheckBox.font = defaultFont
+        return jCheckBox
+    }
+
+    private fun initializeJCheckBoxEnableIPv6(): JCheckBox {
+        val jCheckBox = JCheckBox("Enable IPv6", true)
+        jCheckBox.font = defaultFont
+        return jCheckBox
+    }
+
+    private fun initializeJCheckBoxsEnableIpProtocol(): HashMap<StandardProtocolFamily, JCheckBox> {
+        val jCheckBox = HashMap<StandardProtocolFamily, JCheckBox>()
+        jCheckBox[StandardProtocolFamily.INET] = initializeJCheckBoxEnableIPv4()
+        jCheckBox[StandardProtocolFamily.INET6] = initializeJCheckBoxEnableIPv6()
+        return jCheckBox
+    }
+
+    private val jCheckBoxIpProtocols : HashMap<StandardProtocolFamily, JCheckBox> = initializeJCheckBoxsEnableIpProtocol()
+    /// End: Enable IP protocol
+
+    /// Duration
+    private fun initializeJTextFieldDelayDurationDays(): JTextField {
+        val jTextField = HintJTextField("Days")
+        jTextField.font = defaultFont
+        jTextField.isEditable = true
+        return jTextField
+    }
+
+    private fun initializeJTextFieldDelayDurationHours(): JTextField {
+        val jTextField = HintJTextField("Hours")
+        jTextField.font = defaultFont
+        jTextField.isEditable = true
+        return jTextField
+    }
+
+    private fun initializeJTextFieldDelayDurationMinutes(): JTextField {
+        val jTextField = HintJTextField("Minutes")
+        jTextField.font = defaultFont
+        jTextField.isEditable = true
+        return jTextField
+    }
+
+    private fun initializeJTextFieldDelayDurationSeconds(): JTextField {
+        val jTextField = HintJTextField("Seconds")
+        jTextField.font = defaultFont
+        jTextField.isEditable = true
+        return jTextField
+    }
+
+    private fun initializeJTextFieldsDuration(): HashMap<TimeUnit, JTextField> {
+        val jTextFields = HashMap<TimeUnit, JTextField>()
+        jTextFields[TimeUnit.DAYS] = initializeJTextFieldDelayDurationDays()
+        jTextFields[TimeUnit.HOURS] = initializeJTextFieldDelayDurationHours()
+        jTextFields[TimeUnit.MINUTES] = initializeJTextFieldDelayDurationMinutes()
+        jTextFields[TimeUnit.SECONDS] =  initializeJTextFieldDelayDurationSeconds()
+        return jTextFields
+    }
+
+    private val jTextFieldsDuration : HashMap<TimeUnit, JTextField> = initializeJTextFieldsDuration()
+    /// End: Duration
+
+    /// Title
     override val title: String = "Duck DNS create host menu"
-    private var jTextFieldToken: JTextField? = null
-    private var jTextFieldHost: JTextField? = null
-    private val jCheckBoxIPs = HashMap<StandardProtocolFamily, JCheckBox>()
-    private val jTextFieldsDuaration = HashMap<TimeUnit, JTextField>(6)
-    override val jFrame = initializeJFrame()
+    /// End: Title
+
+    /// JFrame
+    //// JPanel
+    ///// JPanel Delay Duration
+    private fun initializeJTextFieldDelayDurationJLabel(): JLabel {
+        return JLabel("Delay duration")
+    }
+
+    private fun initializeJPanelDelayDuration(): JPanel {
+        val jPanelDelayDuration = JPanel(GridLayout(1, 4))
+        jPanelDelayDuration.border = BorderFactory.createLineBorder(Color.black)
+        jPanelDelayDuration.add(initializeJTextFieldDelayDurationJLabel())
+        jPanelDelayDuration.add(jTextFieldsDuration[TimeUnit.DAYS])
+        jPanelDelayDuration.add(jTextFieldsDuration[TimeUnit.HOURS])
+        jPanelDelayDuration.add(jTextFieldsDuration[TimeUnit.MINUTES])
+        jPanelDelayDuration.add(jTextFieldsDuration[TimeUnit.SECONDS])
+        return jPanelDelayDuration
+    }
+    ///// End: JPanel Delay Duration
+
+    ///// JPanel IP Protocols CheckBox
+    private fun initializeJPanelIpProtocolsCheckBox(): JPanel {
+        val jPanelIPsCheckBox = JPanel(GridLayout(1, 2))
+        jPanelIPsCheckBox.border = BorderFactory.createLineBorder(Color.black)
+        jPanelIPsCheckBox.add(jCheckBoxIpProtocols[StandardProtocolFamily.INET])
+        jPanelIPsCheckBox.add(jCheckBoxIpProtocols[StandardProtocolFamily.INET6])
+        return jPanelIPsCheckBox
+    }
+    ///// End: JPanel IP Protocols CheckBox
+
+    ///// JButton
+    private fun initializeJButtonAdd(): JButton {
+        val jButtonAdd = JButton("Add")
+        jButtonAdd.font = defaultFont
+        jButtonAdd.isEnabled = true
+        jButtonAdd.addActionListener {
+
+            if (jTextFieldsDuration.all { it.value.text != null }) {
+                val duration = Duration.ofDays(jTextFieldsDuration[TimeUnit.DAYS]!!.text.toLong()) +
+                        Duration.ofHours(jTextFieldsDuration[TimeUnit.HOURS]!!.text.toLong()) +
+                        Duration.ofMinutes(jTextFieldsDuration[TimeUnit.MINUTES]!!.text.toLong()) +
+                        Duration.ofSeconds(jTextFieldsDuration[TimeUnit.SECONDS]!!.text.toLong())
+
+                val host = DuckDnsSubdomain(
+                    jTextFieldHost.text,
+                    jCheckBoxIpProtocols[StandardProtocolFamily.INET]?.isSelected == true,
+                    jCheckBoxIpProtocols[StandardProtocolFamily.INET6]?.isSelected == true, duration,
+                    jTextFieldToken.text)
+
+                HostsController.add(host)
+                jFrame.dispatchEvent(WindowEvent(jFrame, WindowEvent.WINDOW_CLOSING))
+                (previousMenu as? DuckDnsHostMainMenu)?.fireTableDataChanged()
+            }
+
+        }
+        return jButtonAdd
+    }
+    ///// End: JButton
+
+    private fun initializeJPanel(): JPanel {
+        val jPanel = JPanel(GridLayout(5, 1))
+        jPanel.add(jTextFieldHost)
+        jPanel.add(jTextFieldToken)
+        jPanel.add(initializeJPanelIpProtocolsCheckBox())
+        jPanel.add(initializeJPanelDelayDuration())
+        jPanel.add(initializeJButtonAdd())
+        return jPanel
+    }
+    //// End: JPanel
 
     override fun initializeJFrame(): JFrame {
         val jFrame = super.initializeJFrame()
@@ -28,135 +181,6 @@ class DuckDnsCreateHostMenu(previousMenu: Menu? = null) : Menu(previousMenu) {
         return jFrame
     }
 
-    private fun initializeJPanel(): JPanel {
-        val jPanel = JPanel(GridLayout(5, 1))
-        jPanel.add(initializeJTextFieldHost())
-        jPanel.add(initializeJTextFieldToken())
-        jPanel.add(initializeJPanelIPsCheckBox())
-        jPanel.add(initializeJPanelDelayDuration())
-        jPanel.add(initializeJButtonAdd())
-        return jPanel
-    }
-
-    private fun initializeJPanelIPsCheckBox(): JPanel {
-        val jPanelIPsCheckBox = JPanel(GridLayout(1, 2))
-        jPanelIPsCheckBox.border = BorderFactory.createLineBorder(Color.black)
-        jPanelIPsCheckBox.add(initializeJCheckBoxEnableIPv6())
-        jPanelIPsCheckBox.add(initializeJCheckBoxEnableIPv4())
-        return jPanelIPsCheckBox
-    }
-
-    private fun initializeJPanelDelayDuration(): JPanel {
-        val jPanelDelayDuration = JPanel(GridLayout(1, 6))
-        jPanelDelayDuration.border = BorderFactory.createLineBorder(Color.black)
-        jPanelDelayDuration.add(initializeJTextFieldDelayDurationJLabel())
-        jPanelDelayDuration.add(initializeJTextFieldDelayDurationDays())
-        jPanelDelayDuration.add(initializeJTextFieldDelayDurationHours())
-        jPanelDelayDuration.add(initializeJTextFieldDelayDurationMinutes())
-        jPanelDelayDuration.add(initializeJTextFieldDelayDurationSeconds())
-        jPanelDelayDuration.add(initializeJTextFieldDelayDurationMilliseconds())
-        jPanelDelayDuration.add(initializeJTextFieldDelayDurationNanoSeconds())
-        return jPanelDelayDuration
-    }
-
-    private fun initializeJTextFieldDelayDurationJLabel(): JLabel {
-        return JLabel("Delay duration")
-    }
-
-    private fun initializeJTextFieldDelayDurationDays(): JTextField {
-        jTextFieldsDuaration[TimeUnit.DAYS] = HintJTextField("Days")
-        jTextFieldsDuaration[TimeUnit.DAYS]?.font = defaultFont
-        jTextFieldsDuaration[TimeUnit.DAYS]?.isEditable = true
-        return jTextFieldsDuaration[TimeUnit.DAYS] as JTextField
-    }
-
-    private fun initializeJTextFieldDelayDurationHours(): JTextField {
-        jTextFieldsDuaration[TimeUnit.HOURS] = HintJTextField("Hours")
-        jTextFieldsDuaration[TimeUnit.HOURS]?.font = defaultFont
-        jTextFieldsDuaration[TimeUnit.HOURS]?.isEditable = true
-        return jTextFieldsDuaration[TimeUnit.HOURS] as JTextField
-    }
-
-    private fun initializeJTextFieldDelayDurationMinutes(): JTextField {
-        jTextFieldsDuaration[TimeUnit.MINUTES] = HintJTextField("Minutes")
-        jTextFieldsDuaration[TimeUnit.MINUTES]?.font = defaultFont
-        jTextFieldsDuaration[TimeUnit.MINUTES]?.isEditable = true
-        return jTextFieldsDuaration[TimeUnit.MINUTES] as JTextField
-    }
-
-    private fun initializeJTextFieldDelayDurationSeconds(): JTextField {
-        jTextFieldsDuaration[TimeUnit.SECONDS] = HintJTextField("Seconds")
-        jTextFieldsDuaration[TimeUnit.SECONDS]?.font = defaultFont
-        jTextFieldsDuaration[TimeUnit.SECONDS]?.isEditable = true
-        return jTextFieldsDuaration[TimeUnit.SECONDS] as JTextField
-    }
-
-    private fun initializeJTextFieldDelayDurationMilliseconds(): JTextField {
-        jTextFieldsDuaration[TimeUnit.MILLISECONDS] = HintJTextField("Milliseconds")
-        jTextFieldsDuaration[TimeUnit.MILLISECONDS]?.font = defaultFont
-        jTextFieldsDuaration[TimeUnit.MILLISECONDS]?.isEditable = true
-        return jTextFieldsDuaration[TimeUnit.MILLISECONDS] as JTextField
-    }
-
-    private fun initializeJTextFieldDelayDurationNanoSeconds(): JTextField {
-        jTextFieldsDuaration[TimeUnit.NANOSECONDS] = HintJTextField("Nano seconds")
-        jTextFieldsDuaration[TimeUnit.NANOSECONDS]?.font = defaultFont
-        jTextFieldsDuaration[TimeUnit.NANOSECONDS]?.isEditable = true
-        return jTextFieldsDuaration[TimeUnit.NANOSECONDS] as JTextField
-    }
-
-    private fun initializeJButtonAdd(): JButton {
-        val jButtonAdd = JButton("Add")
-        jButtonAdd.font = defaultFont
-        jButtonAdd.isEnabled = true
-        jButtonAdd.addActionListener {
-
-            if (jTextFieldHost != null && jTextFieldToken != null && jTextFieldsDuaration.all { it.value.text != null }) {
-                val duration = Duration.ofDays(jTextFieldsDuaration[TimeUnit.DAYS]!!.text.toLong()) +
-                        Duration.ofHours(jTextFieldsDuaration[TimeUnit.HOURS]!!.text.toLong()) +
-                        Duration.ofMinutes(jTextFieldsDuaration[TimeUnit.MINUTES]!!.text.toLong()) +
-                        Duration.ofSeconds(jTextFieldsDuaration[TimeUnit.SECONDS]!!.text.toLong()) +
-                        Duration.ofMillis(jTextFieldsDuaration[TimeUnit.MILLISECONDS]!!.text.toLong()) +
-                        Duration.ofNanos(jTextFieldsDuaration[TimeUnit.NANOSECONDS]!!.text.toLong())
-
-                val host = DuckDnsSubdomain(jTextFieldHost!!.text,
-                    jCheckBoxIPs[StandardProtocolFamily.INET]?.isEnabled == true,
-                    jCheckBoxIPs[StandardProtocolFamily.INET6]?.isEnabled == true, duration,
-                    jTextFieldToken!!.text)
-
-                HostsController.add(host)
-                jFrame.dispose()
-
-            }
-
-        }
-        return jButtonAdd
-    }
-
-    private fun initializeJCheckBoxEnableIPv4(): JCheckBox {
-        jCheckBoxIPs[StandardProtocolFamily.INET] = JCheckBox("Enable IPv4", true)
-        jCheckBoxIPs[StandardProtocolFamily.INET]?.font = defaultFont
-        return jCheckBoxIPs[StandardProtocolFamily.INET] as JCheckBox
-    }
-
-    private fun initializeJCheckBoxEnableIPv6(): JCheckBox {
-        jCheckBoxIPs[StandardProtocolFamily.INET6] = JCheckBox("Enable IPv6", true)
-        jCheckBoxIPs[StandardProtocolFamily.INET6]?.font = defaultFont
-        return jCheckBoxIPs[StandardProtocolFamily.INET6] as JCheckBox
-    }
-
-    private fun initializeJTextFieldToken(): JTextField {
-        jTextFieldToken = HintJTextField("Token")
-        jTextFieldToken?.font = defaultFont
-        jTextFieldToken?.isEditable = true
-        return jTextFieldToken as JTextField
-    }
-
-    private fun initializeJTextFieldHost(): JTextField {
-        jTextFieldHost = HintJTextField("Host")
-        jTextFieldHost?.font = defaultFont
-        jTextFieldHost?.isEditable = true
-        return jTextFieldHost as JTextField
-    }
-
+    override val jFrame = initializeJFrame()
+    /// End: JFrame
 }

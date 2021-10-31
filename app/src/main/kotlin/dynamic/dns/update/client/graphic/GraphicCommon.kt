@@ -10,9 +10,11 @@ val defaultFont: Font = Font("Arial", Font.PLAIN, 20)
 
 fun getConfirmation(message: String = ""): Boolean {
     val jFrame = JFrame()
-    jFrame.defaultCloseOperation = JFrame.DO_NOTHING_ON_CLOSE
+    jFrame.defaultCloseOperation = JFrame.DISPOSE_ON_CLOSE
     jFrame.font = defaultFont
+    jFrame.isVisible = true
     val confirmation = JOptionPane.showConfirmDialog(jFrame, message)
+    jFrame.pack()
     return confirmation == JOptionPane.YES_OPTION
 }
 

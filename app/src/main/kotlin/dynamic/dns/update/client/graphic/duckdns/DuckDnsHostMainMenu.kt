@@ -7,13 +7,13 @@ import dynamic.dns.update.client.graphic.getConfirmation
 import java.awt.FlowLayout
 import java.awt.GridLayout
 import javax.swing.*
-import javax.swing.table.TableModel
 
 class DuckDnsHostMainMenu(previousMenu: Menu? = null) : Menu(previousMenu) {
-    override val jFrame: JFrame = initializeJFrame()
-    private var jTable: JTable? = null
-    private var tableModel: TableModel? = null
+
+    private val tableModel: DuckDnsSubdomainTableModel = DuckDnsSubdomainTableModel()
+    private val jTable: JTable = initializeJTable()
     override val title: String = "Duck DNS subdomain menu"
+    override val jFrame: JFrame = initializeJFrame()
 
     override fun initializeJFrame(): JFrame {
         val jFrame = super.initializeJFrame()
@@ -61,16 +61,11 @@ class DuckDnsHostMainMenu(previousMenu: Menu? = null) : Menu(previousMenu) {
     private fun initializeJButtonUpdate(): JButton {
         val jButton = JButton("Update")
         jButton.addActionListener {
-            if (jTable != null) {
-                val selectedRow = jTable!!.selectedRow
-                val selectedHostname = jTable!!.getValueAt(selectedRow, 0) as String
-                val oldDuckDnsSubdomain = duckDnsHosts.first { duckDnsSubdomain ->
-                    duckDnsSubdomain.hostname.equals(selectedHostname)
-                }
+                val selectedRow = jTable.selectedRow
+                val oldDuckDnsSubdomain = duckDnsHosts[selectedRow]
                 nextMenu = DuckDnsUpdateHostMenu(this, oldDuckDnsSubdomain)
                 fireTableDataChanged()
                 isVisible = false
-            }
         }
         return jButton
     }
@@ -78,43 +73,31 @@ class DuckDnsHostMainMenu(previousMenu: Menu? = null) : Menu(previousMenu) {
     private fun initializeJButtonDelete(): JButton {
         val jButton = JButton("Delete")
         jButton.addActionListener {
-            if (jTable != null) {
-                val selectedRow = jTable!!.selectedRow
-                val selectedHostname = jTable!!.getValueAt(selectedRow, 0) as String
-                val removedDuckDnsSubdomain =
-                    duckDnsHosts.first { duckDnsSubdomain ->
-                        duckDnsSubdomain.hostname.equals(selectedHostname)
-                    }
-                if (getConfirmation("Would you like to remove $selectedHostname?")) {
+                val selectedRow = jTable.selectedRow
+                val removedDuckDnsSubdomain = duckDnsHosts[selectedRow]
+                if (getConfirmation("Would you like to remove $removedDuckDnsSubdomain?")) {
                     HostsController.remove(removedDuckDnsSubdomain)
+                    fireTableDataChanged()
                 }
-                fireTableDataChanged()
-            }
         }
         return jButton
     }
 
 
     private fun initializeJScrollPaneTable(): JScrollPane {
-        val jScrollPane = JScrollPane()
-        jScrollPane.add(initializeJTable())
-        return jScrollPane
+        return JScrollPane(jTable)
     }
 
     private fun initializeJTable(): JTable {
         val jTable = JTable()
         jTable.font = defaultFont
-        jTable.model = initializeTableModel()
+        jTable.model = this.tableModel
         jTable.autoResizeMode = JTable.AUTO_RESIZE_ALL_COLUMNS
         return jTable
     }
 
-    private fun initializeTableModel(): TableModel {
-        this.tableModel = DuckDnsSubdomainTableModel()
-        return this.tableModel!!
-    }
-
-    private fun fireTableDataChanged() {
-        (tableModel as? DuckDnsSubdomainTableModel)?.fireTableDataChanged()
+    fun fireTableDataChanged() {
+        tableModel.fireTableDataChanged()
+        jFrame.pack()
     }
 }

@@ -4,13 +4,9 @@ import javax.swing.table.AbstractTableModel
 
 class DuckDnsSubdomainTableModel : AbstractTableModel() {
 
-    override fun getRowCount(): Int {
-        return duckDnsHosts.size
-    }
+    override fun getRowCount(): Int = duckDnsHosts.size
 
-    override fun getColumnCount(): Int {
-        return 5
-    }
+    override fun getColumnCount(): Int = 5
 
     override fun getValueAt(p0: Int, p1: Int): Any {
         val duckDnsSubdomain = duckDnsHosts[p0]
@@ -24,9 +20,7 @@ class DuckDnsSubdomainTableModel : AbstractTableModel() {
         }
     }
 
-    override fun isCellEditable(rowIndex: Int, columnIndex: Int): Boolean {
-        return false
-    }
+    override fun isCellEditable(rowIndex: Int, columnIndex: Int): Boolean = false
 
     override fun getColumnName(column: Int): String {
         return when (column) {

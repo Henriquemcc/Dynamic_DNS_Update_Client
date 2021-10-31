@@ -2,6 +2,7 @@ package dynamic.dns.update.client.model
 
 import dynamic.dns.update.client.exception.*
 import dynamic.dns.update.client.network.internet.protocol.getUnicastIPv4Address
+import dynamic.dns.update.client.network.internet.protocol.getUnicastIPv6Address
 import dynamic.dns.update.client.network.internet.protocol.hostAddressFormatted
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -20,7 +21,7 @@ class DuckDnsSubdomain(hostname: String = "", enableIPv4: Boolean = true, enable
             if (enableIPv4)
                 for (i in 0..1024)
                     try {
-                        peformUpdateIPv4()
+                        performUpdateIPv4()
                         break
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -29,7 +30,7 @@ class DuckDnsSubdomain(hostname: String = "", enableIPv4: Boolean = true, enable
             if (enableIPv6)
                 for (i in 0..1024)
                     try {
-                        peformUpdateIPv6()
+                        performUpdateIPv6()
                         break
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -51,7 +52,7 @@ class DuckDnsSubdomain(hostname: String = "", enableIPv4: Boolean = true, enable
         }
     }
 
-    private fun peformUpdateIPv4() {
+    private fun performUpdateIPv4() {
         val ipv4Address = getUnicastIPv4Address()?.hostAddressFormatted ?: throw IPv4NotFoundException()
 
         val url = URL("https://www.duckdns.org/update?domains=$subdomainName&token=$token&ip=$ipv4Address")
@@ -63,8 +64,8 @@ class DuckDnsSubdomain(hostname: String = "", enableIPv4: Boolean = true, enable
         }
     }
 
-    private fun peformUpdateIPv6() {
-        val ipv6Address = getUnicastIPv4Address()?.hostAddressFormatted ?: throw IPv6NotFoundException()
+    private fun performUpdateIPv6() {
+        val ipv6Address = getUnicastIPv6Address()?.hostAddressFormatted ?: throw IPv6NotFoundException()
 
         val url = URL("https://www.duckdns.org/update?domains=$subdomainName&token=$token&ipv6=$ipv6Address")
         val connection = url.openConnection() as HttpsURLConnection

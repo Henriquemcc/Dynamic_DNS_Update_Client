@@ -16,6 +16,7 @@ abstract class Host(
         stringBuilder.append(", hostname = $hostname")
         stringBuilder.append(", enableIPv4 = $enableIPv4")
         stringBuilder.append(", enableIPv6 = $enableIPv6")
+        stringBuilder.append(", update delay time = $updateDelayTime")
         return stringBuilder.toString()
     }
 

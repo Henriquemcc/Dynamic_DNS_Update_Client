@@ -2,7 +2,7 @@ package dynamic.dns.update.client.graphic.duckdns
 
 import dynamic.dns.update.client.controller.HostsController
 import dynamic.dns.update.client.graphic.GraphicMenu
-import dynamic.dns.update.client.graphic.defaultFont
+import dynamic.dns.update.client.graphic.getDefaultFont
 import dynamic.dns.update.client.model.DuckDnsSubdomain
 import java.awt.Color
 import java.awt.GridLayout
@@ -20,7 +20,7 @@ class DuckDnsUpdateHostGraphicMenu(
     /// Token
     private fun initializeJTextFieldToken(): JTextField {
         val jTextFieldToken = JTextField(oldDuckDnsSubdomain.token)
-        jTextFieldToken.font = defaultFont
+        jTextFieldToken.font = getDefaultFont()
         jTextFieldToken.isEditable = true
         return jTextFieldToken
     }
@@ -31,7 +31,7 @@ class DuckDnsUpdateHostGraphicMenu(
     /// Host
     private fun initializeJTextFieldHost(): JTextField {
         val jTextField = JTextField(oldDuckDnsSubdomain.hostname)
-        jTextField.font = defaultFont
+        jTextField.font = getDefaultFont()
         jTextField.isEditable = true
         return jTextField
     }
@@ -42,13 +42,13 @@ class DuckDnsUpdateHostGraphicMenu(
     /// Enable IP protocol
     private fun initializeJCheckBoxEnableIPv4(): JCheckBox {
         val jCheckBox = JCheckBox("Enable IPv4", oldDuckDnsSubdomain.enableIPv4)
-        jCheckBox.font = defaultFont
+        jCheckBox.font = getDefaultFont()
         return jCheckBox
     }
 
     private fun initializeJCheckBoxEnableIPv6(): JCheckBox {
         val jCheckBox = JCheckBox("Enable IPv6", oldDuckDnsSubdomain.enableIPv6)
-        jCheckBox.font = defaultFont
+        jCheckBox.font = getDefaultFont()
         return jCheckBox
     }
 
@@ -66,28 +66,28 @@ class DuckDnsUpdateHostGraphicMenu(
     /// Duration
     private fun initializeJTextFieldDelayDurationDays(): JTextField {
         val jTextField = JTextField((oldDuckDnsSubdomain.updateDelayTime.seconds / 60 / 60 / 24).toString())
-        jTextField.font = defaultFont
+        jTextField.font = getDefaultFont()
         jTextField.isEditable = true
         return jTextField
     }
 
     private fun initializeJTextFieldDelayDurationHours(): JTextField {
         val jTextField = JTextField(((oldDuckDnsSubdomain.updateDelayTime.seconds / 60 / 60) % 24).toString())
-        jTextField.font = defaultFont
+        jTextField.font = getDefaultFont()
         jTextField.isEditable = true
         return jTextField
     }
 
     private fun initializeJTextFieldDelayDurationMinutes(): JTextField {
         val jTextField = JTextField(((oldDuckDnsSubdomain.updateDelayTime.seconds / 60) % 60).toString())
-        jTextField.font = defaultFont
+        jTextField.font = getDefaultFont()
         jTextField.isEditable = true
         return jTextField
     }
 
     private fun initializeJTextFieldDelayDurationSeconds(): JTextField {
         val jTextField = JTextField((oldDuckDnsSubdomain.updateDelayTime.seconds % 60).toString())
-        jTextField.font = defaultFont
+        jTextField.font = getDefaultFont()
         jTextField.isEditable = true
         return jTextField
     }
@@ -140,7 +140,7 @@ class DuckDnsUpdateHostGraphicMenu(
     ///// JButton
     private fun initializeJButtonAdd(): JButton {
         val jButtonAdd = JButton("Modify")
-        jButtonAdd.font = defaultFont
+        jButtonAdd.font = getDefaultFont()
         jButtonAdd.isEnabled = true
         jButtonAdd.addActionListener {
 

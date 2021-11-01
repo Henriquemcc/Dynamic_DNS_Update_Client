@@ -3,7 +3,7 @@ package dynamic.dns.update.client.graphic.duckdns
 import dynamic.dns.update.client.controller.HostsController
 import dynamic.dns.update.client.graphic.GraphicMenu
 import dynamic.dns.update.client.graphic.HintJTextField
-import dynamic.dns.update.client.graphic.defaultFont
+import dynamic.dns.update.client.graphic.getDefaultFont
 import dynamic.dns.update.client.model.DuckDnsSubdomain
 import java.awt.Color
 import java.awt.GridLayout
@@ -18,7 +18,7 @@ class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : G
     /// Token
     private fun initializeJTextFieldToken(): JTextField {
         val jTextField = HintJTextField("Token")
-        jTextField.font = defaultFont
+        jTextField.font = getDefaultFont()
         jTextField.isEditable = true
         return jTextField
     }
@@ -29,7 +29,7 @@ class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : G
     /// Host
     private fun initializeJTextFieldHost(): JTextField {
         val jTextField = HintJTextField("Host")
-        jTextField.font = defaultFont
+        jTextField.font = getDefaultFont()
         jTextField.isEditable = true
         return jTextField
     }
@@ -40,13 +40,13 @@ class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : G
     /// Enable IP protocol
     private fun initializeJCheckBoxEnableIPv4(): JCheckBox {
         val jCheckBox = JCheckBox("Enable IPv4", true)
-        jCheckBox.font = defaultFont
+        jCheckBox.font = getDefaultFont()
         return jCheckBox
     }
 
     private fun initializeJCheckBoxEnableIPv6(): JCheckBox {
         val jCheckBox = JCheckBox("Enable IPv6", true)
-        jCheckBox.font = defaultFont
+        jCheckBox.font = getDefaultFont()
         return jCheckBox
     }
 
@@ -64,28 +64,28 @@ class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : G
     /// Duration
     private fun initializeJTextFieldDelayDurationDays(): JTextField {
         val jTextField = HintJTextField("Days")
-        jTextField.font = defaultFont
+        jTextField.font = getDefaultFont()
         jTextField.isEditable = true
         return jTextField
     }
 
     private fun initializeJTextFieldDelayDurationHours(): JTextField {
         val jTextField = HintJTextField("Hours")
-        jTextField.font = defaultFont
+        jTextField.font = getDefaultFont()
         jTextField.isEditable = true
         return jTextField
     }
 
     private fun initializeJTextFieldDelayDurationMinutes(): JTextField {
         val jTextField = HintJTextField("Minutes")
-        jTextField.font = defaultFont
+        jTextField.font = getDefaultFont()
         jTextField.isEditable = true
         return jTextField
     }
 
     private fun initializeJTextFieldDelayDurationSeconds(): JTextField {
         val jTextField = HintJTextField("Seconds")
-        jTextField.font = defaultFont
+        jTextField.font = getDefaultFont()
         jTextField.isEditable = true
         return jTextField
     }
@@ -138,7 +138,7 @@ class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : G
     ///// JButton
     private fun initializeJButtonAdd(): JButton {
         val jButtonAdd = JButton("Add")
-        jButtonAdd.font = defaultFont
+        jButtonAdd.font = getDefaultFont()
         jButtonAdd.isEnabled = true
         jButtonAdd.addActionListener {
 

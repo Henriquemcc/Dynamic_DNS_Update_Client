@@ -2,8 +2,8 @@ package dynamic.dns.update.client.graphic.duckdns
 
 import dynamic.dns.update.client.controller.HostsController
 import dynamic.dns.update.client.graphic.GraphicMenu
-import dynamic.dns.update.client.graphic.defaultFont
-import dynamic.dns.update.client.graphic.getConfirmation
+import dynamic.dns.update.client.graphic.getConfirmationGraphic
+import dynamic.dns.update.client.graphic.getDefaultFont
 import java.awt.FlowLayout
 import java.awt.GridLayout
 import javax.swing.*
@@ -75,7 +75,7 @@ class DuckDnsHostMainGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : Gra
         jButton.addActionListener {
             val selectedRow = jTable.selectedRow
             val removedDuckDnsSubdomain = duckDnsHosts[selectedRow]
-            if (getConfirmation("Would you like to remove $removedDuckDnsSubdomain?")) {
+            if (getConfirmationGraphic("Would you like to remove $removedDuckDnsSubdomain?")) {
                 HostsController.remove(removedDuckDnsSubdomain)
                 fireTableDataChanged()
             }
@@ -90,7 +90,7 @@ class DuckDnsHostMainGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : Gra
 
     private fun initializeJTable(): JTable {
         val jTable = JTable()
-        jTable.font = defaultFont
+        jTable.font = getDefaultFont()
         jTable.model = this.tableModel
         jTable.autoResizeMode = JTable.AUTO_RESIZE_ALL_COLUMNS
         return jTable

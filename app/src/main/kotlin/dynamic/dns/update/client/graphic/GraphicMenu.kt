@@ -19,8 +19,8 @@ abstract class GraphicMenu(val previousGraphicMenu: GraphicMenu?) {
     protected open fun initializeJFrame(): JFrame {
         val jFrame = JFrame(title)
         jFrame.isVisible = true
-        jFrame.font = defaultFont
-        jFrame.location = jFrame.defaultLocation
+        jFrame.font = getDefaultFont()
+        jFrame.location = jFrame.getDefaultLocation()
         jFrame.defaultCloseOperation = JFrame.DISPOSE_ON_CLOSE
         jFrame.addWindowListener(
             object : WindowAdapter() {

@@ -12,11 +12,14 @@ class MainConsoleMenu {
                 ConsoleButton("Host menu") {
                     HostConsoleMenu()
                 },
-                ConsoleButton("Perform host update") {
-                    HostsController.performUpdate()
+                ConsoleButton("Perform host IP cleaning") {
+                    HostsController.performIpCleaning()
                 },
-                ConsoleButton("Perform host update in infinite looping") {
-                    HostsController.performUpdate(true)
+                ConsoleButton("Perform host IP update") {
+                    HostsController.performIpUpdate()
+                },
+                ConsoleButton("Perform host IP update in infinite looping") {
+                    HostsController.performIpUpdate(true)
                 })
         )
     }

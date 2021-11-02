@@ -188,7 +188,7 @@ object HostsController : MutableList<Host> {
         return list.subList(fromIndex, toIndex)
     }
 
-    fun performUpdate(looping: Boolean = false) {
+    fun performIpUpdate(looping: Boolean = false) {
         for (host in list) {
             val thread = object : Thread() {
                 override fun run() {
@@ -199,7 +199,7 @@ object HostsController : MutableList<Host> {
         }
     }
 
-    fun peformClean() {
+    fun performIpCleaning() {
         for (host in list) {
             val thread = object : Thread() {
                 override fun run() {

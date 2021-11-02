@@ -18,11 +18,28 @@ class MainGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : GraphicMenu(pr
     }
 
     private fun initializeJPanel(): JPanel {
-        val jPanel = JPanel(GridLayout(3, 1))
+        val jPanel = JPanel(GridLayout(4, 1))
         jPanel.add(initializeJButtonHostMenu())
+        jPanel.add(initializeJButtonPerformHostCleaning())
         jPanel.add(initializeJButtonPerformHostUpdate())
         jPanel.add(initializeJButtonPerformHostUpdateInInfiniteLooping())
         return jPanel
+    }
+
+    private fun initializeJButtonPerformHostCleaning(): JButton {
+        val jButton = JButton("Perform host IP cleaning")
+        jButton.addActionListener {
+            isVisible = false
+            val thread = object : Thread() {
+                override fun run() {
+                    HostsController.performIpCleaning()
+                }
+            }
+            thread.start()
+            Thread.sleep((5000).toLong())
+            isVisible = true
+        }
+        return jButton
     }
 
     private fun initializeJButtonHostMenu(): JButton {
@@ -35,12 +52,12 @@ class MainGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : GraphicMenu(pr
     }
 
     private fun initializeJButtonPerformHostUpdate(): JButton {
-        val jButton = JButton("Perform host update")
+        val jButton = JButton("Perform host IP update")
         jButton.addActionListener {
             isVisible = false
             val thread = object : Thread() {
                 override fun run() {
-                    HostsController.performUpdate()
+                    HostsController.performIpUpdate()
                 }
             }
             thread.start()
@@ -51,12 +68,12 @@ class MainGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : GraphicMenu(pr
     }
 
     private fun initializeJButtonPerformHostUpdateInInfiniteLooping(): JButton {
-        val jButton = JButton("Perform host update in infinite looping")
+        val jButton = JButton("Perform host IP update in infinite looping")
         jButton.addActionListener {
             isVisible = false
             val thread = object : Thread() {
                 override fun run() {
-                    HostsController.performUpdate(true)
+                    HostsController.performIpUpdate(true)
                 }
             }
             thread.start()

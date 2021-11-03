@@ -25,14 +25,21 @@ private fun performIpUpdateHelp()
 {
     val jarFileName = File(object{}.javaClass.protectionDomain.codeSource.location.path).name
     val stringBuilder = StringBuilder()
+
     stringBuilder.appendLine("Usage: java -jar $jarFileName perform-ip-update [OPTIONS]")
+
     stringBuilder.appendLine()
+
     stringBuilder.appendLine("Perform host IP address update")
+
     stringBuilder.appendLine()
+
     stringBuilder.appendLine("Options:")
+
     val str = "\t-i, --infinite-looping"
     stringBuilder.append(str)
     stringBuilder.append(printTab(str.length))
-    stringBuilder.appendLine("Run in infinite looping")
+    stringBuilder.appendLine("run in infinite looping")
+
     println(stringBuilder.toString())
 }

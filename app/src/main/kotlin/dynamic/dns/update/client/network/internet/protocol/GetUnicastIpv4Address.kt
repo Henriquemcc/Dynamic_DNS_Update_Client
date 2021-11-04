@@ -9,7 +9,7 @@ import java.util.*
  * @param networkInterfaces Network interfaces to retrieve IP addresses.
  * @return An unicast IPv4 address.
  */
-fun getUnicastIPv4Address(networkInterfaces: Enumeration<NetworkInterface> = NetworkInterface.getNetworkInterfaces()):
+fun getUnicastIPv4Address(networkInterfaces: List<NetworkInterface> = NetworkInterface.getNetworkInterfaces().toList()):
         Inet4Address? {
 
     val addresses = getIPAddresses(networkInterfaces)

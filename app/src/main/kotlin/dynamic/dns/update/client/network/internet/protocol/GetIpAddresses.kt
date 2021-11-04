@@ -10,7 +10,7 @@ import kotlin.collections.ArrayList
  * @param networkInterfaces Network interfaces to retrieve IP addresses.
  * @return List of IP addresses.
  */
-fun getIPAddresses(networkInterfaces: Enumeration<NetworkInterface> = NetworkInterface.getNetworkInterfaces()):
+fun getIPAddresses(networkInterfaces: List<NetworkInterface> = NetworkInterface.getNetworkInterfaces().toList()):
         List<InetAddress> {
 
     val ipAddresses = ArrayList<InetAddress>()

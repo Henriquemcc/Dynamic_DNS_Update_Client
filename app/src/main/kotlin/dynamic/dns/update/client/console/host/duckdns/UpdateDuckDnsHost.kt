@@ -6,6 +6,7 @@ import dynamic.dns.update.client.console.common.menu.DynamicConsoleMenu
 import dynamic.dns.update.client.console.common.myio.readLong
 import dynamic.dns.update.client.console.common.myio.readString
 import dynamic.dns.update.client.console.getConfirmationConsole
+import dynamic.dns.update.client.console.networkInterface.networkInterfaceMainMenu
 import dynamic.dns.update.client.controller.HostsController
 import dynamic.dns.update.client.model.DuckDnsSubdomain
 import java.time.Duration
@@ -24,6 +25,7 @@ fun updateDuckDnsHost(oldHost: DuckDnsSubdomain) {
     var updateDelayTimeMinutes: Long = (oldHost.updateDelayTime.seconds / 60) % 60
     var updateDelayTimeSeconds: Long = oldHost.updateDelayTime.seconds % 60
     var token: String = oldHost.token
+    var networkInterfaces = oldHost.networkInterfacesName
 
     DynamicConsoleMenu("Update Duck DNS subdomain menu") {
         return@DynamicConsoleMenu listOf(
@@ -32,7 +34,7 @@ fun updateDuckDnsHost(oldHost: DuckDnsSubdomain) {
                         Duration.ofHours(updateDelayTimeHours) +
                         Duration.ofMinutes(updateDelayTimeMinutes) +
                         Duration.ofSeconds(updateDelayTimeSeconds)
-                val newHost = DuckDnsSubdomain(hostname, enableIPv4, enableIPv6, duration, token)
+                val newHost = DuckDnsSubdomain(hostname, enableIPv4, enableIPv6, duration, token, networkInterfaces)
                 val confirmationMessage = StringBuilder()
                 confirmationMessage.appendLine("Would you like to update :")
                 confirmationMessage.appendLine(oldHost)
@@ -55,6 +57,9 @@ fun updateDuckDnsHost(oldHost: DuckDnsSubdomain) {
             },
             ConsoleButton("Enable IPv6 = $enableIPv6") {
                 enableIPv6 = (!enableIPv6)
+            },
+            ConsoleButton("Allowed network interfaces = $networkInterfaces") {
+                networkInterfaces = networkInterfaceMainMenu(networkInterfaces) as MutableList<String>
             },
             ConsoleText("Delay duration time:"),
             ConsoleButton("Days = $updateDelayTimeDays") {

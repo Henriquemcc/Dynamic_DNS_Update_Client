@@ -9,13 +9,14 @@ import java.time.Duration
  * @param enableIPv4 Whether is to enable IPv4 update for this host.
  * @param enableIPv6 Whether is to enable IPv6 update for this host.
  * @param updateDelayTime Time interval between each infinite loop interaction to update IP address of the host.
+ * @param networkInterfacesName Names of allowed network interfaces.
  */
 abstract class Host(
     val hostname: String = "",
     val enableIPv4: Boolean = true,
     val enableIPv6: Boolean = true,
     val updateDelayTime: Duration,
-    val networkInterfacesName: List<String>? = null
+    val networkInterfacesName: MutableList<String> = mutableListOf()
 ) : Serializable {
 
     override fun toString(): String {
@@ -24,6 +25,7 @@ abstract class Host(
         stringBuilder.append(", hostname = $hostname")
         stringBuilder.append(", enableIPv4 = $enableIPv4")
         stringBuilder.append(", enableIPv6 = $enableIPv6")
+        stringBuilder.append(", allowed network interfaces' name = $networkInterfacesName")
         stringBuilder.append(", update delay time = $updateDelayTime")
         return stringBuilder.toString()
     }

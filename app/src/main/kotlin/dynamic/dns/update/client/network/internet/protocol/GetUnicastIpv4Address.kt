@@ -2,7 +2,6 @@ package dynamic.dns.update.client.network.internet.protocol
 
 import java.net.Inet4Address
 import java.net.NetworkInterface
-import java.util.*
 
 /**
  * Retrieves an unicast IPv4 address.

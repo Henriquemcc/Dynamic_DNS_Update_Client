@@ -21,7 +21,7 @@ class DuckDnsSubdomain(
     enableIPv6: Boolean = true,
     updateDelayTime: Duration,
     val token: String,
-    networkInterfacesName: List<String>? = null
+    networkInterfacesName: MutableList<String> = mutableListOf()
 ) : Host(hostname, enableIPv4, enableIPv6, updateDelayTime, networkInterfacesName) {
 
     /**
@@ -42,7 +42,7 @@ class DuckDnsSubdomain(
 
     override fun performIpUpdate(looping: Boolean) {
 
-        val networkInterfaces = if (networkInterfacesName != null) {
+        val networkInterfaces = if (networkInterfacesName.isNotEmpty()) {
             NetworkInterface.getNetworkInterfaces().toList().filter {
                 networkInterfacesName.contains(it.name)
             }

@@ -2,8 +2,6 @@ package dynamic.dns.update.client.network.internet.protocol
 
 import java.net.InetAddress
 import java.net.NetworkInterface
-import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * Retrieves a list of IP addresses.

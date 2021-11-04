@@ -10,11 +10,11 @@ import dynamic.dns.update.client.controller.HostsController
 /**
  * Console menu which allows the user to delete a host.
  */
-fun deleteHostConsoleMenu() {
+internal fun deleteHost() {
 
     StaticConsoleMenu("Delete host console menu", listOf(
         ConsoleButton("List hosts") {
-            listHostsConsoleMenu()
+            listHosts()
         },
         ConsoleButton("Delete host by it's index") {
             if (HostsController.isNotEmpty()) {

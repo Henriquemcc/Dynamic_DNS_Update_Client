@@ -12,7 +12,7 @@ import java.time.Duration
 /**
  * Console menu which allows the user to add a Duck DNS subdomain host.
  */
-fun addDuckDnsSubdomainConsoleMenu() {
+fun addDuckDnsHost() {
 
     var hostname: String = ""
     var enableIPv4: Boolean = true

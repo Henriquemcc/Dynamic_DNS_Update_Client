@@ -9,7 +9,7 @@ import dynamic.dns.update.client.controller.HostsController
 /**
  * Console menu which allows the user to list the hosts.
  */
-fun listHostsConsoleMenu() {
+internal fun listHosts() {
 
     StaticConsoleMenu("List hosts menu", listOf(
         ConsoleButton("Print hosts sorted by index") {

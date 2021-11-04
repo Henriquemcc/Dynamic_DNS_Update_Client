@@ -1,11 +1,10 @@
-package dynamic.dns.update.client.console
+package dynamic.dns.update.client.console.host
 
 import dynamic.dns.update.client.console.common.menu.ConsoleButton
 import dynamic.dns.update.client.console.common.menu.StaticConsoleMenu
 import dynamic.dns.update.client.console.common.myio.readInteger
 import dynamic.dns.update.client.console.common.myio.readString
-import dynamic.dns.update.client.console.host.duckdns.updateDuckDnsSubdomainConsoleMenu
-import dynamic.dns.update.client.console.host.listHostsConsoleMenu
+import dynamic.dns.update.client.console.host.duckdns.updateDuckDnsHost
 import dynamic.dns.update.client.controller.HostsController
 import dynamic.dns.update.client.model.DuckDnsSubdomain
 import dynamic.dns.update.client.model.Host
@@ -13,7 +12,7 @@ import dynamic.dns.update.client.model.Host
 /**
  * Console menu which allows the user to modify a host.
  */
-class UpdateHostMenu {
+internal class UpdateHost {
 
     /**
      * Identify the type of host and redirects the user to the specific menu.
@@ -21,7 +20,7 @@ class UpdateHostMenu {
      */
     private fun updateHost(oldHost: Host) {
         if (oldHost is DuckDnsSubdomain) {
-            updateDuckDnsSubdomainConsoleMenu(oldHost)
+            updateDuckDnsHost(oldHost)
         }
     }
 
@@ -31,7 +30,7 @@ class UpdateHostMenu {
     init {
         StaticConsoleMenu("Update host menu", listOf(
             ConsoleButton("List hosts") {
-                listHostsConsoleMenu()
+                listHosts()
             },
             ConsoleButton("Select a host to update by it's index") {
                 if (HostsController.isNotEmpty()) {

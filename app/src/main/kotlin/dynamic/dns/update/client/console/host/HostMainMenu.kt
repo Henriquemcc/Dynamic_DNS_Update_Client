@@ -1,26 +1,25 @@
 package dynamic.dns.update.client.console.host
 
-import dynamic.dns.update.client.console.UpdateHostMenu
 import dynamic.dns.update.client.console.common.menu.ConsoleButton
 import dynamic.dns.update.client.console.common.menu.StaticConsoleMenu
 
 /**
  * Console menu which allows the user to manage hosts.
  */
-fun hostConsoleMenu() {
+fun hostMainMenu() {
 
     StaticConsoleMenu("Host menu", listOf(
         ConsoleButton("Show hosts") {
-            listHostsConsoleMenu()
+            listHosts()
         },
         ConsoleButton("Add host") {
-            addHostConsoleMenu()
+            addHost()
         },
         ConsoleButton("Edit host") {
-            UpdateHostMenu()
+            UpdateHost()
         },
         ConsoleButton("Remove host") {
-            deleteHostConsoleMenu()
+            deleteHost()
         }
     ))
 }

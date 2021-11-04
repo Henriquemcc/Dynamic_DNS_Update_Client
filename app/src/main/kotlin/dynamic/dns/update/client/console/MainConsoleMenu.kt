@@ -2,7 +2,7 @@ package dynamic.dns.update.client.console
 
 import dynamic.dns.update.client.console.common.menu.ConsoleButton
 import dynamic.dns.update.client.console.common.menu.StaticConsoleMenu
-import dynamic.dns.update.client.console.host.hostConsoleMenu
+import dynamic.dns.update.client.console.host.hostMainMenu
 import dynamic.dns.update.client.controller.HostsController
 
 /**
@@ -13,7 +13,7 @@ fun mainConsoleMenu() {
     StaticConsoleMenu(
         "Main menu", listOf(
             ConsoleButton("Host menu") {
-                hostConsoleMenu()
+                hostMainMenu()
             },
             ConsoleButton("Perform host IP cleaning") {
                 HostsController.performIpCleaning()

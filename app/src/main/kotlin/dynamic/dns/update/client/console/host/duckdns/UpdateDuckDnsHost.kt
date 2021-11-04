@@ -14,7 +14,7 @@ import java.time.Duration
  * Console menu which allows the user to modify a Duck DNS subdomain host.
  * @param oldHost The duck dns subdomain host which will be modified.
  */
-fun updateDuckDnsSubdomainConsoleMenu(oldHost: DuckDnsSubdomain) {
+fun updateDuckDnsHost(oldHost: DuckDnsSubdomain) {
 
     var hostname: String = oldHost.hostname
     var enableIPv4: Boolean = oldHost.enableIPv4

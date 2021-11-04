@@ -7,8 +7,7 @@ import java.net.InetAddress
  */
 val InetAddress.isUnicastAddress: Boolean
     get() {
-        return (!this.isMulticastAddress) &&
-                (!this.isLinkLocalAddress) &&
-                (!this.isSiteLocalAddress) &&
-                (!this.isLoopbackAddress)
+        return !this.isMulticastAddress && !this.isLinkLocalAddress &&
+                !this.isSiteLocalAddress && !this.isLoopbackAddress &&
+                !this.isAnyLocalAddress
     }

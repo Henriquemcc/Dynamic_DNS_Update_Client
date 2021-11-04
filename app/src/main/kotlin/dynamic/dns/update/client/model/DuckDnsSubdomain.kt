@@ -6,6 +6,7 @@ import dynamic.dns.update.client.network.internet.protocol.getUnicastIPv6Address
 import dynamic.dns.update.client.network.internet.protocol.hostAddressFormatted
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.net.NetworkInterface
 import java.net.URL
 import java.time.Duration
 import javax.net.ssl.HttpsURLConnection
@@ -19,8 +20,9 @@ class DuckDnsSubdomain(
     enableIPv4: Boolean = true,
     enableIPv6: Boolean = true,
     updateDelayTime: Duration,
-    val token: String
-) : Host(hostname, enableIPv4, enableIPv6, updateDelayTime) {
+    val token: String,
+    networkInterfacesName: List<String>? = null
+) : Host(hostname, enableIPv4, enableIPv6, updateDelayTime, networkInterfacesName) {
 
     /**
      * Duck DNS subdomain name without '.duckdns.org'
@@ -40,11 +42,19 @@ class DuckDnsSubdomain(
 
     override fun performIpUpdate(looping: Boolean) {
 
+        val networkInterfaces = if (networkInterfacesName != null) {
+            NetworkInterface.getNetworkInterfaces().toList().filter {
+                networkInterfacesName.contains(it.name)
+            }
+        } else {
+            NetworkInterface.getNetworkInterfaces().toList()
+        }
+
         do {
             if (enableIPv4)
                 for (i in 0..1024)
                     try {
-                        performUpdateIPv4()
+                        performUpdateIPv4(networkInterfaces)
                         break
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -53,7 +63,7 @@ class DuckDnsSubdomain(
             if (enableIPv6)
                 for (i in 0..1024)
                     try {
-                        performUpdateIPv6()
+                        performUpdateIPv6(networkInterfaces)
                         break
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -78,8 +88,12 @@ class DuckDnsSubdomain(
     /**
      * Performs IP update to IPv4.
      */
-    private fun performUpdateIPv4() {
-        val ipv4Address = getUnicastIPv4Address()?.hostAddressFormatted ?: throw IPv4NotFoundException()
+    private fun performUpdateIPv4(
+        networkInterfaces: List<NetworkInterface> =
+            NetworkInterface.getNetworkInterfaces().toList()
+    ) {
+        val ipv4Address =
+            getUnicastIPv4Address(networkInterfaces)?.hostAddressFormatted ?: throw IPv4NotFoundException()
 
         val url = URL("https://www.duckdns.org/update?domains=$subdomainName&token=$token&ip=$ipv4Address")
         val connection = url.openConnection() as HttpsURLConnection
@@ -93,8 +107,12 @@ class DuckDnsSubdomain(
     /**
      * Performs IP update to IPv6.
      */
-    private fun performUpdateIPv6() {
-        val ipv6Address = getUnicastIPv6Address()?.hostAddressFormatted ?: throw IPv6NotFoundException()
+    private fun performUpdateIPv6(
+        networkInterfaces: List<NetworkInterface> =
+            NetworkInterface.getNetworkInterfaces().toList()
+    ) {
+        val ipv6Address =
+            getUnicastIPv6Address(networkInterfaces)?.hostAddressFormatted ?: throw IPv6NotFoundException()
 
         val url = URL("https://www.duckdns.org/update?domains=$subdomainName&token=$token&ipv6=$ipv6Address")
         val connection = url.openConnection() as HttpsURLConnection

@@ -14,7 +14,8 @@ abstract class Host(
     val hostname: String = "",
     val enableIPv4: Boolean = true,
     val enableIPv6: Boolean = true,
-    val updateDelayTime: Duration
+    val updateDelayTime: Duration,
+    val networkInterfacesName: List<String>? = null
 ) : Serializable {
 
     override fun toString(): String {

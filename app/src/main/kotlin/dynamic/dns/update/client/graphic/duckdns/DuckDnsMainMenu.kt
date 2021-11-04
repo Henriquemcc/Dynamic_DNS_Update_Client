@@ -8,12 +8,12 @@ import java.awt.FlowLayout
 import java.awt.GridLayout
 import javax.swing.*
 
-class DuckDnsHostMainGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : GraphicMenu(previousGraphicMenu) {
+class DuckDnsMainMenu(previousGraphicMenu: GraphicMenu? = null) : GraphicMenu(previousGraphicMenu) {
 
     /**
      * Table model which will show Duck DNS subdomains hosts.
      */
-    private val tableModel: DuckDnsSubdomainTableModel = DuckDnsSubdomainTableModel()
+    private val tableModel: TableModel = TableModel()
 
     /**
      * JTable which will show Duck DNS subdomains hosts.
@@ -47,10 +47,10 @@ class DuckDnsHostMainGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : Gra
      */
     private fun initializeJPanelButtons(): JPanel {
         val jPanel = JPanel(GridLayout(4, 1))
-        jPanel.add(initializeJButtonCreate())
-        jPanel.add(initializeJButtonRetrieve())
-        jPanel.add(initializeJButtonUpdate())
-        jPanel.add(initializeJButtonDelete())
+        jPanel.add(initializeJButtonAdd())
+        jPanel.add(initializeJButtonRefresh())
+        jPanel.add(initializeJButtonModify())
+        jPanel.add(initializeJButtonRemove())
         return jPanel
     }
 
@@ -58,10 +58,10 @@ class DuckDnsHostMainGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : Gra
      * Initializes JButton create, which on pressed, creates a Duck DNS host.
      * @return JButton create.
      */
-    private fun initializeJButtonCreate(): JButton {
-        val jButton = JButton("Create")
+    private fun initializeJButtonAdd(): JButton {
+        val jButton = JButton("Add")
         jButton.addActionListener {
-            DuckDnsCreateHostGraphicMenu(this)
+            nextGraphicMenu = AddHostMenu(this)
             isVisible = false
         }
         return jButton
@@ -71,8 +71,8 @@ class DuckDnsHostMainGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : Gra
      * Initializes JButton retrieve, which on pressed, retrieves Duck DNS hosts.
      * @return JButton retrieve.
      */
-    private fun initializeJButtonRetrieve(): JButton {
-        val jButton = JButton("Retrieve")
+    private fun initializeJButtonRefresh(): JButton {
+        val jButton = JButton("Refresh")
         jButton.addActionListener {
             isVisible = false
             fireTableDataChanged()
@@ -86,12 +86,12 @@ class DuckDnsHostMainGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : Gra
      * Initializes JButton update, which on pressed, updates the selected Duck DNS host.
      * @return JButton update.
      */
-    private fun initializeJButtonUpdate(): JButton {
-        val jButton = JButton("Update")
+    private fun initializeJButtonModify(): JButton {
+        val jButton = JButton("Modify")
         jButton.addActionListener {
             val selectedRow = jTable.selectedRow
             val oldDuckDnsSubdomain = duckDnsHosts[selectedRow]
-            nextGraphicMenu = DuckDnsUpdateHostGraphicMenu(this, oldDuckDnsSubdomain)
+            nextGraphicMenu = ModifyHostMenu(this, oldDuckDnsSubdomain)
             fireTableDataChanged()
             isVisible = false
         }
@@ -102,8 +102,8 @@ class DuckDnsHostMainGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : Gra
      * Initializes JButton delete, which on pressed, deletes the selected Duck DNS host.
      * @return JButton delete.
      */
-    private fun initializeJButtonDelete(): JButton {
-        val jButton = JButton("Delete")
+    private fun initializeJButtonRemove(): JButton {
+        val jButton = JButton("Remove")
         jButton.addActionListener {
             val selectedRow = jTable.selectedRow
             val removedDuckDnsSubdomain = duckDnsHosts[selectedRow]

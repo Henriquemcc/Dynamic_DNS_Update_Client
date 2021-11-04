@@ -5,7 +5,7 @@ import javax.swing.table.AbstractTableModel
 /**
  * Duck DNS subdomain host custom table model.
  */
-class DuckDnsSubdomainTableModel : AbstractTableModel() {
+internal class TableModel : AbstractTableModel() {
 
     /**
      * Retrieves the number of rows on the table.

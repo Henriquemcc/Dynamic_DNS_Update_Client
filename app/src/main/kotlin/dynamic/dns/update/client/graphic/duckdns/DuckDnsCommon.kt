@@ -6,5 +6,5 @@ import dynamic.dns.update.client.model.DuckDnsSubdomain
 /**
  * List of Duck DNS hosts.
  */
-val duckDnsHosts: List<DuckDnsSubdomain>
+internal val duckDnsHosts: List<DuckDnsSubdomain>
     get() = HostsController.filterIsInstance<DuckDnsSubdomain>()

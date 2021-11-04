@@ -3,6 +3,7 @@ package dynamic.dns.update.client.graphic.duckdns
 import dynamic.dns.update.client.controller.HostsController
 import dynamic.dns.update.client.graphic.GraphicMenu
 import dynamic.dns.update.client.graphic.HintJTextField
+import dynamic.dns.update.client.graphic.networkInterface.NetworkInterfaceMainMenu
 import dynamic.dns.update.client.graphic.getDefaultFont
 import dynamic.dns.update.client.model.DuckDnsSubdomain
 import java.awt.Color
@@ -17,7 +18,7 @@ import javax.swing.*
  * Allows the user to create a Duck DNS host on the graphic user interface.
  * @param previousGraphicMenu Previous graphic menu to return after the execution of this menu.
  */
-class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : GraphicMenu(previousGraphicMenu) {
+internal class AddHostMenu(previousGraphicMenu: GraphicMenu? = null) : GraphicMenu(previousGraphicMenu) {
 
     /**
      * Text field which will receive from the user the Duck DNS host's token.
@@ -40,6 +41,7 @@ class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : G
      */
     private val jTextFieldsDelayDuration: HashMap<TimeUnit, JTextField> = initializeJTextFieldsDelayDuration()
 
+    private val allowedNetworkInterfaces: MutableList<String> = mutableListOf()
 
     override val title: String = "Duck DNS create host menu"
 
@@ -195,16 +197,16 @@ class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : G
      * @return JButton add.
      */
     private fun initializeJButtonAdd(): JButton {
-        val jButtonAdd = JButton("Add")
-        jButtonAdd.font = getDefaultFont()
-        jButtonAdd.isEnabled = true
-        jButtonAdd.addActionListener {
+        val jButton = JButton("Add")
+        jButton.font = getDefaultFont()
+        jButton.isEnabled = true
+        jButton.addActionListener {
 
             if (jTextFieldsDelayDuration.all { it.value.text != null }) {
-                val duration = Duration.ofDays(jTextFieldsDelayDuration[TimeUnit.DAYS]!!.text.toLong()) +
-                        Duration.ofHours(jTextFieldsDelayDuration[TimeUnit.HOURS]!!.text.toLong()) +
-                        Duration.ofMinutes(jTextFieldsDelayDuration[TimeUnit.MINUTES]!!.text.toLong()) +
-                        Duration.ofSeconds(jTextFieldsDelayDuration[TimeUnit.SECONDS]!!.text.toLong())
+                val duration = Duration.ofDays((jTextFieldsDelayDuration[TimeUnit.DAYS] ?: return@addActionListener).text.toLong()) +
+                        Duration.ofHours((jTextFieldsDelayDuration[TimeUnit.HOURS] ?: return@addActionListener).text.toLong()) +
+                        Duration.ofMinutes((jTextFieldsDelayDuration[TimeUnit.MINUTES] ?: return@addActionListener).text.toLong()) +
+                        Duration.ofSeconds((jTextFieldsDelayDuration[TimeUnit.SECONDS] ?: return@addActionListener).text.toLong())
 
                 val host = DuckDnsSubdomain(
                     jTextFieldHostname.text,
@@ -215,11 +217,11 @@ class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : G
 
                 HostsController.add(host)
                 jFrame.dispatchEvent(WindowEvent(jFrame, WindowEvent.WINDOW_CLOSING))
-                (previousGraphicMenu as? DuckDnsHostMainGraphicMenu)?.fireTableDataChanged()
+                (previousGraphicMenu as? DuckDnsMainMenu)?.fireTableDataChanged()
             }
 
         }
-        return jButtonAdd
+        return jButton
     }
 
     /**
@@ -227,13 +229,27 @@ class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : G
      * @return Main JPanel.
      */
     private fun initializeJPanel(): JPanel {
-        val jPanel = JPanel(GridLayout(5, 1))
+        val jPanel = JPanel(GridLayout(6, 1))
         jPanel.add(jTextFieldHostname)
         jPanel.add(jTextFieldToken)
         jPanel.add(initializeJPanelIpProtocolsCheckBox())
         jPanel.add(initializeJPanelDelayDuration())
+        jPanel.add(initializeJButtonNetworkInterfaceMenu())
         jPanel.add(initializeJButtonAdd())
         return jPanel
+    }
+
+    private fun initializeJButtonNetworkInterfaceMenu(): JButton {
+        val jButton = JButton("Manage allowed network interfaces' name")
+
+        jButton.font = getDefaultFont()
+        jButton.isEnabled = true
+        jButton.addActionListener{
+            isVisible = false
+            nextGraphicMenu = NetworkInterfaceMainMenu(this, allowedNetworkInterfaces)
+        }
+
+        return jButton
     }
 
     override fun initializeJFrame(): JFrame {

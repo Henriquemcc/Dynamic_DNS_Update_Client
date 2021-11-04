@@ -2,6 +2,7 @@ package dynamic.dns.update.client.graphic.duckdns
 
 import dynamic.dns.update.client.controller.HostsController
 import dynamic.dns.update.client.graphic.GraphicMenu
+import dynamic.dns.update.client.graphic.networkInterface.NetworkInterfaceMainMenu
 import dynamic.dns.update.client.graphic.getDefaultFont
 import dynamic.dns.update.client.model.DuckDnsSubdomain
 import java.awt.Color
@@ -17,7 +18,7 @@ import javax.swing.*
  * @param previousGraphicMenu Previous graphic menu to return after the execution of this menu.
  * @param oldDuckDnsSubdomain Duck DNS subdomain host which will be modified.
  */
-class DuckDnsUpdateHostGraphicMenu(
+internal class ModifyHostMenu(
     previousGraphicMenu: GraphicMenu? = null,
     private val oldDuckDnsSubdomain: DuckDnsSubdomain
 ) : GraphicMenu(previousGraphicMenu) {
@@ -196,11 +197,11 @@ class DuckDnsUpdateHostGraphicMenu(
      * Initializes JButton modify.
      * @return JButton modify.
      */
-    private fun initializeJButtonAdd(): JButton {
-        val jButtonAdd = JButton("Modify")
-        jButtonAdd.font = getDefaultFont()
-        jButtonAdd.isEnabled = true
-        jButtonAdd.addActionListener {
+    private fun initializeJButtonModify(): JButton {
+        val jButton = JButton("Modify")
+        jButton.font = getDefaultFont()
+        jButton.isEnabled = true
+        jButton.addActionListener {
 
             if (jTextFieldsDelayDuration.all { it.value.text != null }) {
                 val duration = Duration.ofDays(jTextFieldsDelayDuration[TimeUnit.DAYS]!!.text.toLong()) +
@@ -212,17 +213,17 @@ class DuckDnsUpdateHostGraphicMenu(
                     jTextFieldHostname.text,
                     jCheckBoxIpProtocols[StandardProtocolFamily.INET]?.isSelected == true,
                     jCheckBoxIpProtocols[StandardProtocolFamily.INET6]?.isSelected == true, duration,
-                    jTextFieldToken.text
+                    jTextFieldToken.text, oldDuckDnsSubdomain.networkInterfacesName
                 )
 
                 HostsController.remove(oldDuckDnsSubdomain)
                 HostsController.add(host)
                 jFrame.dispatchEvent(WindowEvent(jFrame, WindowEvent.WINDOW_CLOSING))
-                (previousGraphicMenu as? DuckDnsHostMainGraphicMenu)?.fireTableDataChanged()
+                (previousGraphicMenu as? DuckDnsMainMenu)?.fireTableDataChanged()
             }
 
         }
-        return jButtonAdd
+        return jButton
     }
 
     /**
@@ -230,13 +231,27 @@ class DuckDnsUpdateHostGraphicMenu(
      * @return Main JPanel.
      */
     private fun initializeJPanel(): JPanel {
-        val jPanel = JPanel(GridLayout(5, 1))
+        val jPanel = JPanel(GridLayout(6, 1))
         jPanel.add(jTextFieldHostname)
         jPanel.add(jTextFieldToken)
         jPanel.add(initializeJPanelIpProtocolsCheckBox())
         jPanel.add(initializeJPanelDelayDuration())
-        jPanel.add(initializeJButtonAdd())
+        jPanel.add(initializeJButtonNetworkInterfaceMenu())
+        jPanel.add(initializeJButtonModify())
         return jPanel
+    }
+
+    private fun initializeJButtonNetworkInterfaceMenu(): JButton {
+        val jButton = JButton("Manage allowed network interfaces' name")
+
+        jButton.font = getDefaultFont()
+        jButton.isEnabled = true
+        jButton.addActionListener{
+            isVisible = false
+            nextGraphicMenu = NetworkInterfaceMainMenu(this, oldDuckDnsSubdomain.networkInterfacesName)
+        }
+
+        return jButton
     }
 
     override fun initializeJFrame(): JFrame {

@@ -22,8 +22,21 @@ class DuckDnsSubdomain(
     val token: String
 ) : Host(hostname, enableIPv4, enableIPv6, updateDelayTime) {
 
+    /**
+     * Duck DNS subdomain name without '.duckdns.org'
+     */
     private val subdomainName: String
-        get() = hostname.lowercase().substring(0, hostname.lowercase().lastIndexOf(".duckdns.org"))
+        get() {
+
+            var duckDnsSubdomainName = hostname.lowercase()
+            val positionDotDuckDnsDotOrg = duckDnsSubdomainName.lastIndexOf(".duckdns.org")
+
+            if (positionDotDuckDnsDotOrg >= 0) {
+                duckDnsSubdomainName = duckDnsSubdomainName.substring(0, positionDotDuckDnsDotOrg)
+            }
+
+            return duckDnsSubdomainName
+        }
 
     override fun performIpUpdate(looping: Boolean) {
 

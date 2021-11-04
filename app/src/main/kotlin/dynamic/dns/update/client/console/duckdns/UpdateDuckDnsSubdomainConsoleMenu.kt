@@ -10,6 +10,10 @@ import dynamic.dns.update.client.controller.HostsController
 import dynamic.dns.update.client.model.DuckDnsSubdomain
 import java.time.Duration
 
+/**
+ * Console menu which allows the user to modify a Duck DNS subdomain host.
+ * @param oldHost The duck dns subdomain host which will be modified.
+ */
 class UpdateDuckDnsSubdomainConsoleMenu(private val oldHost: DuckDnsSubdomain) {
 
     private var hostname: String = oldHost.hostname
@@ -21,6 +25,9 @@ class UpdateDuckDnsSubdomainConsoleMenu(private val oldHost: DuckDnsSubdomain) {
     private var updateDelayTimeSeconds: Long = oldHost.updateDelayTime.seconds % 60
     private var token: String = oldHost.token
 
+    /**
+     * Initialization block
+     */
     init {
         DynamicConsoleMenu("Update Duck DNS subdomain menu") {
             return@DynamicConsoleMenu listOf(

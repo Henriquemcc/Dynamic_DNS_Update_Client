@@ -6,6 +6,10 @@ import javax.swing.JButton
 import javax.swing.JFrame
 import javax.swing.JPanel
 
+/**
+ * Main graphical user interface menu.
+ * @param previousGraphicMenu Previous graphic menu to return after the execution of this menu.
+ */
 class MainGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : GraphicMenu(previousGraphicMenu) {
     override val jFrame: JFrame = initializeJFrame()
     override val title: String = "Main menu"
@@ -17,16 +21,24 @@ class MainGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : GraphicMenu(pr
         return jFrame
     }
 
+    /**
+     * Initializes the main JPanel.
+     * @return Main JPanel.
+     */
     private fun initializeJPanel(): JPanel {
         val jPanel = JPanel(GridLayout(4, 1))
         jPanel.add(initializeJButtonHostMenu())
-        jPanel.add(initializeJButtonPerformHostCleaning())
-        jPanel.add(initializeJButtonPerformHostUpdate())
-        jPanel.add(initializeJButtonPerformHostUpdateInInfiniteLooping())
+        jPanel.add(initializeJButtonPerformHostIpCleaning())
+        jPanel.add(initializeJButtonPerformHostIpUpdate())
+        jPanel.add(initializeJButtonPerformHostIpUpdateInInfiniteLooping())
         return jPanel
     }
 
-    private fun initializeJButtonPerformHostCleaning(): JButton {
+    /**
+     * Initializes the JButton perform host ip cleaning.
+     * @return JButton perform host ip cleaning initialized.
+     */
+    private fun initializeJButtonPerformHostIpCleaning(): JButton {
         val jButton = JButton("Perform host IP cleaning")
         jButton.addActionListener {
             isVisible = false
@@ -42,6 +54,10 @@ class MainGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : GraphicMenu(pr
         return jButton
     }
 
+    /**
+     * Initializes JButton host menu.
+     * @return JButton host menu initialized.
+     */
     private fun initializeJButtonHostMenu(): JButton {
         val jButton = JButton("Host menu")
         jButton.addActionListener {
@@ -51,7 +67,11 @@ class MainGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : GraphicMenu(pr
         return jButton
     }
 
-    private fun initializeJButtonPerformHostUpdate(): JButton {
+    /**
+     * Initializes JButton perform host IP update.
+     * @return JButton perform host IP update.
+     */
+    private fun initializeJButtonPerformHostIpUpdate(): JButton {
         val jButton = JButton("Perform host IP update")
         jButton.addActionListener {
             isVisible = false
@@ -67,7 +87,11 @@ class MainGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : GraphicMenu(pr
         return jButton
     }
 
-    private fun initializeJButtonPerformHostUpdateInInfiniteLooping(): JButton {
+    /**
+     * Initializes JButton perform host IP update in infinite looping.
+     * @return JButton perform host IP update in infinite looping.
+     */
+    private fun initializeJButtonPerformHostIpUpdateInInfiniteLooping(): JButton {
         val jButton = JButton("Perform host IP update in infinite looping")
         jButton.addActionListener {
             isVisible = false

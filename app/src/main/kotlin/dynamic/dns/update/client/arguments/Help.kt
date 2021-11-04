@@ -2,8 +2,11 @@ package dynamic.dns.update.client.arguments
 
 import java.io.File
 
+/**
+ * Print the main help menu.
+ */
 internal fun help() {
-    val jarFileName = File(object{}.javaClass.protectionDomain.codeSource.location.path).name
+    val jarFileName = File(object {}.javaClass.protectionDomain.codeSource.location.path).name
     val stringBuilder = StringBuilder()
     stringBuilder.appendLine("Usage: java -jar $jarFileName COMMAND [OPTIONS]")
     stringBuilder.appendLine()
@@ -53,6 +56,10 @@ internal fun help() {
     println(stringBuilder.toString())
 }
 
+/**
+ * Prints tabs according to the length of the string before it.
+ * @param lengthStringBeforeIt The length of the string before the tabs.
+ */
 fun printTab(lengthStringBeforeIt: Int): String {
 
     var resultingSpace = 81 - lengthStringBeforeIt

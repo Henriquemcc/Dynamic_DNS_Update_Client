@@ -10,6 +10,10 @@ import java.net.URL
 import java.time.Duration
 import javax.net.ssl.HttpsURLConnection
 
+/**
+ * A Duck DNS subdomain host.
+ * @param token Duck DNS authentication token.
+ */
 class DuckDnsSubdomain(
     hostname: String = "",
     enableIPv4: Boolean = true,
@@ -21,7 +25,7 @@ class DuckDnsSubdomain(
     private val subdomainName: String
         get() = hostname.lowercase().substring(0, hostname.lowercase().lastIndexOf(".duckdns.org"))
 
-    override fun performUpdate(looping: Boolean) {
+    override fun performIpUpdate(looping: Boolean) {
 
         do {
             if (enableIPv4)
@@ -48,7 +52,7 @@ class DuckDnsSubdomain(
         } while (looping)
     }
 
-    override fun performCleaning() {
+    override fun performIpCleaning() {
         val url = URL("https://www.duckdns.org/update?domains=$subdomainName&token=$token&clear=true")
         val connection = url.openConnection() as HttpsURLConnection
         val bufferedReader = BufferedReader(InputStreamReader(connection.inputStream))
@@ -58,6 +62,9 @@ class DuckDnsSubdomain(
         }
     }
 
+    /**
+     * Performs IP update to IPv4.
+     */
     private fun performUpdateIPv4() {
         val ipv4Address = getUnicastIPv4Address()?.hostAddressFormatted ?: throw IPv4NotFoundException()
 
@@ -70,6 +77,9 @@ class DuckDnsSubdomain(
         }
     }
 
+    /**
+     * Performs IP update to IPv6.
+     */
     private fun performUpdateIPv6() {
         val ipv6Address = getUnicastIPv6Address()?.hostAddressFormatted ?: throw IPv6NotFoundException()
 

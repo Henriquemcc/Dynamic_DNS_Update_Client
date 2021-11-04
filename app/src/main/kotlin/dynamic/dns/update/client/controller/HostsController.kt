@@ -7,15 +7,24 @@ import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 import java.nio.file.Paths
 
+/**
+ * Object which controls the data persistence of hosts.
+ */
 object HostsController : MutableList<Host> {
 
     private val file = Paths.get(System.getProperty("user.home"), ".dynamic_dns_ip_updater", "hosts").toFile()
     private var list = ArrayList<Host>()
 
+    /**
+     * Initialization block
+     */
     init {
         loadFromFile()
     }
 
+    /**
+     * Creates the file if it does not exist.
+     */
     private fun createFile() {
         try {
             if (!file.parentFile.exists()) {
@@ -29,6 +38,9 @@ object HostsController : MutableList<Host> {
         }
     }
 
+    /**
+     * Save data to file.
+     */
     private fun saveToFile() {
         createFile()
 
@@ -48,6 +60,9 @@ object HostsController : MutableList<Host> {
 
     }
 
+    /**
+     * Load data from file.
+     */
     private fun loadFromFile() {
         var fileInputStream: FileInputStream? = null
         var objectInputStream: ObjectInputStream? = null
@@ -68,12 +83,17 @@ object HostsController : MutableList<Host> {
         }
     }
 
+    /**
+     * Retrieves the number of hosts stored.
+     */
     override val size: Int
         get() = list.size
+
 
     override fun contains(element: Host): Boolean {
         return list.contains(element)
     }
+
 
     override fun containsAll(elements: Collection<Host>): Boolean {
         return list.containsAll(elements)
@@ -188,22 +208,29 @@ object HostsController : MutableList<Host> {
         return list.subList(fromIndex, toIndex)
     }
 
+    /**
+     * Performs IP address update on all hosts on the list.
+     * @param looping To run the update in infinite looping.
+     */
     fun performIpUpdate(looping: Boolean = false) {
         for (host in list) {
             val thread = object : Thread() {
                 override fun run() {
-                    host.performUpdate(looping)
+                    host.performIpUpdate(looping)
                 }
             }
             thread.start()
         }
     }
 
+    /**
+     * Performs IP address cleaning on all hosts on the list.
+     */
     fun performIpCleaning() {
         for (host in list) {
             val thread = object : Thread() {
                 override fun run() {
-                    host.performCleaning()
+                    host.performIpCleaning()
                 }
             }
             thread.start()

@@ -13,9 +13,42 @@ import java.time.Duration
 import java.util.concurrent.TimeUnit
 import javax.swing.*
 
+/**
+ * Allows the user to create a Duck DNS host on the graphic user interface.
+ * @param previousGraphicMenu Previous graphic menu to return after the execution of this menu.
+ */
 class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : GraphicMenu(previousGraphicMenu) {
 
-    /// Token
+    /**
+     * Text field which will receive from the user the Duck DNS host's token.
+     */
+    private val jTextFieldToken: JTextField = initializeJTextFieldToken()
+
+    /**
+     * Text field which will receive from the user the Duck DNS host's hostname.
+     */
+    private var jTextFieldHostname: JTextField = initializeJTextFieldHostname()
+
+    /**
+     * Hash map of checkboxes which will receive from the user whether to enable or disable the IPs protocols.
+     */
+    private val jCheckBoxIpProtocols: HashMap<StandardProtocolFamily, JCheckBox> =
+        initializeJCheckBoxsEnableIpProtocol()
+
+    /**
+     * Hash map of text fields which will store delay duration.
+     */
+    private val jTextFieldsDelayDuration: HashMap<TimeUnit, JTextField> = initializeJTextFieldsDelayDuration()
+
+
+    override val title: String = "Duck DNS create host menu"
+
+    override val jFrame: JFrame = initializeJFrame()
+
+    /**
+     * Initializes JTextField which will receive from the user the token.
+     * @return JTextField which will receive the token.
+     */
     private fun initializeJTextFieldToken(): JTextField {
         val jTextField = HintJTextField("Token")
         jTextField.font = getDefaultFont()
@@ -23,33 +56,41 @@ class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : G
         return jTextField
     }
 
-    private val jTextFieldToken: JTextField = initializeJTextFieldToken()
-    /// End: Token
-
-    /// Host
-    private fun initializeJTextFieldHost(): JTextField {
-        val jTextField = HintJTextField("Host")
+    /**
+     * Initializes JTextField which will receive from the user the hostname.
+     * @return JTextField which will receive the hostname.
+     */
+    private fun initializeJTextFieldHostname(): JTextField {
+        val jTextField = HintJTextField("Hostname")
         jTextField.font = getDefaultFont()
         jTextField.isEditable = true
         return jTextField
     }
 
-    private var jTextFieldHost: JTextField = initializeJTextFieldHost()
-    /// End: Host
-
-    /// Enable IP protocol
+    /**
+     * Initializes JCheckBox which will receive from the user whether is to enable IPv4.
+     * @return JCheckBox which will receive whether is to enable IPv4.
+     */
     private fun initializeJCheckBoxEnableIPv4(): JCheckBox {
         val jCheckBox = JCheckBox("Enable IPv4", true)
         jCheckBox.font = getDefaultFont()
         return jCheckBox
     }
 
+    /**
+     * Initializes JCheckBox which will receive from the user whether is to enable IPv6.
+     * @return JCheckBox which will receive whether is to enable IPv6.
+     */
     private fun initializeJCheckBoxEnableIPv6(): JCheckBox {
         val jCheckBox = JCheckBox("Enable IPv6", true)
         jCheckBox.font = getDefaultFont()
         return jCheckBox
     }
 
+    /**
+     * Initializes the hash map which will store JCheckBox(es) enable IPv4 and enable IPv6.
+     * @return Hash map with JCheckBoxes enable IPv4 and enable IPv6.
+     */
     private fun initializeJCheckBoxsEnableIpProtocol(): HashMap<StandardProtocolFamily, JCheckBox> {
         val jCheckBox = HashMap<StandardProtocolFamily, JCheckBox>()
         jCheckBox[StandardProtocolFamily.INET] = initializeJCheckBoxEnableIPv4()
@@ -57,11 +98,10 @@ class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : G
         return jCheckBox
     }
 
-    private val jCheckBoxIpProtocols: HashMap<StandardProtocolFamily, JCheckBox> =
-        initializeJCheckBoxsEnableIpProtocol()
-    /// End: Enable IP protocol
-
-    /// Duration
+    /**
+     * Initializes JTextField delay time in days.
+     * @return JTextField which will receive the number of days as a delay time.
+     */
     private fun initializeJTextFieldDelayDurationDays(): JTextField {
         val jTextField = HintJTextField("Days")
         jTextField.font = getDefaultFont()
@@ -69,6 +109,10 @@ class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : G
         return jTextField
     }
 
+    /**
+     * Initializes JTextField delay time in hours.
+     * @return JTextField which will receive the number of hours as a delay time.
+     */
     private fun initializeJTextFieldDelayDurationHours(): JTextField {
         val jTextField = HintJTextField("Hours")
         jTextField.font = getDefaultFont()
@@ -76,6 +120,10 @@ class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : G
         return jTextField
     }
 
+    /**
+     * Initializes JTextField delay time in minutes.
+     * @return JTextField which will receive the number of minutes as a delay time.
+     */
     private fun initializeJTextFieldDelayDurationMinutes(): JTextField {
         val jTextField = HintJTextField("Minutes")
         jTextField.font = getDefaultFont()
@@ -83,6 +131,10 @@ class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : G
         return jTextField
     }
 
+    /**
+     * Initializes JTextField delay time in seconds.
+     * @return JTextField which will receive the number of seconds as a delay time.
+     */
     private fun initializeJTextFieldDelayDurationSeconds(): JTextField {
         val jTextField = HintJTextField("Seconds")
         jTextField.font = getDefaultFont()
@@ -90,7 +142,11 @@ class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : G
         return jTextField
     }
 
-    private fun initializeJTextFieldsDuration(): HashMap<TimeUnit, JTextField> {
+    /**
+     * Initializes the hash map which will store delay time JTextField(s).
+     * @return Hash map which will store delay time JTextField(s).
+     */
+    private fun initializeJTextFieldsDelayDuration(): HashMap<TimeUnit, JTextField> {
         val jTextFields = HashMap<TimeUnit, JTextField>()
         jTextFields[TimeUnit.DAYS] = initializeJTextFieldDelayDurationDays()
         jTextFields[TimeUnit.HOURS] = initializeJTextFieldDelayDurationHours()
@@ -99,33 +155,33 @@ class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : G
         return jTextFields
     }
 
-    private val jTextFieldsDuration: HashMap<TimeUnit, JTextField> = initializeJTextFieldsDuration()
-    /// End: Duration
-
-    /// Title
-    override val title: String = "Duck DNS create host menu"
-    /// End: Title
-
-    /// JFrame
-    //// JPanel
-    ///// JPanel Delay Duration
-    private fun initializeJTextFieldDelayDurationJLabel(): JLabel {
+    /**
+     * Initializes delay duration title JLabel,
+     * @return JLabel which will have delay duration title.
+     */
+    private fun initializeDelayDurationJLabel(): JLabel {
         return JLabel("Delay duration")
     }
 
+    /**
+     * Initializes JPanel which will have the graphic components of delay duration time.
+     * @return JPanel with the graphic components of delay duration time.
+     */
     private fun initializeJPanelDelayDuration(): JPanel {
         val jPanelDelayDuration = JPanel(GridLayout(1, 4))
         jPanelDelayDuration.border = BorderFactory.createLineBorder(Color.black)
-        jPanelDelayDuration.add(initializeJTextFieldDelayDurationJLabel())
-        jPanelDelayDuration.add(jTextFieldsDuration[TimeUnit.DAYS])
-        jPanelDelayDuration.add(jTextFieldsDuration[TimeUnit.HOURS])
-        jPanelDelayDuration.add(jTextFieldsDuration[TimeUnit.MINUTES])
-        jPanelDelayDuration.add(jTextFieldsDuration[TimeUnit.SECONDS])
+        jPanelDelayDuration.add(initializeDelayDurationJLabel())
+        jPanelDelayDuration.add(jTextFieldsDelayDuration[TimeUnit.DAYS])
+        jPanelDelayDuration.add(jTextFieldsDelayDuration[TimeUnit.HOURS])
+        jPanelDelayDuration.add(jTextFieldsDelayDuration[TimeUnit.MINUTES])
+        jPanelDelayDuration.add(jTextFieldsDelayDuration[TimeUnit.SECONDS])
         return jPanelDelayDuration
     }
-    ///// End: JPanel Delay Duration
 
-    ///// JPanel IP Protocols CheckBox
+    /**
+     * Initializes JPanel which will have the graphic components of enable / disable IP protocols.
+     * @return JPanel with the graphic components of enable / disable IP protocols.
+     */
     private fun initializeJPanelIpProtocolsCheckBox(): JPanel {
         val jPanelIPsCheckBox = JPanel(GridLayout(1, 2))
         jPanelIPsCheckBox.border = BorderFactory.createLineBorder(Color.black)
@@ -133,23 +189,25 @@ class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : G
         jPanelIPsCheckBox.add(jCheckBoxIpProtocols[StandardProtocolFamily.INET6])
         return jPanelIPsCheckBox
     }
-    ///// End: JPanel IP Protocols CheckBox
 
-    ///// JButton
+    /**
+     * Initializes JButton add.
+     * @return JButton add.
+     */
     private fun initializeJButtonAdd(): JButton {
         val jButtonAdd = JButton("Add")
         jButtonAdd.font = getDefaultFont()
         jButtonAdd.isEnabled = true
         jButtonAdd.addActionListener {
 
-            if (jTextFieldsDuration.all { it.value.text != null }) {
-                val duration = Duration.ofDays(jTextFieldsDuration[TimeUnit.DAYS]!!.text.toLong()) +
-                        Duration.ofHours(jTextFieldsDuration[TimeUnit.HOURS]!!.text.toLong()) +
-                        Duration.ofMinutes(jTextFieldsDuration[TimeUnit.MINUTES]!!.text.toLong()) +
-                        Duration.ofSeconds(jTextFieldsDuration[TimeUnit.SECONDS]!!.text.toLong())
+            if (jTextFieldsDelayDuration.all { it.value.text != null }) {
+                val duration = Duration.ofDays(jTextFieldsDelayDuration[TimeUnit.DAYS]!!.text.toLong()) +
+                        Duration.ofHours(jTextFieldsDelayDuration[TimeUnit.HOURS]!!.text.toLong()) +
+                        Duration.ofMinutes(jTextFieldsDelayDuration[TimeUnit.MINUTES]!!.text.toLong()) +
+                        Duration.ofSeconds(jTextFieldsDelayDuration[TimeUnit.SECONDS]!!.text.toLong())
 
                 val host = DuckDnsSubdomain(
-                    jTextFieldHost.text,
+                    jTextFieldHostname.text,
                     jCheckBoxIpProtocols[StandardProtocolFamily.INET]?.isSelected == true,
                     jCheckBoxIpProtocols[StandardProtocolFamily.INET6]?.isSelected == true, duration,
                     jTextFieldToken.text
@@ -163,18 +221,20 @@ class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : G
         }
         return jButtonAdd
     }
-    ///// End: JButton
 
+    /**
+     * Initializes main JPanel.
+     * @return Main JPanel.
+     */
     private fun initializeJPanel(): JPanel {
         val jPanel = JPanel(GridLayout(5, 1))
-        jPanel.add(jTextFieldHost)
+        jPanel.add(jTextFieldHostname)
         jPanel.add(jTextFieldToken)
         jPanel.add(initializeJPanelIpProtocolsCheckBox())
         jPanel.add(initializeJPanelDelayDuration())
         jPanel.add(initializeJButtonAdd())
         return jPanel
     }
-    //// End: JPanel
 
     override fun initializeJFrame(): JFrame {
         val jFrame = super.initializeJFrame()
@@ -183,6 +243,4 @@ class DuckDnsCreateHostGraphicMenu(previousGraphicMenu: GraphicMenu? = null) : G
         return jFrame
     }
 
-    override val jFrame = initializeJFrame()
-    /// End: JFrame
 }

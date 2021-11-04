@@ -6,6 +6,10 @@ import java.net.Inet4Address
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
+/**
+ * Retrieves an unicast IPv4 address from 'checkip.amazonws.com' server.
+ * @return An unicast IPv4 address.
+ */
 fun getUnicastIPv4AddressFromServer(): Inet4Address? {
     val urlCheckIpAws = URL("https://checkip.amazonaws.com")
     val urlConnection = urlCheckIpAws.openConnection() as HttpsURLConnection

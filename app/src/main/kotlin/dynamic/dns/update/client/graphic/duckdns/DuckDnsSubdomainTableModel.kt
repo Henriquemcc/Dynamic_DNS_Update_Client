@@ -2,12 +2,29 @@ package dynamic.dns.update.client.graphic.duckdns
 
 import javax.swing.table.AbstractTableModel
 
+/**
+ * Duck DNS subdomain host custom table model.
+ */
 class DuckDnsSubdomainTableModel : AbstractTableModel() {
 
+    /**
+     * Retrieves the number of rows on the table.
+     * @return Number of rows on the table.
+     */
     override fun getRowCount(): Int = duckDnsHosts.size
 
+    /**
+     * Retrieves the number of columns on the table.
+     * @return Number of columns on the table.
+     */
     override fun getColumnCount(): Int = 5
 
+    /**
+     * Retrieves a value of a selected pair of column and row.
+     * @param p0 Selected row.
+     * @param p1 Selected column.
+     * @return Value of a selected pair of column and row.
+     */
     override fun getValueAt(p0: Int, p1: Int): Any {
         val duckDnsSubdomain = duckDnsHosts[p0]
         return when (p1) {
@@ -20,6 +37,12 @@ class DuckDnsSubdomainTableModel : AbstractTableModel() {
         }
     }
 
+    /**
+     * Retrieves whether a cell is editable.
+     * @param rowIndex Index of the row.
+     * @param columnIndex Index of the column.
+     * @return Boolean value of whether the cell is editable.
+     */
     override fun isCellEditable(rowIndex: Int, columnIndex: Int): Boolean = false
 
     override fun getColumnName(column: Int): String {

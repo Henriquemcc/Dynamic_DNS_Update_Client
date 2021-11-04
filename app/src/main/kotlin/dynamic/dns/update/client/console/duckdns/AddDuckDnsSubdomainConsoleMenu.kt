@@ -9,6 +9,9 @@ import dynamic.dns.update.client.controller.HostsController
 import dynamic.dns.update.client.model.DuckDnsSubdomain
 import java.time.Duration
 
+/**
+ * Console menu which allows the user to add a Duck DNS subdomain host.
+ */
 class AddDuckDnsSubdomainConsoleMenu {
 
     private var hostname: String = ""
@@ -20,6 +23,9 @@ class AddDuckDnsSubdomainConsoleMenu {
     private var updateDelayTimeSeconds: Long = 0
     private var token: String = ""
 
+    /**
+     * Initialization block
+     */
     init {
         DynamicConsoleMenu("Add Duck DNS subdomain menu") {
             return@DynamicConsoleMenu listOf(

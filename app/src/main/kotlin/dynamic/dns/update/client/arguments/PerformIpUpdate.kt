@@ -3,27 +3,34 @@ package dynamic.dns.update.client.arguments
 import dynamic.dns.update.client.controller.HostsController
 import java.io.File
 
+/**
+ * Process 'perform-ip-update' command line arguments.
+ * @param args Command line arguments.
+ */
 internal fun performIpUpdate(args: List<String>) {
 
     if (args.isNotEmpty()) {
         when (args[0].lowercase()) {
-            "--infinite-looping" -> {HostsController.performIpUpdate(true)}
-            "-i" -> {HostsController.performIpUpdate(true)}
+            "--infinite-looping" -> {
+                HostsController.performIpUpdate(true)
+            }
+            "-i" -> {
+                HostsController.performIpUpdate(true)
+            }
             "-h" -> performIpUpdateHelp()
             "--help" -> performIpUpdateHelp()
         }
-    }
-    else
-    {
+    } else {
         HostsController.performIpUpdate(false)
     }
 
-
 }
 
-private fun performIpUpdateHelp()
-{
-    val jarFileName = File(object{}.javaClass.protectionDomain.codeSource.location.path).name
+/**
+ * Print the 'perform-ip-update --help' menu
+ */
+private fun performIpUpdateHelp() {
+    val jarFileName = File(object {}.javaClass.protectionDomain.codeSource.location.path).name
     val stringBuilder = StringBuilder()
 
     stringBuilder.appendLine("Usage: java -jar $jarFileName perform-ip-update [OPTIONS]")

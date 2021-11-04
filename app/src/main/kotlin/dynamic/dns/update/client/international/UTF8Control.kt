@@ -5,7 +5,10 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.util.*
 
-val UTF8ResourceBundleControl = object : ResourceBundle.Control() {
+/**
+ * UTF-8 Resource Bundle control object which will convert a resource bundle string to UTF-8.
+ */
+val UTF8ResourceBundleControl: ResourceBundle.Control = object : ResourceBundle.Control() {
     override fun newBundle(
         baseName: String,
         locale: Locale,

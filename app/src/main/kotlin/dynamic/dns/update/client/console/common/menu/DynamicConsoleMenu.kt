@@ -3,6 +3,13 @@ package dynamic.dns.update.client.console.common.menu
 import dynamic.dns.update.client.console.common.myio.printHeader
 import dynamic.dns.update.client.console.common.myio.readInteger
 
+/**
+ * A console menu which it's message will change during the execution.
+ * @param title Menu title.
+ * @param optionsText Text which will introduce the options available.
+ * @param exitText Text which will display the exit option.
+ * @param getOptions Anonymous function which will get console menu options.
+ */
 class DynamicConsoleMenu(
     title: String? = null,
     private val optionsText: ConsoleText = ConsoleText("Options: "),
@@ -10,10 +17,22 @@ class DynamicConsoleMenu(
     val getOptions: () -> List<ConsoleOption>
 ) : ConsoleMenu() {
 
+    /**
+     * Retrieves console buttons from console options.
+     * @return List of console buttons.
+     */
     private fun getButtons(): List<ConsoleButton> = getOptions().filterIsInstance<ConsoleButton>()
 
+    /**
+     * Retrieves the number of buttons from the console buttons.
+     * @return Number of buttons.
+     */
     private fun getNumberOfButtons(): Int = getButtons().size
 
+    /**
+     * Creates a message string.
+     * @return Message string.
+     */
     private fun getMessage(): String {
         val stringBuilder = StringBuilder()
         stringBuilder.appendLine(optionsText.text)
@@ -34,8 +53,15 @@ class DynamicConsoleMenu(
         return stringBuilder.toString()
     }
 
+    /**
+     * Retrieves user input option.
+     * @return Option selected by the user.
+     */
     private fun getInput(): Int = readInteger(getMessage(), 0..getNumberOfButtons())
 
+    /**
+     * Initializer block
+     */
     init {
 
         var selectedButton = -1

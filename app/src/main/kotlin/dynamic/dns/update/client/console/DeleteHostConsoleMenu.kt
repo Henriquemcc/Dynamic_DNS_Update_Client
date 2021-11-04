@@ -6,7 +6,14 @@ import dynamic.dns.update.client.console.common.myio.readInteger
 import dynamic.dns.update.client.console.common.myio.readString
 import dynamic.dns.update.client.controller.HostsController
 
+/**
+ * Console menu which allows the user to delete a host.
+ */
 class DeleteHostConsoleMenu {
+
+    /**
+     * Initialization block.
+     */
     init {
         StaticConsoleMenu("Delete host console menu", listOf(
             ConsoleButton("List hosts") {

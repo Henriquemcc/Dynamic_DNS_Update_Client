@@ -4,8 +4,14 @@ import dynamic.dns.update.client.console.common.menu.ConsoleButton
 import dynamic.dns.update.client.console.common.menu.StaticConsoleMenu
 import dynamic.dns.update.client.controller.HostsController
 
+/**
+ * Console menu which allows the user to select what they want to do.
+ */
 class MainConsoleMenu {
 
+    /**
+     * Initialization block.
+     */
     init {
         StaticConsoleMenu(
             "Main menu", listOf(

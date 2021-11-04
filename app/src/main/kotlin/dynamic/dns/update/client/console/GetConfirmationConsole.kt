@@ -2,6 +2,11 @@ package dynamic.dns.update.client.console
 
 import dynamic.dns.update.client.console.common.myio.readString
 
+/**
+ * Retrieves from the user the confirmation.
+ * @param command Command which will instruct the user what to confirm.
+ * @return The user confirmation.
+ */
 fun getConfirmationConsole(command: String = ""): Boolean {
 
     val message = StringBuilder()

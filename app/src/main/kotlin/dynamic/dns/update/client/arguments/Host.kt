@@ -5,6 +5,10 @@ import dynamic.dns.update.client.model.DuckDnsSubdomain
 import java.io.File
 import java.time.Duration
 
+/**
+ * Process host command line arguments.
+ * @param args Command line arguments.
+ */
 internal fun host(args: List<String>) {
     if (args.isNotEmpty()) {
         when (args[0].lowercase()) {
@@ -17,6 +21,9 @@ internal fun host(args: List<String>) {
     }
 }
 
+/**
+ * Print the 'host --help' menu.
+ */
 private fun hostHelp() {
     val jarFileName = File(object {}.javaClass.protectionDomain.codeSource.location.path).name
     val stringBuilder = StringBuilder()
@@ -51,6 +58,10 @@ private fun hostHelp() {
     println(stringBuilder.toString())
 }
 
+/**
+ * Process 'host list' command line.
+ * @param args Command line arguments.
+ */
 private fun listHost(args: List<String>) {
     if (args.isEmpty() || args[0].lowercase() == "--sort-by-index") {
         var index = 0
@@ -65,8 +76,11 @@ private fun listHost(args: List<String>) {
     }
 }
 
-private fun addHost(args: List<String>)
-{
+/**
+ * Process 'host add' command line arguments.
+ * @param args Command line arguments.
+ */
+private fun addHost(args: List<String>) {
     if (args.isNotEmpty()) {
         when (args[0].lowercase()) {
             "--duckdns" -> addDuckDnsHost(args - args[0])
@@ -76,6 +90,9 @@ private fun addHost(args: List<String>)
     }
 }
 
+/**
+ * Print the 'host add' help menu.
+ */
 private fun addHostHelp() {
     val jarFileName = File(object {}.javaClass.protectionDomain.codeSource.location.path).name
     val stringBuilder = StringBuilder()
@@ -99,6 +116,10 @@ private fun addHostHelp() {
     println(stringBuilder.toString())
 }
 
+/**
+ * Process the 'host remove' command line arguments.
+ * @param args Command line arguments.
+ */
 private fun removeHost(args: List<String>) {
     if (args.isNotEmpty()) {
         when (args[0].lowercase()) {
@@ -110,6 +131,9 @@ private fun removeHost(args: List<String>) {
     }
 }
 
+/**
+ * Print the 'host remove --help' menu.
+ */
 private fun removeHostHelp() {
 
     val jarFileName = File(object {}.javaClass.protectionDomain.codeSource.location.path).name
@@ -140,12 +164,20 @@ private fun removeHostHelp() {
 
 }
 
+/**
+ * Process the 'host remove' command line arguments.
+ * @param args Command line arguments.
+ */
 private fun removeHostByIndex(args: List<String>) {
     if (args.isNotEmpty()) {
         HostsController.removeAt(args[0].toInt())
     }
 }
 
+/**
+ * Process the 'host remove --hostname' command line arguments.
+ * @param args Command line arguments.
+ */
 private fun removeHostByHostname(args: List<String>) {
     if (args.isNotEmpty()) {
         val hostname = args[0]
@@ -155,6 +187,9 @@ private fun removeHostByHostname(args: List<String>) {
     }
 }
 
+/**
+ * Duck DNS enum type tags.
+ */
 private enum class TagType {
     Hostname,
     Token,
@@ -167,16 +202,15 @@ private enum class TagType {
     DisableIPv6
 }
 
-private fun addDuckDnsHost(args: List<String>)
-{
-    if (args.isNotEmpty())
-    {
-        if (args[0].lowercase() == "-h" || args[0].lowercase() == "--help")
-        {
+/**
+ * Process the 'host add --duckDNS' command line arguments.
+ * @param args Command line arguments.
+ */
+private fun addDuckDnsHost(args: List<String>) {
+    if (args.isNotEmpty()) {
+        if (args[0].lowercase() == "-h" || args[0].lowercase() == "--help") {
             addDuckDnsHostHelp()
-        }
-        else
-        {
+        } else {
 
             val tags = mutableMapOf<TagType, Int>()
             tags[TagType.Hostname] = args.map { it.lowercase() }.indexOf("--hostname")
@@ -229,9 +263,11 @@ private fun addDuckDnsHost(args: List<String>)
     }
 }
 
-private fun addDuckDnsHostHelp()
-{
-    val jarFileName = File(object{}.javaClass.protectionDomain.codeSource.location.path).name
+/**
+ * Print the 'host add --duckDNS --help' menu.
+ */
+private fun addDuckDnsHostHelp() {
+    val jarFileName = File(object {}.javaClass.protectionDomain.codeSource.location.path).name
     val stringBuilder = StringBuilder()
 
     stringBuilder.appendLine("Usage: java -jar $jarFileName host add --duckDNS [OPTIONS]")

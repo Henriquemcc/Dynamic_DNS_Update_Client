@@ -4,7 +4,11 @@ import dynamic.dns.update.client.console.MainConsoleMenu
 import dynamic.dns.update.client.controller.HostsController
 import dynamic.dns.update.client.graphic.MainGraphicMenu
 
-fun arguments(args: List<String>) {
+/**
+ * Process command line arguments.
+ * @param args Arguments which will be processed.
+ */
+fun processCommandLineArguments(args: List<String>) {
     if (args.isNotEmpty()) {
         when (args[0].lowercase()) {
             // Help

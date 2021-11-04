@@ -6,7 +6,14 @@ import dynamic.dns.update.client.console.common.myio.readInteger
 import dynamic.dns.update.client.console.common.myio.readString
 import dynamic.dns.update.client.controller.HostsController
 
+/**
+ * Console menu which allows the user to list the hosts.
+ */
 class ListHostsConsoleMenu {
+
+    /**
+     * Initialization block.
+     */
     init {
         StaticConsoleMenu("List hosts menu", listOf(
             ConsoleButton("Print hosts sorted by index") {

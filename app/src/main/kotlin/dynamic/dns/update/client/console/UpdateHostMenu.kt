@@ -4,7 +4,8 @@ import dynamic.dns.update.client.console.common.menu.ConsoleButton
 import dynamic.dns.update.client.console.common.menu.StaticConsoleMenu
 import dynamic.dns.update.client.console.common.myio.readInteger
 import dynamic.dns.update.client.console.common.myio.readString
-import dynamic.dns.update.client.console.duckdns.UpdateDuckDnsSubdomainConsoleMenu
+import dynamic.dns.update.client.console.host.duckdns.updateDuckDnsSubdomainConsoleMenu
+import dynamic.dns.update.client.console.host.listHostsConsoleMenu
 import dynamic.dns.update.client.controller.HostsController
 import dynamic.dns.update.client.model.DuckDnsSubdomain
 import dynamic.dns.update.client.model.Host
@@ -20,7 +21,7 @@ class UpdateHostMenu {
      */
     private fun updateHost(oldHost: Host) {
         if (oldHost is DuckDnsSubdomain) {
-            UpdateDuckDnsSubdomainConsoleMenu(oldHost)
+            updateDuckDnsSubdomainConsoleMenu(oldHost)
         }
     }
 
@@ -30,7 +31,7 @@ class UpdateHostMenu {
     init {
         StaticConsoleMenu("Update host menu", listOf(
             ConsoleButton("List hosts") {
-                ListHostsConsoleMenu()
+                listHostsConsoleMenu()
             },
             ConsoleButton("Select a host to update by it's index") {
                 if (HostsController.isNotEmpty()) {

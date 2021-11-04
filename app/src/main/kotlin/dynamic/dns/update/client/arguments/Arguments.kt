@@ -1,6 +1,6 @@
 package dynamic.dns.update.client.arguments
 
-import dynamic.dns.update.client.console.MainConsoleMenu
+import dynamic.dns.update.client.console.mainConsoleMenu
 import dynamic.dns.update.client.controller.HostsController
 import dynamic.dns.update.client.graphic.MainGraphicMenu
 
@@ -19,7 +19,7 @@ fun processCommandLineArguments(args: List<String>) {
             "--version" -> version()
 
             // Console
-            "console" -> MainConsoleMenu()
+            "console" -> mainConsoleMenu()
 
             // Graphic User Interface
             "graphic-user-interface" -> MainGraphicMenu()

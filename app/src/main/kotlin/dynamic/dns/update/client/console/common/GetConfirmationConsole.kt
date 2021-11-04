@@ -1,4 +1,4 @@
-package dynamic.dns.update.client.console
+package dynamic.dns.update.client.console.common
 
 import dynamic.dns.update.client.console.common.myio.readString
 

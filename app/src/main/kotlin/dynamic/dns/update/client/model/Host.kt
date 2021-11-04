@@ -33,7 +33,7 @@ abstract class Host(
     /**
      * Sleep the current thread.
      */
-    fun sleep() = Thread.sleep(updateDelayTime.toMillis())
+    fun sleep(): Unit = Thread.sleep(updateDelayTime.toMillis())
 
     /**
      * Performs IP update to the current host.

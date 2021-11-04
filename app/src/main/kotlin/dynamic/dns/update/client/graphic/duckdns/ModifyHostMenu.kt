@@ -204,10 +204,18 @@ internal class ModifyHostMenu(
         jButton.addActionListener {
 
             if (jTextFieldsDelayDuration.all { it.value.text != null }) {
-                val duration = Duration.ofDays(jTextFieldsDelayDuration[TimeUnit.DAYS]!!.text.toLong()) +
-                        Duration.ofHours(jTextFieldsDelayDuration[TimeUnit.HOURS]!!.text.toLong()) +
-                        Duration.ofMinutes(jTextFieldsDelayDuration[TimeUnit.MINUTES]!!.text.toLong()) +
-                        Duration.ofSeconds(jTextFieldsDelayDuration[TimeUnit.SECONDS]!!.text.toLong())
+                val duration = Duration.ofDays(
+                    (jTextFieldsDelayDuration[TimeUnit.DAYS] ?: return@addActionListener).text.toLong()
+                ) +
+                        Duration.ofHours(
+                            (jTextFieldsDelayDuration[TimeUnit.HOURS] ?: return@addActionListener).text.toLong()
+                        ) +
+                        Duration.ofMinutes(
+                            (jTextFieldsDelayDuration[TimeUnit.MINUTES] ?: return@addActionListener).text.toLong()
+                        ) +
+                        Duration.ofSeconds(
+                            (jTextFieldsDelayDuration[TimeUnit.SECONDS] ?: return@addActionListener).text.toLong()
+                        )
 
                 val host = DuckDnsSubdomain(
                     jTextFieldHostname.text,
@@ -246,7 +254,7 @@ internal class ModifyHostMenu(
 
         jButton.font = getDefaultFont()
         jButton.isEnabled = true
-        jButton.addActionListener{
+        jButton.addActionListener {
             isVisible = false
             nextGraphicMenu = NetworkInterfaceMainMenu(this, oldDuckDnsSubdomain.networkInterfacesName)
         }

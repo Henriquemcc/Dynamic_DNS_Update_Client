@@ -8,6 +8,10 @@ import java.awt.FlowLayout
 import java.awt.GridLayout
 import javax.swing.*
 
+/**
+ *  * Graphic menu which will allow the user to manage Duck DNS hosts.
+ *  @param previousGraphicMenu Previous graphic menu to return after the execution of this menu.
+ */
 class DuckDnsMainMenu(previousGraphicMenu: GraphicMenu? = null) : GraphicMenu(previousGraphicMenu) {
 
     /**

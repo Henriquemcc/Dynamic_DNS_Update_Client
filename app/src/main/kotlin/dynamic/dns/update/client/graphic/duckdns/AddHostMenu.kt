@@ -203,10 +203,18 @@ internal class AddHostMenu(previousGraphicMenu: GraphicMenu? = null) : GraphicMe
         jButton.addActionListener {
 
             if (jTextFieldsDelayDuration.all { it.value.text != null }) {
-                val duration = Duration.ofDays((jTextFieldsDelayDuration[TimeUnit.DAYS] ?: return@addActionListener).text.toLong()) +
-                        Duration.ofHours((jTextFieldsDelayDuration[TimeUnit.HOURS] ?: return@addActionListener).text.toLong()) +
-                        Duration.ofMinutes((jTextFieldsDelayDuration[TimeUnit.MINUTES] ?: return@addActionListener).text.toLong()) +
-                        Duration.ofSeconds((jTextFieldsDelayDuration[TimeUnit.SECONDS] ?: return@addActionListener).text.toLong())
+                val duration = Duration.ofDays(
+                    (jTextFieldsDelayDuration[TimeUnit.DAYS] ?: return@addActionListener).text.toLong()
+                ) +
+                        Duration.ofHours(
+                            (jTextFieldsDelayDuration[TimeUnit.HOURS] ?: return@addActionListener).text.toLong()
+                        ) +
+                        Duration.ofMinutes(
+                            (jTextFieldsDelayDuration[TimeUnit.MINUTES] ?: return@addActionListener).text.toLong()
+                        ) +
+                        Duration.ofSeconds(
+                            (jTextFieldsDelayDuration[TimeUnit.SECONDS] ?: return@addActionListener).text.toLong()
+                        )
 
                 val host = DuckDnsSubdomain(
                     jTextFieldHostname.text,
@@ -244,7 +252,7 @@ internal class AddHostMenu(previousGraphicMenu: GraphicMenu? = null) : GraphicMe
 
         jButton.font = getDefaultFont()
         jButton.isEnabled = true
-        jButton.addActionListener{
+        jButton.addActionListener {
             isVisible = false
             nextGraphicMenu = NetworkInterfaceMainMenu(this, allowedNetworkInterfaces)
         }

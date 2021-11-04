@@ -6,9 +6,14 @@ import dynamic.dns.update.client.graphic.getDefaultFont
 import java.awt.GridLayout
 import javax.swing.*
 
+/**
+ * Graphic menu which will allow the user to add or remove network interfaces.
+ * @param allowedNetworkInterfaces List of allowed network interfaces.
+ * @param previousGraphicMenu Previous graphic menu to return after the execution of this menu.
+ */
 class NetworkInterfaceMainMenu(
     previousGraphicMenu: GraphicMenu? = null,
-    val allowedNetworkInterfaces: MutableList<String> = mutableListOf()
+    private val allowedNetworkInterfaces: MutableList<String> = mutableListOf()
 ) : GraphicMenu(previousGraphicMenu) {
 
     private val tableModel = TableModel(allowedNetworkInterfaces)

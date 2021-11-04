@@ -2,7 +2,6 @@ package dynamic.dns.update.client.graphic.networkInterface
 
 import dynamic.dns.update.client.graphic.GraphicMenu
 import dynamic.dns.update.client.graphic.getDefaultFont
-import java.awt.FlowLayout
 import java.awt.GridLayout
 import java.awt.event.WindowEvent
 import java.net.NetworkInterface
@@ -11,9 +10,17 @@ import javax.swing.JCheckBox
 import javax.swing.JFrame
 import javax.swing.JPanel
 
+/**
+ * Graphic menu which will allow the user to add network interfaces.
+ * @param allowedNetworkInterfaces List of allowed network interfaces.
+ * @param previousGraphicMenu Previous graphic menu to return after the execution of this menu.
+ */
 class NetworkInterfaceAddMenu(
     previousGraphicMenu: GraphicMenu? = null,
-    val allowedNetworkInterfaces: MutableList<String> = mutableListOf()) : GraphicMenu(previousGraphicMenu) {
+    private val allowedNetworkInterfaces: MutableList<String> = mutableListOf()
+) : GraphicMenu(
+    previousGraphicMenu
+) {
 
     override val title: String = "Add network interface"
     private val networkInterfacesNamesAvailableToAdd = initializeNetworkInterfacesNamesAvailableToAdd()

@@ -199,7 +199,8 @@ private enum class TagType {
     Minutes,
     Seconds,
     DisableIPv4,
-    DisableIPv6
+    DisableIPv6,
+    NetworkInterfaces
 }
 
 /**
@@ -212,75 +213,111 @@ private fun addDuckDnsHost(args: List<String>) {
             addDuckDnsHostHelp()
         } else {
 
-            val tags = mutableMapOf<TagType, Int>()
-            tags[TagType.Hostname] = args.map { it.lowercase() }.indexOf("--hostname")
-            tags[TagType.Token] = args.map { it.lowercase() }.indexOf("--token")
-            tags[TagType.DelayDuration] = args.map { it.lowercase() }.indexOf("--delay-duration")
-            tags[TagType.Days] = args.map { it.lowercase() }.indexOf("--days")
-            tags[TagType.Hours] = args.map { it.lowercase() }.indexOf("--hours")
-            tags[TagType.Minutes] = args.map { it.lowercase() }.indexOf("--minutes")
-            tags[TagType.Seconds] = args.map { it.lowercase() }.indexOf("--seconds")
-            tags[TagType.DisableIPv4] = args.map { it.lowercase() }.indexOf("--disable-ipv4")
-            tags[TagType.DisableIPv6] = args.map { it.lowercase() }.indexOf("--disable-ipv6")
+            val argsLowerCase = args.map { it.lowercase() }
 
-            var hostname: String? = null
-            if ((tags[TagType.Hostname] != null) && ((tags[TagType.Hostname] ?: return) >= 0) && (!tags.values.contains(
-                    (tags[TagType.Hostname] ?: return) + 1
-                ))
-            ) {
-                hostname = args[(tags[TagType.Hostname] ?: return) + 1]
+            val tagsIndex = mutableMapOf<TagType, Int>()
+            tagsIndex[TagType.Hostname] = argsLowerCase.indexOf("--hostname")
+            tagsIndex[TagType.Token] = argsLowerCase.indexOf("--token")
+            tagsIndex[TagType.DelayDuration] = argsLowerCase.indexOf("--delay-duration")
+            tagsIndex[TagType.Days] = argsLowerCase.indexOf("--days")
+            tagsIndex[TagType.Hours] = argsLowerCase.indexOf("--hours")
+            tagsIndex[TagType.Minutes] = argsLowerCase.indexOf("--minutes")
+            tagsIndex[TagType.Seconds] = argsLowerCase.indexOf("--seconds")
+            tagsIndex[TagType.DisableIPv4] = argsLowerCase.indexOf("--disable-ipv4")
+            tagsIndex[TagType.DisableIPv6] = argsLowerCase.indexOf("--disable-ipv6")
+            tagsIndex[TagType.NetworkInterfaces] = argsLowerCase.indexOf("--network-interfaces")
+            if (tagsIndex.getOrDefault(TagType.NetworkInterfaces, -1) < 0) {
+                tagsIndex[TagType.NetworkInterfaces] = argsLowerCase.indexOf("--network-interface")
             }
 
-            var token: String? = null
-            if ((tags[TagType.Token] != null) && ((tags[TagType.Token] ?: return) >= 0) && (!tags.values.contains(
-                    (tags[TagType.Token]
-                        ?: return) + 1
-                ))
-            ) {
-                token = args[(tags[TagType.Token] ?: return) + 1]
+            // Getting Hostname
+            var tagIndex = tagsIndex.getOrDefault(TagType.Hostname, -1)
+            if (tagIndex < 0 || (tagIndex + 1) >= args.size || tagsIndex.values.contains(tagIndex + 1))
+                return
+            val hostname = argsLowerCase[tagIndex + 1]
+
+            // Getting Token
+            tagIndex = tagsIndex.getOrDefault(TagType.Token, -1)
+            if (tagIndex < 0 || (tagIndex + 1) >= args.size || tagsIndex.values.contains(tagIndex + 1))
+                return
+            val token = argsLowerCase[tagIndex + 1]
+
+            // Getting enable IPv6
+            tagIndex = tagsIndex.getOrDefault(TagType.DisableIPv6, -1)
+            val enableIPv6 = (tagIndex < 0)
+
+            // Getting enable IPv4
+            tagIndex = tagsIndex.getOrDefault(TagType.DisableIPv4, -1)
+            val enableIPv4 = (tagIndex < 0)
+
+            // Getting network interfaces
+            tagIndex = tagsIndex.getOrDefault(TagType.NetworkInterfaces, -1)
+            val networkInterfaceName = mutableListOf<String>()
+            if (tagIndex >= 0 && (tagIndex + 1) < args.size && !tagsIndex.values.contains(tagIndex + 1)) {
+                println("oi0")
+                if (args[tagIndex + 1].contains("[")) {
+                    println("oi1")
+                    var index = tagIndex + 1
+
+                    while (index < args.size && !tagsIndex.values.contains(index)) {
+                        println("oi2")
+
+                        val line = args[index].replace("[", "").replace(",", "").replace("]", "")
+                        if (line.isNotEmpty() && line.isNotBlank()) {
+                            println("oi3")
+                            networkInterfaceName.add(line)
+                        }
+
+                        if (args[index].contains("]")) {
+                            break
+                        }
+
+                        index++
+                    }
+                } else {
+                    networkInterfaceName.add(args[tagIndex + 1])
+                }
             }
 
-            val enableIPv6 = (tags[TagType.DisableIPv6] == null || (tags[TagType.DisableIPv6] ?: return) < 0)
-
-            val enableIPv4 = (tags[TagType.DisableIPv4] == null || (tags[TagType.DisableIPv4] ?: return) < 0)
-
+            // Getting delay duration
             var delayDuration = Duration.ZERO
-            if ((tags[TagType.DelayDuration] != null) && ((tags[TagType.DelayDuration] ?: return) >= 0)) {
+            tagIndex = tagsIndex.getOrDefault(TagType.DelayDuration, -1)
+            if (tagIndex >= 0) {
 
-                if ((tags[TagType.Days] != null) && ((tags[TagType.Days]
-                        ?: return) >= 0) && (!tags.values.contains((tags[TagType.Days] ?: return) + 1))
-                ) {
-                    delayDuration += Duration.ofDays(args[(tags[TagType.Days] ?: return) + 1].toLong())
+                // Getting days
+                tagIndex = tagsIndex.getOrDefault(TagType.Days, -1)
+                if (tagIndex >= 0 && (tagIndex + 1) < args.size && !tagsIndex.values.contains(tagIndex + 1)) {
+                    delayDuration += Duration.ofDays(argsLowerCase[tagIndex + 1].toLong())
                 }
 
-                if ((tags[TagType.Hours] != null) && ((tags[TagType.Hours]
-                        ?: return) >= 0) && (!tags.values.contains((tags[TagType.Hours] ?: return) + 1))
-                ) {
-                    delayDuration += Duration.ofDays(args[(tags[TagType.Hours] ?: return) + 1].toLong())
+                // Getting hours
+                tagIndex = tagsIndex.getOrDefault(TagType.Hours, -1)
+                if (tagIndex >= 0 && (tagIndex + 1) < args.size && !tagsIndex.values.contains(tagIndex + 1)) {
+                    delayDuration += Duration.ofHours(args[tagIndex + 1].toLong())
                 }
 
-                if ((tags[TagType.Minutes] != null) && ((tags[TagType.Minutes]
-                        ?: return) >= 0) && (!tags.values.contains(
-                        (tags[TagType.Minutes] ?: return) + 1
-                    ))
-                ) {
-                    delayDuration += Duration.ofDays(args[(tags[TagType.Minutes] ?: return) + 1].toLong())
+                // Getting minutes
+                tagIndex = tagsIndex.getOrDefault(TagType.Minutes, -1)
+                if (tagIndex >= 0 && (tagIndex + 1) < args.size && !tagsIndex.values.contains(tagIndex + 1)) {
+                    delayDuration += Duration.ofMinutes(args[tagIndex + 1].toLong())
                 }
 
-                if ((tags[TagType.Seconds] != null) && ((tags[TagType.Seconds]
-                        ?: return) >= 0) && (!tags.values.contains(
-                        (tags[TagType.Seconds] ?: return) + 1
-                    ))
-                ) {
-                    delayDuration += Duration.ofDays(args[(tags[TagType.Seconds] ?: return) + 1].toLong())
+                // Getting seconds
+                tagIndex = tagsIndex.getOrDefault(TagType.Seconds, -1)
+                if (tagIndex >= 0 && (tagIndex + 1) < args.size && !tagsIndex.values.contains(tagIndex + 1)) {
+                    delayDuration += Duration.ofSeconds(args[tagIndex + 1].toLong())
                 }
 
             }
 
             HostsController.add(
                 DuckDnsSubdomain(
-                    hostname ?: return, enableIPv4, enableIPv6, delayDuration,
-                    token ?: return
+                    hostname,
+                    enableIPv4,
+                    enableIPv6,
+                    delayDuration,
+                    token,
+                    networkInterfaceName
                 )
             )
         }

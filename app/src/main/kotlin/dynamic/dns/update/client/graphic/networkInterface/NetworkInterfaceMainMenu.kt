@@ -67,6 +67,7 @@ class NetworkInterfaceMainMenu(
             val allowedNetworkInterface = allowedNetworkInterfaces[jTable.selectedRow]
             if (getConfirmationGraphic("Would you like to remove $allowedNetworkInterface ?")) {
                 allowedNetworkInterfaces.remove(allowedNetworkInterface)
+                fireTableDataChanged()
             }
         }
         return jButton

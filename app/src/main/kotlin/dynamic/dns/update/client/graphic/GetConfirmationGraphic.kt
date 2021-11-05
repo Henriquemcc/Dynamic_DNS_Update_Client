@@ -13,7 +13,8 @@ fun getConfirmationGraphic(message: String = ""): Boolean {
     jFrame.defaultCloseOperation = JFrame.DISPOSE_ON_CLOSE
     jFrame.font = getDefaultFont()
     jFrame.isVisible = true
-    val confirmation = JOptionPane.showConfirmDialog(jFrame, message)
     jFrame.pack()
+    val confirmation = JOptionPane.showConfirmDialog(jFrame, message)
+    jFrame.dispose()
     return confirmation == JOptionPane.YES_OPTION
 }

@@ -6,3 +6,6 @@ build
 
 # Ignore IntelliJ Idea project settings folder
 .idea
+
+# Ignore IntelliJ Idea running settings
+.run

@@ -40,3 +40,16 @@ application {
     // Define the main class for the application.
     mainClass.set("dynamic.dns.update.client.AppKt")
 }
+
+tasks {
+    withType<Jar> {
+        manifest {
+            attributes["Main-Class"] = application.mainClass.get()
+            duplicatesStrategy = DuplicatesStrategy.INCLUDE
+        }
+
+        configurations["compileClasspath"].forEach { file: File ->
+            from(zipTree(file.absoluteFile))
+        }
+    }
+}

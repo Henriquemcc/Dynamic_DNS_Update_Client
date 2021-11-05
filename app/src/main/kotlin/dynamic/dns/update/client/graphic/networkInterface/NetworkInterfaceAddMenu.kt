@@ -15,7 +15,7 @@ import javax.swing.JPanel
  * @param allowedNetworkInterfaces List of allowed network interfaces.
  * @param previousGraphicMenu Previous graphic menu to return after the execution of this menu.
  */
-class NetworkInterfaceAddMenu(
+internal class NetworkInterfaceAddMenu(
     previousGraphicMenu: GraphicMenu? = null,
     private val allowedNetworkInterfaces: MutableList<String> = mutableListOf()
 ) : GraphicMenu(

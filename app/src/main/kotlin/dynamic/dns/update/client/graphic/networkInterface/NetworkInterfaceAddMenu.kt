@@ -23,11 +23,23 @@ internal class NetworkInterfaceAddMenu(
 ) {
 
     override val title: String = "Add network interface"
+
+    /**
+     * List of network interfaces' name available to add.
+     */
     private val networkInterfacesNamesAvailableToAdd = initializeNetworkInterfacesNamesAvailableToAdd()
+
+    /**
+     * JCheckboxes with all network interfaces' name available to add.
+     */
     private val jCheckBoxes = initializesJCheckBoxes()
 
     override val jFrame: JFrame = initializeJFrame()
 
+    /**
+     * Initializes the names of network interfaces which are available to add.
+     * @return List of network interfaces' name available to add.
+     */
     private fun initializeNetworkInterfacesNamesAvailableToAdd(): List<String> {
         val list = NetworkInterface.getNetworkInterfaces().toList().map { it.name } as MutableList<String>
         list.removeAll(allowedNetworkInterfaces)
@@ -50,12 +62,16 @@ internal class NetworkInterfaceAddMenu(
         for (jCheckBox in jCheckBoxes) {
             jPanel.add(jCheckBox.value)
         }
-        jPanel.add(initializeJButtonApply())
+        jPanel.add(initializeJButtonAdd())
         return jPanel
     }
 
-    private fun initializeJButtonApply(): JButton {
-        val jButton = JButton("Apply")
+    /**
+     * Initializes JButton add.
+     * @return JButton add initialized.
+     */
+    private fun initializeJButtonAdd(): JButton {
+        val jButton = JButton("Add")
         jButton.addActionListener {
             for ((key, value) in jCheckBoxes) {
                 if (value.isSelected) {
@@ -71,6 +87,11 @@ internal class NetworkInterfaceAddMenu(
         return jButton
     }
 
+    /**
+     * Initializes JCheckBoxes with the network interfaces' available to add.
+     * @return Map of JCheckBoxes and Strings in which each String is the name of the interface and each JCheckBox
+     * is the checkbox to add the interface name.
+     */
     private fun initializesJCheckBoxes(): Map<String, JCheckBox> {
         val jCheckBoxes = mutableMapOf<String, JCheckBox>()
 

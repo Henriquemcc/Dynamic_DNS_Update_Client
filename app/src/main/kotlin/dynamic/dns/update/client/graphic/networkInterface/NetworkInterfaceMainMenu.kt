@@ -16,14 +16,24 @@ class NetworkInterfaceMainMenu(
     private val allowedNetworkInterfaces: MutableList<String> = mutableListOf()
 ) : GraphicMenu(previousGraphicMenu) {
 
+    /**
+     * Table model for allowed network interfaces.
+     */
     private val tableModel = TableModel(allowedNetworkInterfaces)
 
+    /**
+     * JTable which will show the network interfaces' name.
+     */
     private val jTable: JTable = initializeJTable()
 
     override val title: String = "Allowed network interface menu"
 
     override val jFrame: JFrame = initializeJFrame()
 
+    /**
+     * Initializes the JTable which will show the network interfaces' name.
+     * @return JTable initialized.
+     */
     private fun initializeJTable(): JTable {
         val jTable = JTable()
         jTable.font = getDefaultFont()
@@ -50,10 +60,18 @@ class NetworkInterfaceMainMenu(
         return jPanel
     }
 
+    /**
+     * Initializes the JScrollPane table which will have the JTable.
+     * @return JScrollPane initialized.
+     */
     private fun initializeJScrollPaneTable(): JScrollPane {
         return JScrollPane(jTable)
     }
 
+    /**
+     * Initializes the JPanel which will store the buttons to add or remove the network interfaces' name.
+     * @return JPanel with JButtons initialized.
+     */
     private fun initializeJPanelButtons(): JPanel {
         val jPanel = JPanel(GridLayout(2, 1))
         jPanel.add(initializeJButtonAdd())
@@ -61,6 +79,10 @@ class NetworkInterfaceMainMenu(
         return jPanel
     }
 
+    /**
+     * Initializes the JButton remove.
+     * @return JButton remove initialized.
+     */
     private fun initializeJButtonRemove(): JButton {
         val jButton = JButton("Remove")
         jButton.addActionListener {
@@ -73,6 +95,10 @@ class NetworkInterfaceMainMenu(
         return jButton
     }
 
+    /**
+     * Initializes JButton add.
+     * @return JButton add initialized.
+     */
     private fun initializeJButtonAdd(): JButton {
         val jButton = JButton("Add")
         jButton.addActionListener {

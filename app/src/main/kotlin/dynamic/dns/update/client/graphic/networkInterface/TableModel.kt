@@ -2,6 +2,11 @@ package dynamic.dns.update.client.graphic.networkInterface
 
 import javax.swing.table.AbstractTableModel
 
+/**
+ * Table model for network interfaces' name.
+ * @param allowedNetworkInterfaces List of network interfaces' name which are already included in the list of allowed
+ * network interfaces for this host.
+ */
 internal class TableModel(private val allowedNetworkInterfaces: MutableList<String>) : AbstractTableModel() {
     override fun getRowCount(): Int {
         return allowedNetworkInterfaces.size
@@ -15,12 +20,6 @@ internal class TableModel(private val allowedNetworkInterfaces: MutableList<Stri
         return allowedNetworkInterfaces[p0]
     }
 
-    /**
-     * Retrieves whether a cell is editable.
-     * @param rowIndex Index of the row.
-     * @param columnIndex Index of the column.
-     * @return Boolean value of whether the cell is editable.
-     */
     override fun isCellEditable(rowIndex: Int, columnIndex: Int): Boolean = false
 
     override fun getColumnName(column: Int): String {

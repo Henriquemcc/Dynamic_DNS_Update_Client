@@ -5,7 +5,7 @@ import dynamic.dns.update.client.console.common.menu.ConsoleText
 import dynamic.dns.update.client.console.common.menu.DynamicConsoleMenu
 import dynamic.dns.update.client.console.common.myio.readLong
 import dynamic.dns.update.client.console.common.myio.readString
-import dynamic.dns.update.client.console.getConfirmationConsole
+import dynamic.dns.update.client.console.common.getConfirmationConsole
 import dynamic.dns.update.client.console.networkInterface.networkInterfaceMainMenu
 import dynamic.dns.update.client.controller.HostsController
 import dynamic.dns.update.client.model.DuckDnsSubdomain

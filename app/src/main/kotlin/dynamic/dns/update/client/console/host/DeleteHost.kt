@@ -4,7 +4,7 @@ import dynamic.dns.update.client.console.common.menu.ConsoleButton
 import dynamic.dns.update.client.console.common.menu.StaticConsoleMenu
 import dynamic.dns.update.client.console.common.myio.readInteger
 import dynamic.dns.update.client.console.common.myio.readString
-import dynamic.dns.update.client.console.getConfirmationConsole
+import dynamic.dns.update.client.console.common.getConfirmationConsole
 import dynamic.dns.update.client.controller.HostsController
 
 /**

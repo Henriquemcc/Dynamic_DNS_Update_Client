@@ -356,6 +356,11 @@ private fun addDuckDnsHostHelp() {
     stringBuilder.append(printTab(str.length))
     stringBuilder.appendLine("Duck DNS delay duration")
 
+    str = "\t--network-interface, --network-interfaces"
+    stringBuilder.append(str)
+    stringBuilder.append(printTab(str.length))
+    stringBuilder.appendLine("Allowed network interfaces (in brackets, separated by space)")
+
     stringBuilder.appendLine()
 
     stringBuilder.appendLine("Delay duration options:")

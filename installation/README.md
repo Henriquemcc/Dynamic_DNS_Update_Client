@@ -1,6 +1,6 @@
 [Versão em português](README.pt.md)
 
-# Installation
+# Install
 
 ## Linux
 

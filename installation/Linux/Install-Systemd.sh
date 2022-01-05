@@ -32,7 +32,7 @@ function install_systemd_on_deb_distros() {
 
 # Installs systemd on archlinux distros.
 function install_systemd_on_archlinux_distros() {
-  pacman -Sy systemd --noconfirm
+  pacman -S systemd --noconfirm
 }
 
 # Installs dnf package manager.
@@ -68,8 +68,9 @@ fi
 run_as_root
 
 # Identifying operating system
-if [ "$(uname)" == "Linux" ]; then
-  install_on_linux
-else
+if ! [ "$(uname)" == "Linux" ]; then
+  echo "This operating system is NOT a Linux distribution!"
   exit 1
 fi
+
+install_on_linux

@@ -57,13 +57,13 @@ function install_java_on_deb_distros() {
 function install_java_on_archlinux_distros() {
   {
     # Trying to install java 8
-    pacman -Sy jre8-openjdk --noconfirm
+    pacman -S jre8-openjdk --noconfirm
   } || {
     # Trying to install java 11
-    pacman -Sy jre11-openjdk --noconfirm
+    pacman -S jre11-openjdk --noconfirm
   } || {
     # Trying to install java latest
-    pacman -Sy jre-openjdk --noconfirm
+    pacman -S jre-openjdk --noconfirm
   }
 }
 
@@ -109,8 +109,9 @@ fi
 run_as_root
 
 # Identifying operating system
-if [ "$(uname)" == "Linux" ]; then
-  install_on_linux
-else
+if ! [ "$(uname)" == "Linux" ]; then
+  echo "This operating system is NOT a Linux distribution!"
   exit 1
 fi
+
+install_on_linux

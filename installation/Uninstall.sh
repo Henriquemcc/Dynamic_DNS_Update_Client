@@ -26,11 +26,14 @@ function uninstall_on_Linux()
   # Downloading repository
   file_path="$(download_repository)"
 
-  # Unzipping file
-  unzip "$file_path" || exit 1
-
   # Storing path
   old_path="$(pwd)"
+
+  # Changing directory
+  cd "$destination_directory" || exit 1
+
+  # Unzipping file
+  unzip "$file_path" || exit 1
 
   # Changing directory
   cd "${destination_directory}/Dynamic_DNS_Update_Client-main/installation/Linux" || exit 1

@@ -36,7 +36,7 @@ It was written in Kotlin for Java Virtual Machine.
 
 ## Installation / Uninstall
 
-[How to install / uninstall](installation/README.md). 
+[How to install / uninstall](installation). 
 
 ## Dynamic DNS services compatible
 

@@ -36,7 +36,7 @@ Foi escrito em Kotlin para Java Virtual Machine.
 
 ## Instalação / Desinstalação
 
-[Como instalar / desinstalar](installation/README.pt.md).
+[Como instalar / desinstalar](installation).
 
 ## Serviços de DNS dinâmico compatíveis
 

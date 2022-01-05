@@ -13,6 +13,11 @@ function download_repository()
   # Defining destination file path
   destination_file_path="${destination_directory}/Dynamic_DNS_Update_Client.zip"
 
+  # Deleting file if it exists
+  if [ -f $destination_file_path ]; then
+      rm $destination_file_path
+  fi
+
   # Downloading file
   curl -L $repository_zip_url --output $destination_file_path
 
@@ -29,11 +34,8 @@ function uninstall_on_Linux()
   # Storing path
   old_path="$(pwd)"
 
-  # Changing directory
-  cd "$destination_directory" || exit 1
-
   # Unzipping file
-  unzip -o "$file_path" || exit 1
+  unzip -o "$file_path" -d "$destination_directory" || exit 1
 
   # Changing directory
   cd "${destination_directory}/Dynamic_DNS_Update_Client-main/installation/Linux" || exit 1

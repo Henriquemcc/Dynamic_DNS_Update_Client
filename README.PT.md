@@ -34,6 +34,10 @@ Foi escrito em Kotlin para Java Virtual Machine.
 
 ![](pictures/10.PNG) *Menu de ajuda dos argumentos de linha de comando*
 
+## Instalação / Desinstalação
+
+[Como instalar / desinstalar](installation).
+
 ## Serviços de DNS dinâmico compatíveis
 
 Atualmente, o único serviço de DNS dinâmico suportado é o [Duck DNS](https://www.duckdns.org).

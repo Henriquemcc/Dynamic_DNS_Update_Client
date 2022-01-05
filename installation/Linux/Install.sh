@@ -122,8 +122,9 @@ function install_on_linux() {
 run_as_root
 
 # Identifying operating system
-if [ "$(uname)" == "Linux" ]; then
-  install_on_linux
-else
+if ! [ "$(uname)" == "Linux" ]; then
+  echo "This operating system is NOT a Linux distribution!"
   exit 1
 fi
+
+install_on_linux

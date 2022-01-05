@@ -34,7 +34,7 @@ It was written in Kotlin for Java Virtual Machine.
 
 ![](pictures/10.PNG) *Command line argument help menu*
 
-## Installation / Uninstall
+## Install / Uninstall
 
 [How to install / uninstall](installation). 
 

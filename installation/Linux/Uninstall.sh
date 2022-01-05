@@ -71,11 +71,4 @@ if ! [ "$(uname)" == "Linux" ]; then
   exit 1
 fi
 
-echo "Are you sure you want to uninstall Dynamic DNS Update Client? (yes/no)"
-read -r answer
-
-if ! [ "$answer" == "yes" ]; then
-    exit 0
-fi
-
 uninstall_dynamic_dns_update_client

@@ -34,7 +34,7 @@ function install_on_Linux()
   cd "$destination_directory" || exit 1
 
   # Unzipping file
-  unzip "$file_path" || exit 1
+  unzip -o "$file_path" || exit 1
 
   # Changing directory
   cd "${destination_directory}/Dynamic_DNS_Update_Client-main/installation/Linux" || exit 1

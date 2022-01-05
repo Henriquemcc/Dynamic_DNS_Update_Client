@@ -31,6 +31,10 @@ function install_java_on_rpm_distros() {
 
 # Installs java on linux deb distros.
 function install_java_on_deb_distros() {
+
+  # Updating sources
+  apt update
+
   {
     # Trying to install java 8
     apt install openjdk-8-jre --yes

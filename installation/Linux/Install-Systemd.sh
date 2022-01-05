@@ -22,6 +22,11 @@ function install_systemd_on_rpm_distros() {
 
 # Installs systemd on deb distros.
 function install_systemd_on_deb_distros() {
+
+  # Updating sources
+  apt update
+
+  # Installing Systemd
   apt install systemd --yes
 }
 

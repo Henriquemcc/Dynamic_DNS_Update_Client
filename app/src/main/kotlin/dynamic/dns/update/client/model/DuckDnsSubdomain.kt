@@ -16,12 +16,12 @@ import javax.net.ssl.HttpsURLConnection
  * @param token Duck DNS authentication token.
  */
 class DuckDnsSubdomain(
-    hostname: String = "",
-    enableIPv4: Boolean = true,
-    enableIPv6: Boolean = true,
-    updateDelayTime: Duration,
-    val token: String,
-    networkInterfacesName: MutableList<String> = mutableListOf()
+        hostname: String = "",
+        enableIPv4: Boolean = true,
+        enableIPv6: Boolean = true,
+        updateDelayTime: Duration,
+        val token: String,
+        networkInterfacesName: MutableList<String> = mutableListOf()
 ) : Host(hostname, enableIPv4, enableIPv6, updateDelayTime, networkInterfacesName) {
 
     /**
@@ -51,23 +51,33 @@ class DuckDnsSubdomain(
         }
 
         do {
-            if (enableIPv4)
-                for (i in 0..1024)
-                    try {
+            if (enableIPv4) {
+                var success = false
+                while (!success) {
+                    success = try {
                         performUpdateIPv4(networkInterfaces)
-                        break
+                        true
                     } catch (e: Exception) {
                         e.printStackTrace()
+                        Thread.sleep(Duration.ofMinutes(1).toMillis())
+                        false
                     }
+                }
+            }
 
-            if (enableIPv6)
-                for (i in 0..1024)
-                    try {
+            if (enableIPv6) {
+                var success = false
+                while (!success) {
+                    success = try {
                         performUpdateIPv6(networkInterfaces)
-                        break
+                        true
                     } catch (e: Exception) {
                         e.printStackTrace()
+                        Thread.sleep(Duration.ofMinutes(1).toMillis())
+                        false
                     }
+                }
+            }
 
             if (looping)
                 sleep()
@@ -89,11 +99,11 @@ class DuckDnsSubdomain(
      * Performs IP update to IPv4.
      */
     private fun performUpdateIPv4(
-        networkInterfaces: List<NetworkInterface> =
-            NetworkInterface.getNetworkInterfaces().toList()
+            networkInterfaces: List<NetworkInterface> =
+                    NetworkInterface.getNetworkInterfaces().toList()
     ) {
         val ipv4Address =
-            getUnicastIPv4Address(networkInterfaces)?.hostAddressFormatted ?: throw IPv4NotFoundException()
+                getUnicastIPv4Address(networkInterfaces)?.hostAddressFormatted ?: throw IPv4NotFoundException()
 
         val url = URL("https://www.duckdns.org/update?domains=$subdomainName&token=$token&ip=$ipv4Address")
         val connection = url.openConnection() as HttpsURLConnection
@@ -108,11 +118,11 @@ class DuckDnsSubdomain(
      * Performs IP update to IPv6.
      */
     private fun performUpdateIPv6(
-        networkInterfaces: List<NetworkInterface> =
-            NetworkInterface.getNetworkInterfaces().toList()
+            networkInterfaces: List<NetworkInterface> =
+                    NetworkInterface.getNetworkInterfaces().toList()
     ) {
         val ipv6Address =
-            getUnicastIPv6Address(networkInterfaces)?.hostAddressFormatted ?: throw IPv6NotFoundException()
+                getUnicastIPv6Address(networkInterfaces)?.hostAddressFormatted ?: throw IPv6NotFoundException()
 
         val url = URL("https://www.duckdns.org/update?domains=$subdomainName&token=$token&ipv6=$ipv6Address")
         val connection = url.openConnection() as HttpsURLConnection

@@ -3,11 +3,10 @@
 repository_zip_url="https://github.com/Henriquemcc/Dynamic_DNS_Update_Client/archive/refs/heads/main.zip"
 destination_directory="/tmp"
 
-function download_repository()
-{
+function download_repository() {
   # Creating destination directory
   if ! [ -d $destination_directory ]; then
-      sudo mkdir -p $destination_directory
+    sudo mkdir -p $destination_directory
   fi
 
   # Defining destination file path
@@ -15,7 +14,7 @@ function download_repository()
 
   # Deleting file if it exists
   if [ -f $destination_file_path ]; then
-      rm $destination_file_path
+    rm $destination_file_path
   fi
 
   # Downloading file
@@ -25,9 +24,7 @@ function download_repository()
   echo $destination_file_path
 }
 
-
-function uninstall_on_Linux()
-{
+function install_on_Linux() {
   # Downloading repository
   file_path="$(download_repository)"
 
@@ -41,12 +38,12 @@ function uninstall_on_Linux()
   cd "${destination_directory}/Dynamic_DNS_Update_Client-main/installation/Linux" || exit 1
 
   # Installing
-  bash ./Uninstall.sh
+  bash ./Install.bash
 
   # Returning to the old path
   cd "$old_path" || exit 1
 }
 
 if [ "$(uname)" == "Linux" ]; then
-  uninstall_on_Linux
+  install_on_Linux
 fi

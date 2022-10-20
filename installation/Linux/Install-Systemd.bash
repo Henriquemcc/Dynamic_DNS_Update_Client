@@ -17,27 +17,39 @@ function run_as_root() {
 
 # Installs systemd on rpm distros.
 function install_systemd_on_rpm_distros() {
-  dnf install systemd --assumeyes
+
+  if [ "$(command -v dnf)" ]; then
+    dnf install systemd --assumeyes
+  fi
+
+  if [ "$(command -v yum)" ]; then
+    yum install systemd --assumeyes
+  fi
 }
 
 # Installs systemd on deb distros.
 function install_systemd_on_deb_distros() {
 
-  # Updating sources
-  apt update
+  if [ "$(command -v apt)" ]; then
+    # Updating sources
+    apt update
 
-  # Installing Systemd
-  apt install systemd --yes
+    # Installing Systemd
+    apt install systemd --yes
+  fi
+
+  if [ "$(command -v apt-get)" ]; then
+    # Updating sources
+    apt-get update
+
+    # Installing Systemd
+    apt-get install systemd --yes
+  fi
 }
 
 # Installs systemd on archlinux distros.
 function install_systemd_on_archlinux_distros() {
   pacman -S systemd --noconfirm
-}
-
-# Installs dnf package manager.
-function install_dnf_package_manager() {
-  yum install dnf --assumeyes
 }
 
 # Installs systemd on rpm-ostree distros.
@@ -46,23 +58,26 @@ function install_systemd_on_rpm_os_tree_distros() {
 }
 
 function install_on_linux() {
-  if [ "$(command -v dnf)" ]; then
+  if [ "$(command -v dnf)" ] || [ "$(command -v yum)" ]; then
     install_systemd_on_rpm_distros
-  elif [ "$(command -v apt)" ]; then
+  fi
+
+  if [ "$(command -v apt)" ] || [ "$(command -v apt-get)" ]; then
     install_systemd_on_deb_distros
-  elif [ "$(command -v pacman)" ]; then
+  fi
+
+  if [ "$(command -v pacman)" ]; then
     install_systemd_on_archlinux_distros
-  elif [ "$(command -v yum)" ]; then
-    install_dnf_package_manager
-    install_systemd_on_rpm_distros
-  elif [ "$(command -v rpm-ostree)" ]; then
+  fi
+
+  if [ "$(command -v rpm-ostree)" ]; then
     install_systemd_on_rpm_os_tree_distros
   fi
 }
 
 # Checking if systemd is installed
 if [ "$(command -v systemctl)" ]; then
-    exit 0
+  exit 0
 fi
 
 run_as_root

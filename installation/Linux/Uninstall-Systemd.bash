@@ -17,12 +17,26 @@ function run_as_root() {
 
 # Uninstalls systemd on rpm distros.
 function uninstall_systemd_on_rpm_distros() {
-  dnf autoremove systemd
+
+  if [ "$(command -v dnf)" ]; then
+    dnf autoremove systemd
+  fi
+
+  if [ "$(command -v yum)" ]; then
+    yum autoremove systemd
+  fi
 }
 
 # Uninstalls systemd on deb distros.
 function uninstall_systemd_on_deb_distros() {
-  apt autoremove systemd
+
+  if [ "$(command -v apt)" ]; then
+    apt autoremove systemd
+  fi
+
+  if [ "$(command -v apt-get)" ]; then
+    apt-get autoremove systemd
+  fi
 }
 
 # Uninstalls systemd on archlinux distros.
@@ -36,13 +50,19 @@ function uninstall_systemd_on_rpm_os_tree_distros() {
 }
 
 function uninstall_on_linux() {
-  if [ "$(command -v dnf)" ]; then
+  if [ "$(command -v dnf)" ] || [ "$(command -v yum)" ]; then
     uninstall_systemd_on_rpm_distros
-  elif [ "$(command -v apt)" ]; then
+  fi
+
+  if [ "$(command -v apt)" ] || [ "$(command -v apt-get)" ]; then
     uninstall_systemd_on_deb_distros
-  elif [ "$(command -v pacman)" ]; then
+  fi
+
+  if [ "$(command -v pacman)" ]; then
     uninstall_systemd_on_archlinux_distros
-  elif [ "$(command -v rpm-ostree)" ]; then
+  fi
+
+  if [ "$(command -v rpm-ostree)" ]; then
     uninstall_systemd_on_rpm_os_tree_distros
   fi
 }

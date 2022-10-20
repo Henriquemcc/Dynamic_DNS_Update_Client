@@ -17,42 +17,74 @@ function run_as_root() {
 
 # Uninstalls java on linux RPM distros.
 function uninstall_java_on_rpm_distros() {
-  dnf autoremove java-1.8.0-openjdk
-  dnf autoremove java-11-openjdk
-  dnf autoremove java-latest-openjdk
+
+  if [ "$(command -v dnf)" ]; then
+    dnf autoremove java-1.8.0-openjdk
+    dnf autoremove java-11-openjdk
+    dnf autoremove java-17-openjdk
+    dnf autoremove java-latest-openjdk
+  fi
+
+  if [ "$(command -v yum)" ]; then
+    yum autoremove java-1.8.0-openjdk
+    yum autoremove java-11-openjdk
+    yum autoremove java-17-openjdk
+    yum autoremove java-latest-openjdk
+  fi
+
 }
 
 # Uninstalls java on linux deb distros.
 function uninstall_java_on_deb_distros() {
-  apt autoremove openjdk-8-jre
-  apt autoremove openjdk-11-jre
-  apt autoremove openjdk-13-jre
-  apt autoremove openjdk-16-jre
-  apt autoremove openjdk-17-jre
+
+  if [ "$(command -v apt)" ]; then
+    apt autoremove openjdk-8-jre
+    apt autoremove openjdk-11-jre
+    apt autoremove openjdk-13-jre
+    apt autoremove openjdk-16-jre
+    apt autoremove openjdk-17-jre
+  fi
+
+  if [ "$(command -v apt-get)" ]; then
+    apt-get autoremove openjdk-8-jre
+    apt-get autoremove openjdk-11-jre
+    apt-get autoremove openjdk-13-jre
+    apt-get autoremove openjdk-16-jre
+    apt-get autoremove openjdk-17-jre
+  fi
+
 }
 
 # Uninstalls java on archlinux distros.
 function uninstall_java_on_archlinux_distros() {
   pacman -R jre8-openjdk
   pacman -R jre11-openjdk
+  pacman -R jre17-openjdk
   pacman -R jre-openjdk
 }
 
 # Uninstalls java on linux RPM-ostree distros.
 function uninstall_java_on_rpm_os_tree_distros() {
-    rpm-ostree uninstall java-1.8.0-openjdk
-    rpm-ostree uninstall java-11-openjdk
-    rpm-ostree uninstall java-latest-openjdk
+  rpm-ostree uninstall java-1.8.0-openjdk
+  rpm-ostree uninstall java-11-openjdk
+  rpm-ostree uninstall java-17-openjdk
+  rpm-ostree uninstall java-latest-openjdk
 }
 
 function uninstall_on_linux() {
-  if [ "$(command -v dnf)" ]; then
+  if [ "$(command -v dnf)" ] || [ "$(command -v yum)" ]; then
     uninstall_java_on_rpm_distros
-  elif [ "$(command -v apt)" ]; then
+  fi
+
+  if [ "$(command -v apt)" ] || [ "$(command -v apt-get)" ]; then
     uninstall_java_on_deb_distros
-  elif [ "$(command -v pacman)" ]; then
+  fi
+
+  if [ "$(command -v pacman)" ]; then
     uninstall_java_on_archlinux_distros
-  elif [ "$(command -v rpm-ostree)" ]; then
+  fi
+
+  if [ "$(command -v rpm-ostree)" ]; then
     uninstall_java_on_rpm_os_tree_distros
   fi
 }
@@ -76,7 +108,7 @@ echo "Some applications may not run without Java."
 read -r answer
 
 if ! [ "$answer" == "yes" ]; then
-    exit 0
+  exit 0
 fi
 
 uninstall_on_linux

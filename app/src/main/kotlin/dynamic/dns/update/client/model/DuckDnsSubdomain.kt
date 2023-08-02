@@ -40,44 +40,63 @@ class DuckDnsSubdomain(
             return duckDnsSubdomainName
         }
 
+    /**
+     * Network interfaces which were selected to this host.
+     */
+    private val selectedNetworkInterfaces: List<NetworkInterface>
+        get()
+        {
+            return if (networkInterfacesName.isNotEmpty())
+            {
+                NetworkInterface.getNetworkInterfaces().toList().filter {
+                    networkInterfacesName.contains(it.name)
+                }
+            } else
+            {
+                NetworkInterface.getNetworkInterfaces().toList()
+            }
+        }
+
     override fun performIpUpdate(looping: Boolean) {
 
-        val networkInterfaces = if (networkInterfacesName.isNotEmpty()) {
-            NetworkInterface.getNetworkInterfaces().toList().filter {
-                networkInterfacesName.contains(it.name)
+        val threadIpv4 = object : Thread() {
+            override fun run() {
+                var success = false
+                while (!success) {
+                    success = try {
+                        performUpdateIPv4(selectedNetworkInterfaces)
+                        true
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        sleep(Duration.ofMinutes(1).toMillis())
+                        false
+                    }
+                }
             }
-        } else {
-            NetworkInterface.getNetworkInterfaces().toList()
+        }
+
+        val threadIpv6 = object : Thread() {
+            override fun run() {
+                var success = false
+                while (!success) {
+                    success = try {
+                        performUpdateIPv6(selectedNetworkInterfaces)
+                        true
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        sleep(Duration.ofMinutes(1).toMillis())
+                        false
+                    }
+                }
+            }
         }
 
         do {
-            if (enableIPv4) {
-                var success = false
-                while (!success) {
-                    success = try {
-                        performUpdateIPv4(networkInterfaces)
-                        true
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        Thread.sleep(Duration.ofMinutes(1).toMillis())
-                        false
-                    }
-                }
-            }
+            if (enableIPv4)
+                threadIpv4.run()
 
-            if (enableIPv6) {
-                var success = false
-                while (!success) {
-                    success = try {
-                        performUpdateIPv6(networkInterfaces)
-                        true
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        Thread.sleep(Duration.ofMinutes(1).toMillis())
-                        false
-                    }
-                }
-            }
+            if (enableIPv6)
+                threadIpv6.run()
 
             if (looping)
                 sleep()

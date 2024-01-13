@@ -24,6 +24,9 @@ class DuckDnsSubdomain(
         networkInterfacesName: MutableList<String> = mutableListOf()
 ) : Host(hostname, enableIPv4, enableIPv6, updateDelayTime, networkInterfacesName) {
 
+    private var previousIpv4 = ""
+    private var previousIpv6 = ""
+
     /**
      * Duck DNS subdomain name without '.duckdns.org'
      */
@@ -124,12 +127,17 @@ class DuckDnsSubdomain(
         val ipv4Address =
                 getUnicastIPv4Address(networkInterfaces)?.hostAddressFormatted ?: throw IPv4NotFoundException()
 
-        val url = URL("https://www.duckdns.org/update?domains=$subdomainName&token=$token&ip=$ipv4Address")
-        val connection = url.openConnection() as HttpsURLConnection
-        val bufferedReader = BufferedReader(InputStreamReader(connection.inputStream))
-        val message = bufferedReader.readLine()
-        if (!message.contains("OK")) {
-            throw FailedToUpdateIPv4AddressException()
+        if (ipv4Address != previousIpv4)
+        {
+            val url = URL("https://www.duckdns.org/update?domains=$subdomainName&token=$token&ip=$ipv4Address")
+            val connection = url.openConnection() as HttpsURLConnection
+            val bufferedReader = BufferedReader(InputStreamReader(connection.inputStream))
+            val message = bufferedReader.readLine()
+            if (!message.contains("OK"))
+            {
+                throw FailedToUpdateIPv4AddressException()
+            }
+            previousIpv4 = ipv4Address
         }
     }
 
@@ -143,12 +151,17 @@ class DuckDnsSubdomain(
         val ipv6Address =
                 getUnicastIPv6Address(networkInterfaces)?.hostAddressFormatted ?: throw IPv6NotFoundException()
 
-        val url = URL("https://www.duckdns.org/update?domains=$subdomainName&token=$token&ipv6=$ipv6Address")
-        val connection = url.openConnection() as HttpsURLConnection
-        val bufferedReader = BufferedReader(InputStreamReader(connection.inputStream))
-        val message = bufferedReader.readLine()
-        if (!message.contains("OK")) {
-            throw FailedToUpdateIPv6AddressException()
+        if (ipv6Address != previousIpv6)
+        {
+            val url = URL("https://www.duckdns.org/update?domains=$subdomainName&token=$token&ipv6=$ipv6Address")
+            val connection = url.openConnection() as HttpsURLConnection
+            val bufferedReader = BufferedReader(InputStreamReader(connection.inputStream))
+            val message = bufferedReader.readLine()
+            if (!message.contains("OK"))
+            {
+                throw FailedToUpdateIPv6AddressException()
+            }
+            previousIpv6 = ipv6Address
         }
     }
 

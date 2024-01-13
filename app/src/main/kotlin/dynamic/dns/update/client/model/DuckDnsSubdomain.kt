@@ -24,7 +24,14 @@ class DuckDnsSubdomain(
         networkInterfacesName: MutableList<String> = mutableListOf()
 ) : Host(hostname, enableIPv4, enableIPv6, updateDelayTime, networkInterfacesName) {
 
+    /**
+     * Previous IPv4 address sent to the server. So that it will only make a new request to the server if the IP address has changed.
+     */
     private var previousIpv4 = ""
+
+    /**
+     * Previous IPv6 address sent to the server. So that it will only make a new request to the server if the IP address has changed.
+     */
     private var previousIpv6 = ""
 
     /**
@@ -127,6 +134,7 @@ class DuckDnsSubdomain(
         val ipv4Address =
                 getUnicastIPv4Address(networkInterfaces)?.hostAddressFormatted ?: throw IPv4NotFoundException()
 
+        // Making a new request to the server only if the IP address has changed
         if (ipv4Address != previousIpv4)
         {
             val url = URL("https://www.duckdns.org/update?domains=$subdomainName&token=$token&ip=$ipv4Address")
@@ -151,6 +159,7 @@ class DuckDnsSubdomain(
         val ipv6Address =
                 getUnicastIPv6Address(networkInterfaces)?.hostAddressFormatted ?: throw IPv6NotFoundException()
 
+        // Making a new request to the server only if the IP address has changed
         if (ipv6Address != previousIpv6)
         {
             val url = URL("https://www.duckdns.org/update?domains=$subdomainName&token=$token&ipv6=$ipv6Address")

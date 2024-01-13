@@ -96,10 +96,10 @@ class DuckDnsSubdomain(
 
         do {
             if (enableIPv4)
-                threadIpv4.run()
+	            threadIpv4.start()
 
             if (enableIPv6)
-                threadIpv6.run()
+	            threadIpv6.start()
 
             if (looping)
                 sleep()

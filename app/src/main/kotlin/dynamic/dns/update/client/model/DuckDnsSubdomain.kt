@@ -122,6 +122,8 @@ class DuckDnsSubdomain(
         if (!message.contains("OK")) {
             throw FailedToCleanAddressesException()
         }
+        previousIpv4 = ""
+        previousIpv6 = ""
     }
 
     /**

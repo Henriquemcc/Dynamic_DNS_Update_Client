@@ -41,3 +41,4 @@ Description: A program that updates the IP address of a domain/subdomain of a pr
   - dduc daemon
 - The program must be developed in modules in a way that makes it possible the integration with other DNS providers (DynDNS, NO-IP, dyn.addr.tools, AWS Route 53, etc.) in the future. These modules could be developed as plugins, allowing the integration without having to change its core.
 - The update of the IP address must be made asynchronously for each domain/subdomain, so that it happens independently, avoiding that erros in one domain/subdomain disturbs the update of other domain/subdomain.
+- The communication with the API of the dynamic DNS providers must be secure (TLS 1.2 and 1.3).

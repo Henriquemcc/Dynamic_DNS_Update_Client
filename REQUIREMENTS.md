@@ -6,8 +6,8 @@ Description: A program that updates the IP address of a domain/subdomain of a pr
 
 - The program must allow to Create, Retrieve, Update and Delete (CRUD) a dynamic DNS domain/subdomain object. This object is compose of the following attributes:
   - Domain/Subdomain: The hostname address of the dynamic DNS domain/subdomain.
-  - enableIPv4: Whether to enable IPv4 update.
-  - enableIPv6: Whether to enable IPv6 update.
+  - enableIpv4: Whether to enable IPv4 update.
+  - enableIpv6: Whether to enable IPv6 update.
   - updateDelayTime: The delay between each update of the dynamic DNS IP address.
   - retryDelayTime: The delay between a failed update and the next attempt.
   - Token: The dynamic dns provider authentication token.
@@ -32,7 +32,7 @@ Description: A program that updates the IP address of a domain/subdomain of a pr
   - A .MSI installation package for Windows.
   - A .DMG installation package for MAC OS X.
 - The program must be interfaced through command line, so that its procedures can be executed with scripts. The commands are:
-  - ```dduc add <type> <domain/subdomain> <token> [<enable_ipv4> <enable_ipv6> <delay_time> <retryDelayTime>]``` Adds a new domain/subdomain.
+  - ```dduc add <type> <domain/subdomain> <token> [<enableIpv4> <enableIpv6> <delayTime> <retryDelayTime>]``` Adds a new domain/subdomain.
   - ```dduc list [<type>]``` Lists all subdomains.
   - ```dduc alter <type> <domain/subdomain> <attribute> <value>``` Alters the value of an attribute.
   - ```dduc delete <type> <domain/subdomain>``` Deletes a domain/subdomain.

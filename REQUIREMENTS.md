@@ -28,6 +28,14 @@ Description: A program that updates the IP address of a domain/subdomain of a pr
   - A .jar executable of the program.
   - A .RPM installation package for RPM based distros.
   - A .DEB installation package for Debian based distros.
-- The program must be interfaced through command line, so that its procedures can be executed with scripts.
+- The program must be interfaced through command line, so that its procedures can be executed with scripts. The commands are:
+  - dduc add <type> <domain/subdomain> <token> \[<enable_ipv4> <enable_ipv6> <delay_time>]
+  - dduc list
+  - dduc alter <type> <domain/subdomain> <attribute> <value>
+  - dduc delete <type> <domain/subdomain>
+  - dduc force-update \[<type> <domain/subdomain>]
+  - dduc force-clean \[<type> <domain/subdomain>]
+  - dduc test-auth \[<type> <domain/subdomain>]
+  - dduc daemon
 - The program must be developed in modules in a way that makes it possible the integration with other DNS providers (DynDNS, NO-IP, dyn.addr.tools, AWS Route 53, etc.) in the future.
 - The update of the IP address must be made asynchronously for each domain/subdomain, so that it happens independently, avoiding that erros in one domain/subdomain disturbs the update of other domain/subdomain.

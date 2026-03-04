@@ -25,9 +25,11 @@ Description: A program that updates the IP address of a domain/subdomain of a pr
 - The program must be written in Kotlin for Java Virtual Machine 8 with the framework Koin.
 - The program must be built using Gradle KTS.
 - There must be a CI/CD integration (with GitHub Actions) that checks the program and generates the artifacts when a new tag is created. The artifacts are:
-  - A .jar executable of the program.
+  - A .jar portable executable of the program.
   - A .RPM installation package for RPM based distros.
   - A .DEB installation package for Debian based distros.
+  - A .MSI installation package for Windows.
+  - A .DMG installation package for MAC OS X.
 - The program must be interfaced through command line, so that its procedures can be executed with scripts. The commands are:
   - dduc add <type> <domain/subdomain> <token> \[<enable_ipv4> <enable_ipv6> <delay_time>]
   - dduc list

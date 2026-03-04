@@ -32,14 +32,14 @@ Description: A program that updates the IP address of a domain/subdomain of a pr
   - A .MSI installation package for Windows.
   - A .DMG installation package for MAC OS X.
 - The program must be interfaced through command line, so that its procedures can be executed with scripts. The commands are:
-  - dduc add <type> <domain/subdomain> <token> \[<enable_ipv4> <enable_ipv6> <delay_time>]
-  - dduc list
-  - dduc alter <type> <domain/subdomain> <attribute> <value>
-  - dduc delete <type> <domain/subdomain>
-  - dduc force-update \[<type> <domain/subdomain>]
-  - dduc force-clean \[<type> <domain/subdomain>]
-  - dduc test-auth \[<type> <domain/subdomain>]
-  - dduc daemon
+  - ```dduc add <type> <domain/subdomain> <token> [<enable_ipv4> <enable_ipv6> <delay_time> <retryDelayTime>]``` Adds a new domain/subdomain.
+  - ```dduc list [<type>]``` Lists all subdomains.
+  - ```dduc alter <type> <domain/subdomain> <attribute> <value>``` Alters the value of an attribute.
+  - ```dduc delete <type> <domain/subdomain>``` Deletes a domain/subdomain.
+  - ```dduc force-update [<type> <domain/subdomain>]``` Forces the update of the IP address of a domain/subdomain, ignoring the updateDelayTime.
+  - ```dduc force-clean [<type> <domain/subdomain>]``` Forces the cleaning (set to NULL or 0.0.0.0, ::0) of the IP address of a domain/subdomain.
+  - ```dduc test-auth [<type> <domain/subdomain>]``` Tests the authentication with the dynamic dns provider.
+  - ```dduc daemon``` Runs as a daemon.
 - The program must be developed in modules in a way that makes it possible the integration with other DNS providers (DynDNS, NO-IP, dyn.addr.tools, AWS Route 53, etc.) in the future. These modules could be developed as plugins, allowing the integration without having to change its core.
 - The update of the IP address must be made asynchronously for each domain/subdomain, so that it happens independently, avoiding that erros in one domain/subdomain disturbs the update of other domain/subdomain.
 - The communication with the API of the dynamic DNS providers must be secure (TLS 1.2 and 1.3).

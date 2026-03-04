@@ -10,7 +10,7 @@ Description: A program that updates the IP address of a domain/subdomain of a pr
   - enableIPv6: Whether to enable IPv6 update.
   - updateDelayTime: The delay between each update of the dynamic DNS IP address.
   - Token: The dynamic dns provider authentication token.
-- The program must run in background to automatically update the IP addresses of each dynamic DNS domain/subdomain.
+- The program must run in background as a daemon to automatically update the IP addresses of each dynamic DNS domain/subdomain. 
 - The update of the IP address of the subdomain must be compatible with both IPv4 and IPv6, allowing the user to disable any one of them.
 - The program, for each dynamic dns domain/subdomain, must allow the user to choose which network interface to obtain its the IP addresses.
 - The program, for each dynamic dns domain/subdomain, must securely store its token.

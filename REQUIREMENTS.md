@@ -18,6 +18,7 @@ Description: A program that updates the IP address of a domain/subdomain of a pr
 - The program, for each dynamic dns domain/subdomain, must allow the user to choose which network interface name it will obtain its the IP addresses.
 - The program, for each dynamic dns domain/subdomain, must securely store its token.
 - The program, for each dynamic dns domain/subdomain, must allow the user to add a delay time to each domain/subdomain ip address update.
+- The program must have a command to test the authentication and connectivity with the dynamic dns provider.
 
 ## Non-Functional Requirements
 

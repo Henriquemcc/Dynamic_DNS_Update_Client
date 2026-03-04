@@ -23,7 +23,7 @@ Description: A program that updates the IP address of a domain/subdomain of a pr
 
 ## Non-Functional Requirements
 
-- The program must be written in Kotlin for Java Virtual Machine 8 with the framework Koin.
+- The program must be written in Kotlin for Java Virtual Machine 8 with the framework Koin (for dependency injection).
 - The program must be built using Gradle KTS.
 - There must be a CI/CD integration (with GitHub Actions) that checks the program and generates the artifacts when a new tag is created. The artifacts are:
   - A .JAR portable executable of the program.

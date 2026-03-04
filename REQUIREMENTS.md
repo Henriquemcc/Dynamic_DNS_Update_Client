@@ -29,6 +29,7 @@ Description: A program that updates the IP address of a domain/subdomain of a pr
   - A .jar portable executable of the program.
   - A .RPM installation package for RPM based distros.
   - A .DEB installation package for Debian based distros.
+  - A .FLATPAKREF package for other Linux distros.
   - A .MSI installation package for Windows.
   - A .DMG installation package for MAC OS X.
 - The program must be interfaced through command line, so that its procedures can be executed with scripts. The commands are:

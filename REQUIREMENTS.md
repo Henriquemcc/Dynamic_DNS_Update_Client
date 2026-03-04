@@ -26,7 +26,7 @@ Description: A program that updates the IP address of a domain/subdomain of a pr
 - The program must be written in Kotlin for Java Virtual Machine 8 with the framework Koin.
 - The program must be built using Gradle KTS.
 - There must be a CI/CD integration (with GitHub Actions) that checks the program and generates the artifacts when a new tag is created. The artifacts are:
-  - A .jar portable executable of the program.
+  - A .JAR portable executable of the program.
   - A .RPM installation package for RPM based distros.
   - A .DEB installation package for Debian based distros.
   - A .FLATPAKREF package for other Linux distros.

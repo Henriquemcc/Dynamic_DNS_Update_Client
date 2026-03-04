@@ -24,6 +24,10 @@ dependencies {
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
+    // Koin
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.core)
+
     // This dependency is used by the application.
     implementation(libs.guava)
 }

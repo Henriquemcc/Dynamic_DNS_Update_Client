@@ -37,6 +37,7 @@ class DuckDnsProvider: DynamicDnsProvider {
 
     override fun testAuthentication(dynamicDns: DynamicDns): Boolean {
         val urlString = StringBuilder("https://www.duckdns.org/update?")
+            .append("domains=${dynamicDns.domain.replace(".duckdns.org", "")}")
             .append("&token=${dynamicDns.token}")
 
         return openConnection(urlString, dynamicDns)

@@ -14,7 +14,7 @@ class DuckDnsProvider: DynamicDnsProvider {
         ipv6Address: Inet6Address?
     ): Boolean {
         val urlString = StringBuilder("https://www.duckdns.org/update?")
-            .append("domains=${dynamicDns.domain.replace(".duckdns.org", "")}")
+            .append("domains=${dynamicDns.domain.substringBefore(".duckdns.org")}")
             .append("&token=${dynamicDns.token}")
 
         if (dynamicDns.enableIpv4 && ipv4Address != null)
@@ -28,7 +28,7 @@ class DuckDnsProvider: DynamicDnsProvider {
 
     override fun cleanIpAddress(dynamicDns: DynamicDns): Boolean {
         val urlString = StringBuilder("https://www.duckdns.org/update?")
-            .append("domains=${dynamicDns.domain.replace(".duckdns.org", "")}")
+            .append("domains=${dynamicDns.domain.substringBefore(".duckdns.org")}")
             .append("&token=${dynamicDns.token}")
             .append("&clear=true")
 
@@ -37,7 +37,7 @@ class DuckDnsProvider: DynamicDnsProvider {
 
     override fun testAuthentication(dynamicDns: DynamicDns): Boolean {
         val urlString = StringBuilder("https://www.duckdns.org/update?")
-            .append("domains=${dynamicDns.domain.replace(".duckdns.org", "")}")
+            .append("domains=${dynamicDns.domain.substringBefore(".duckdns.org")}")
             .append("&token=${dynamicDns.token}")
 
         return openConnection(urlString, dynamicDns)

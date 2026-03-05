@@ -3,13 +3,12 @@
  */
 package io.github.henriquemcc.dduc
 
-class App {
-    val greeting: String
-        get() {
-            return "Hello World!"
-        }
-}
+import io.github.henriquemcc.dduc.cli.Cli
+import org.koin.core.context.GlobalContext.startKoin
 
-fun main() {
-    println(App().greeting)
+fun main(args: Array<String>) {
+    startKoin {
+        modules(koinModule)
+    }
+    Cli().run(args)
 }

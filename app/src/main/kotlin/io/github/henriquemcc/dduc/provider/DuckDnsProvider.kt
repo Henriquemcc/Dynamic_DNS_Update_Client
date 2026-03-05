@@ -1,6 +1,7 @@
 package io.github.henriquemcc.dduc.provider
 
 import io.github.henriquemcc.dduc.model.DynamicDns
+import io.github.henriquemcc.dduc.util.formatHostAddress
 import java.net.Inet4Address
 import java.net.Inet6Address
 import java.net.URL
@@ -13,21 +14,21 @@ class DuckDnsProvider: DynamicDnsProvider {
         ipv6Address: Inet6Address?
     ): Boolean {
         val urlString = StringBuilder("https://www.duckdns.org/update?")
-            .append("domains=${dynamicDns.domain}")
+            .append("domains=${dynamicDns.domain.replace(".duckdns.org", "")}")
             .append("&token=${dynamicDns.token}")
 
         if (dynamicDns.enableIpv4 && ipv4Address != null)
-            urlString.append("&ip=${ipv4Address}")
+            urlString.append("&ip=${formatHostAddress(ipv4Address)}")
 
         if (dynamicDns.enableIpv6 && ipv6Address != null)
-            urlString.append("&ipv6=${ipv6Address}")
+            urlString.append("&ipv6=${formatHostAddress(ipv6Address)}")
 
         return openConnection(urlString, dynamicDns)
     }
 
     override fun cleanIpAddress(dynamicDns: DynamicDns): Boolean {
         val urlString = StringBuilder("https://www.duckdns.org/update?")
-            .append("domains=${dynamicDns.domain}")
+            .append("domains=${dynamicDns.domain.replace(".duckdns.org", "")}")
             .append("&token=${dynamicDns.token}")
             .append("&clear=true")
 
@@ -49,6 +50,7 @@ class DuckDnsProvider: DynamicDnsProvider {
         urlString: java.lang.StringBuilder?,
         dynamicDns: DynamicDns
     ): Boolean {
+        println(urlString)
         return try {
             val connection = URL(urlString.toString()).openConnection() as HttpsURLConnection
             connection.connectTimeout = 5000

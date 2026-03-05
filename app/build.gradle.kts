@@ -8,6 +8,8 @@
 plugins {
     // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
     alias(libs.plugins.kotlin.jvm)
+    // Apply the Kotlinx Serialization plugin
+    alias(libs.plugins.kotlin.serialization)
 
     // Apply the application plugin to add support for building a CLI application in Java.
     application
@@ -27,6 +29,9 @@ dependencies {
     // Koin
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
+
+    // Kotlinx Serialization
+    implementation(libs.kotlinx.serialization.json)
 
     // This dependency is used by the application.
     implementation(libs.guava)

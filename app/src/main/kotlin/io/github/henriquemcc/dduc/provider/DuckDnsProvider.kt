@@ -51,7 +51,6 @@ class DuckDnsProvider: DynamicDnsProvider {
         urlString: java.lang.StringBuilder?,
         dynamicDns: DynamicDns
     ): Boolean {
-        println(urlString)
         return try {
             val connection = URL(urlString.toString()).openConnection() as HttpsURLConnection
             connection.connectTimeout = 5000

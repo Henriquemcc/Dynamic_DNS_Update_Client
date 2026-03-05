@@ -14,13 +14,14 @@ import io.github.henriquemcc.dduc.service.NetworkService
 import io.github.henriquemcc.dduc.service.NetworkServiceImpl
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val koinModule = module {
     single<DynamicDnsRepository> { DynamicDnsRepositoryImpl() }
     single<NetworkService> { NetworkServiceImpl() }
-    factory<DynamicDnsProvider> { DuckDnsProvider() }
-    factory<DynamicDnsProvider> { NoIpProvider() }
+    single<DynamicDnsProvider>(named("DuckDns")) { DuckDnsProvider() }
+    single<DynamicDnsProvider>(named("NoIp")) { NoIpProvider() }
 
     // Register individual DynamicDnsCli implementations
     singleOf(::DuckDnsCli) { bind<DynamicDnsCli>() }

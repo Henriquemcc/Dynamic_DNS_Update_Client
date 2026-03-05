@@ -37,7 +37,7 @@ class Cli: KoinComponent {
         println("Usage: java -jar $jarFileName <command> [options]")
         println()
         println("Commands:")
-        println("java -jar $jarFileName add <type> <domain/subdomain> <token> [<enableIpv4> <enableIpv6> <delayTime> <retryDelayTime>]\n\t\t\t\t\t\t\t\t\tAdds a new domain/subdomain.")
+        println("java -jar $jarFileName add <type> <domain/subdomain> <token> [<enableIpv4> <enableIpv6> <updateDelayTime> <retryDelayTime>]\n\t\t\t\t\t\t\t\t\tAdds a new domain/subdomain.")
         println("java -jar $jarFileName list [<type>]\t\t\t\t\t\tLists all subdomains.")
         println("java -jar $jarFileName alter <type> <domain/subdomain> <attribute> <value>\tAlters the value of an attribute.")
         println("java -jar $jarFileName delete <type> <domain/subdomain>\t\t\tDeletes a domain/subdomain.")

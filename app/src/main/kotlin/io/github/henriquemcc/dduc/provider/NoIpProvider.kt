@@ -66,7 +66,7 @@ class NoIpProvider: DynamicDnsProvider {
     }
 
     override fun getType(): String {
-        return "NoIP"
+        return "NoIp"
     }
 
     private fun openConnection(urlString: String, headers: Map<String, String>): String? {

@@ -56,17 +56,14 @@ class NetworkServiceImpl: NetworkService {
             val url = URL(urlStr)
             val connection = url.openConnection() as HttpsURLConnection
 
-            // Configurar timeouts é essencial para não travar a thread indefinidamente
             connection.connectTimeout = 5000
             connection.readTimeout = 5000
 
-            // O .use() fecha o BufferedReader E o InputStreamReader automaticamente
             connection.inputStream.bufferedReader().use { reader ->
                 reader.readLine()
             }
         } catch (e: Exception) {
-            // Logar o erro ou tratar conforme necessário
-            println("Erro ao obter IP: ${e.message}")
+            println("ERROR: Failed to obtain IP address: ${e.message}")
             null
         }
     }

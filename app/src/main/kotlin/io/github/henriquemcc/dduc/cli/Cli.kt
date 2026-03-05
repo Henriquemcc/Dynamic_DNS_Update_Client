@@ -27,8 +27,23 @@ class Cli: KoinComponent {
             "force-clean" -> forceClean(args)
             "test-auth" -> testAuth(args)
             "daemon" -> daemon()
+            "help" -> help()
             else -> println("Unknown command: $command")
         }
+    }
+
+    private fun help() {
+        println("Usage: dduc <command> [options]")
+        println()
+        println("Commands:")
+        println("dduc add <type> <domain/subdomain> <token> [<enableIpv4> <enableIpv6> <delayTime> <retryDelayTime>]\n\t\t\t\t\t\t\t\tAdds a new domain/subdomain.")
+        println("dduc list [<type>]\t\t\t\t\t\tLists all subdomains.")
+        println("dduc alter <type> <domain/subdomain> <attribute> <value>\tAlters the value of an attribute.")
+        println("dduc delete <type> <domain/subdomain>\t\t\t\tDeletes a domain/subdomain.")
+        println("dduc force-update [<type> <domain/subdomain>]\t\t\tForces the update of the IP address of a domain/subdomain, ignoring the updateDelayTime.")
+        println("dduc force-clean [<type> <domain/subdomain>]\t\t\tForces the cleaning (set to NULL or 0.0.0.0, ::0) of the IP address of a domain/subdomain.")
+        println("dduc test-auth [<type> <domain/subdomain>]\t\t\tTests the authentication with the dynamic dns provider.")
+        println("dduc daemon\t\t\t\t\t\t\tRuns as a daemon.")
     }
 
     private fun delete(args: Array<String>) {

@@ -1,8 +1,12 @@
 package io.github.henriquemcc.dduc.repository
 
 import io.github.henriquemcc.dduc.model.DynamicDns
+import io.github.henriquemcc.dduc.model.DuckDnsDynamicDns
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.modules.polymorphic
+import kotlinx.serialization.modules.subclass
 import java.io.File
 import java.nio.file.Paths
 
@@ -11,6 +15,18 @@ class DynamicDnsRepositoryImpl: DynamicDnsRepository {
     private val configFolder = Paths.get(System.getProperty("user.home"), ".dduc").toString()
     private val configFile = File(configFolder, "config.json")
 
+    private val json = Json {
+        prettyPrint = true
+        ignoreUnknownKeys = true
+        classDiscriminator = "_class" // Use a different discriminator name
+        serializersModule = SerializersModule {
+            polymorphic(DynamicDns::class) {
+                subclass(DuckDnsDynamicDns::class)
+                // Register other DynamicDns subclasses here as needed
+            }
+        }
+    }
+
     init {
         File(configFolder).mkdirs()
     }
@@ -18,16 +34,16 @@ class DynamicDnsRepositoryImpl: DynamicDnsRepository {
     override fun save(dynamicDns: DynamicDns) {
         val dynamicDnsList = findAll().toMutableList()
         dynamicDnsList.add(dynamicDns)
-        val json = Json.encodeToString(dynamicDnsList)
-        configFile.writeText(json)
+        val jsonString = json.encodeToString(dynamicDnsList)
+        configFile.writeText(jsonString)
     }
 
     override fun findAll(): List<DynamicDns> {
         if (!configFile.exists())
             return emptyList()
 
-        val json = configFile.readText()
-        return Json.decodeFromString(json)
+        val jsonString = configFile.readText()
+        return json.decodeFromString(jsonString)
     }
 
     override fun findByDomain(domain: String): DynamicDns? {
@@ -37,8 +53,8 @@ class DynamicDnsRepositoryImpl: DynamicDnsRepository {
     override fun delete(domain: String) {
         val dynamicDnsList = findAll().toMutableList()
         dynamicDnsList.removeIf { it.domain == domain }
-        val json = Json.encodeToString(dynamicDnsList)
-        configFile.writeText(json)
+        val jsonString = json.encodeToString(dynamicDnsList)
+        configFile.writeText(jsonString)
     }
 
     override fun findByType(type: String): List<DynamicDns> {

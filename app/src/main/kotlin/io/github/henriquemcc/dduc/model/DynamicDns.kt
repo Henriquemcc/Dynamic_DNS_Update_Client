@@ -1,6 +1,6 @@
 package io.github.henriquemcc.dduc.model
 
-import kotlin.time.Duration
+import java.time.Duration
 
 data class DynamicDns(
     val type: String,

@@ -41,4 +41,8 @@ class DynamicDnsRepositoryImpl: DynamicDnsRepository {
         configFile.writeText(json)
     }
 
+    override fun findByType(type: String): List<DynamicDns> {
+        return findAll().filter { it.type == type }
+    }
+
 }

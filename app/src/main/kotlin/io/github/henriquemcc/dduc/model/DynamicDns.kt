@@ -4,13 +4,14 @@ import kotlinx.serialization.Serializable
 import java.time.Duration
 
 @Serializable
-data class DynamicDns(
+abstract class DynamicDns(
     val type: String,
     val domain: String,
-    val enableIpv4: Boolean,
-    val enableIpv6: Boolean,
-    val updateDelayTime: Long,
-    val retryDelayTime: Long,
-    val token: String,
-    val networkInterfaceNames: List<String>
-)
+    var enableIpv4: Boolean,
+    var enableIpv6: Boolean,
+    var updateDelayTime: Long,
+    var retryDelayTime: Long,
+    var networkInterfaceNames: List<String>
+): Cloneable {
+    public abstract override fun clone(): DynamicDns
+}

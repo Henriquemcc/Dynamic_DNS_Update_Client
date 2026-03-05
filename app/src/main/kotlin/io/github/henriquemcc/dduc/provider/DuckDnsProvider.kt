@@ -1,5 +1,6 @@
 package io.github.henriquemcc.dduc.provider
 
+import io.github.henriquemcc.dduc.model.DuckDnsDynamicDns
 import io.github.henriquemcc.dduc.model.DynamicDns
 import io.github.henriquemcc.dduc.util.formatHostAddress
 import java.net.Inet4Address
@@ -15,7 +16,7 @@ class DuckDnsProvider: DynamicDnsProvider {
     ): Boolean {
         val urlString = StringBuilder("https://www.duckdns.org/update?")
             .append("domains=${dynamicDns.domain.substringBefore(".duckdns.org")}")
-            .append("&token=${dynamicDns.token}")
+            .append("&token=${(dynamicDns as DuckDnsDynamicDns).token}")
 
         if (dynamicDns.enableIpv4 && ipv4Address != null)
             urlString.append("&ip=${formatHostAddress(ipv4Address)}")
@@ -29,7 +30,7 @@ class DuckDnsProvider: DynamicDnsProvider {
     override fun cleanIpAddress(dynamicDns: DynamicDns): Boolean {
         val urlString = StringBuilder("https://www.duckdns.org/update?")
             .append("domains=${dynamicDns.domain.substringBefore(".duckdns.org")}")
-            .append("&token=${dynamicDns.token}")
+            .append("&token=${(dynamicDns as DuckDnsDynamicDns).token}")
             .append("&clear=true")
 
         return openConnection(urlString, dynamicDns)
@@ -38,7 +39,7 @@ class DuckDnsProvider: DynamicDnsProvider {
     override fun testAuthentication(dynamicDns: DynamicDns): Boolean {
         val urlString = StringBuilder("https://www.duckdns.org/update?")
             .append("domains=${dynamicDns.domain.substringBefore(".duckdns.org")}")
-            .append("&token=${dynamicDns.token}")
+            .append("&token=${(dynamicDns as DuckDnsDynamicDns).token}")
 
         return openConnection(urlString, dynamicDns)
     }

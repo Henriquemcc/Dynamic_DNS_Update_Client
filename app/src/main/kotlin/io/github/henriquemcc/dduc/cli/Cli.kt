@@ -1,6 +1,5 @@
 package io.github.henriquemcc.dduc.cli
 
-import io.github.henriquemcc.dduc.model.DynamicDns
 import io.github.henriquemcc.dduc.repository.DynamicDnsRepository
 import io.github.henriquemcc.dduc.service.DynamicDnsService
 import org.koin.core.component.KoinComponent
@@ -10,6 +9,7 @@ import java.io.File
 class Cli: KoinComponent {
     private val repository: DynamicDnsRepository by inject()
     private val service: DynamicDnsService by inject()
+    private val dynamicDnsCli: List<DynamicDnsCli> by inject()
     private val jarFileName = File(object {}.javaClass.protectionDomain.codeSource.location.path).name
 
     fun run(args: Array<String>) {
@@ -21,79 +21,36 @@ class Cli: KoinComponent {
         val command = args[0]
         when (command) {
             "add" -> add(args)
-            "list" -> list()
+            "list" -> list(args)
             "alter" -> alter(args)
             "delete" -> delete(args)
             "force-update" -> forceUpdate(args)
             "force-clean" -> forceClean(args)
             "test-auth" -> testAuth(args)
             "daemon" -> daemon()
-            "help" -> help()
+            "help" -> help(args)
             else -> println("Unknown command: $command")
         }
     }
 
-    private fun help() {
-        println("Usage: java -jar $jarFileName <command> [options]")
-        println()
-        println("Commands:")
-        println("java -jar $jarFileName add <type> <domain/subdomain> <token> [<enableIpv4> <enableIpv6> <updateDelayTime> <retryDelayTime>]\n\t\t\t\t\t\t\t\t\tAdds a new domain/subdomain.")
-        println("java -jar $jarFileName list [<type>]\t\t\t\t\t\tLists all subdomains.")
-        println("java -jar $jarFileName alter <type> <domain/subdomain> <attribute> <value>\tAlters the value of an attribute.")
-        println("java -jar $jarFileName delete <type> <domain/subdomain>\t\t\tDeletes a domain/subdomain.")
-        println("java -jar $jarFileName force-update [<type> <domain/subdomain>]\t\tForces the update of the IP address of a domain/subdomain, ignoring the updateDelayTime.")
-        println("java -jar $jarFileName force-clean [<type> <domain/subdomain>]\t\tForces the cleaning (set to NULL or 0.0.0.0, ::0) of the IP address of a domain/subdomain.")
-        println("java -jar $jarFileName test-auth [<type> <domain/subdomain>]\t\t\tTests the authentication with the dynamic dns provider.")
-        println("java -jar $jarFileName daemon\t\t\t\t\t\tRuns as a daemon.")
-    }
-
-    private fun delete(args: Array<String>) {
-        if (args.size < 3) {
-            println("Usage: java -jar $jarFileName delete <type> <domain/subdomain>")
+    private fun add(args: Array<String>) {
+        if (args.size < 4) {
+            println("Usage: java -jar $jarFileName add <type> <domain/subdomain> <...> [<enableIpv4> <enableIpv6> <delayTime> <retryDelayTime> <networkInterfaceName>]")
             return
         }
 
-        val domain = args[2]
-        repository.delete(domain)
-        println("INFO: Dynamic DNS entry for $domain deleted successfully.")
+        val dynamicDnsCli = getDynamicDnsCli(args)
+        dynamicDnsCli?.add(args)
     }
 
-    private fun alter(args: Array<String>) {
-        if (args.size < 5) {
-            println("Usage: java -jar $jarFileName alter <type> <domain/subdomain> <attribute> <value>")
-            return
+    private fun list(args: Array<String>) {
+        val dynamicDnsList = if (args.size < 2) {
+            repository.findAll()
+        } else {
+            val type = args[1]
+            repository.findByType(type)
         }
 
-        val domain = args[2]
-        val attribute = args[3]
-        val value = args[4]
-
-        val dynamicDns = repository.findByDomain(domain)
-        if (dynamicDns == null) {
-            println("Dynamic DNS entry for $domain not found.")
-            return
-        }
-
-        val updatedDynamicDns = when (attribute) {
-            "enableIpv4" -> dynamicDns.copy(enableIpv4 = value.toBooleanStrict())
-            "enableIpv6" -> dynamicDns.copy(enableIpv6 = value.toBooleanStrict())
-            "updateDelayTime" -> dynamicDns.copy(updateDelayTime = value.toLong())
-            "retryDelayTime" -> dynamicDns.copy(retryDelayTime = value.toLong())
-            "token" -> dynamicDns.copy(token = value)
-            "networkInterfaceName" -> dynamicDns.copy(networkInterfaceNames = value.split(","))
-            else -> {
-                println("Unknown attribute: $attribute")
-                return
-            }
-        }
-
-        repository.delete(domain)
-        repository.save(updatedDynamicDns)
-        println("Dynamic DNS entry for $domain updated successfully.")
-    }
-
-    private fun list() {
-        val dynamicDnsList = repository.findAll()
         if (dynamicDnsList.isEmpty()) {
             println("INFO: No dynamic DNS entries found.")
             return
@@ -103,76 +60,50 @@ class Cli: KoinComponent {
         }
     }
 
-    private fun add(args: Array<String>) {
-        if (args.size < 4) {
-            println("Usage: java -jar $jarFileName add <type> <domain/subdomain> <token> [<enableIpv4> <enableIpv6> <delayTime> <retryDelayTime> <networkInterfaceName>]")
+    private fun alter(args: Array<String>) {
+        if (args.size < 5) {
+            println("Usage: java -jar $jarFileName alter <type> <domain/subdomain> <attribute> <value>")
             return
         }
 
-        val type = args[1]
-        val domain = args[2]
-        val token = args[3]
+        val dynamicDnsCli = getDynamicDnsCli(args)
+        dynamicDnsCli?.alter(args)
+    }
 
-        val enableIpv4 = args.getOrNull(4)?.toBooleanStrictOrNull() ?: true
-        val enableIpv6 = args.getOrNull(5)?.toBooleanStrictOrNull() ?: true
-        val updateDelayTime = args.getOrNull(6)?.toLongOrNull() ?: 300000L // Default 5 minutes
-        val retryDelayTime = args.getOrNull(7)?.toLongOrNull() ?: 60000L // Default 1 minute
-        val networkInterfaceNames = args.getOrNull(8)?.split(",") ?: emptyList()
+    private fun delete(args: Array<String>) {
+        if (args.size < 3) {
+            println("Usage: java -jar $jarFileName delete <type> <domain/subdomain>")
+            return
+        }
 
-        val dynamicDns = DynamicDns(
-            type = type,
-            domain = domain,
-            enableIpv4 = enableIpv4,
-            enableIpv6 = enableIpv6,
-            updateDelayTime = updateDelayTime,
-            retryDelayTime = retryDelayTime,
-            token = token,
-            networkInterfaceNames = networkInterfaceNames
-        )
-
-        repository.save(dynamicDns)
-        println("INFO: Dynamic DNS entry for $domain added successfully.")
+        val dynamicDnsCli = getDynamicDnsCli(args)
+        dynamicDnsCli?.delete(args)
     }
 
     private fun forceUpdate(args: Array<String>) {
-        val domain = args.getOrNull(2)
-        if (domain != null) {
-            val dynamicDns = repository.findByDomain(domain)
-            if (dynamicDns != null) {
-                service.updateIpAddress(dynamicDns)
-            } else {
-                println("ERROR: Dynamic DNS entry for $domain not found.")
-            }
-        } else {
+        if (args.size < 2) {
             repository.findAll().forEach { service.updateIpAddress(it) }
+        } else {
+            val dynamicDnsCli = getDynamicDnsCli(args)
+            dynamicDnsCli?.forceUpdate(args)
         }
     }
 
     private fun forceClean(args: Array<String>) {
-        val domain = args.getOrNull(2)
-        if (domain != null) {
-            val dynamicDns = repository.findByDomain(domain)
-            if (dynamicDns != null) {
-                service.cleanIpAddress(dynamicDns)
-            } else {
-                println("ERROR: Dynamic DNS entry for $domain not found.")
-            }
-        } else {
+        if (args.size < 2) {
             repository.findAll().forEach { service.cleanIpAddress(it) }
+        } else {
+            val dynamicDnsCli = getDynamicDnsCli(args)
+            dynamicDnsCli?.forceClean(args)
         }
     }
 
     private fun testAuth(args: Array<String>) {
-        val domain = args.getOrNull(2)
-        if (domain != null) {
-            val dynamicDns = repository.findByDomain(domain)
-            if (dynamicDns != null) {
-                service.testAuthentication(dynamicDns)
-            } else {
-                println("ERROR: Dynamic DNS entry for $domain not found.")
-            }
-        } else {
+        if (args.size < 2) {
             repository.findAll().forEach { service.testAuthentication(it) }
+        } else {
+            val dynamicDnsCli = getDynamicDnsCli(args)
+            dynamicDnsCli?.testAuth(args)
         }
     }
 
@@ -184,5 +115,35 @@ class Cli: KoinComponent {
                 Thread.sleep(it.updateDelayTime)
             }
         }
+    }
+
+    private fun help(args: Array<String>) {
+        if (args.size < 2) {
+            println("Usage: java -jar $jarFileName <command> [options]")
+            println()
+            println("Commands:")
+            println("java -jar $jarFileName help <type>\t\t\t\t\t\tShows the help menu for a specific type of dynamic DNS.")
+            println("java -jar $jarFileName add <type> <domain/subdomain> <...> [<enableIpv4> <enableIpv6> <updateDelayTime> <retryDelayTime>]\n\t\t\t\t\t\t\t\t\tAdds a new domain/subdomain.")
+            println("java -jar $jarFileName list [<type>]\t\t\t\t\t\tLists all subdomains.")
+            println("java -jar $jarFileName alter <type> <domain/subdomain> <attribute> <value>\tAlters the value of an attribute.")
+            println("java -jar $jarFileName delete <type> <domain/subdomain>\t\t\tDeletes a domain/subdomain.")
+            println("java -jar $jarFileName force-update [<type> <domain/subdomain>]\t\tForces the update of the IP address of a domain/subdomain, ignoring the updateDelayTime.")
+            println("java -jar $jarFileName force-clean [<type> <domain/subdomain>]\t\tForces the cleaning (set to NULL or 0.0.0.0, ::0) of the IP address of a domain/subdomain.")
+            println("java -jar $jarFileName test-auth [<type> <domain/subdomain>]\t\t\tTests the authentication with the dynamic dns provider.")
+            println("java -jar $jarFileName daemon\t\t\t\t\t\tRuns as a daemon.")
+        } else {
+            val dynamicDnsCli = getDynamicDnsCli(args)
+            dynamicDnsCli?.help(args)
+        }
+    }
+
+    private fun getDynamicDnsCli(args: Array<String>): DynamicDnsCli? {
+        val type = args[1]
+        val dynamicDnsCli = dynamicDnsCli.find { it.getType() == type }
+        if (dynamicDnsCli == null) {
+            println("ERROR: Unknown type: $type")
+            return null
+        }
+        return dynamicDnsCli
     }
 }

@@ -1,5 +1,7 @@
 package io.github.henriquemcc.dduc
 
+import io.github.henriquemcc.dduc.cli.DuckDnsCli
+import io.github.henriquemcc.dduc.cli.DynamicDnsCli
 import io.github.henriquemcc.dduc.repository.DynamicDnsRepository
 import io.github.henriquemcc.dduc.repository.DynamicDnsRepositoryImpl
 import io.github.henriquemcc.dduc.service.DynamicDnsService
@@ -14,5 +16,6 @@ val koinModule = module {
     single<DynamicDnsRepository> { DynamicDnsRepositoryImpl() }
     single<NetworkService> { NetworkServiceImpl() }
     factory<DynamicDnsProvider> { DuckDnsProvider() } // Register GenericDynamicDnsProvider
+    factory<DynamicDnsCli> { DuckDnsCli(get(), get()) }
     single<DynamicDnsService> { DynamicDnsServiceImpl(getAll(), get()) } // Inject all DynamicDnsProviders
 }

@@ -7,4 +7,5 @@ interface DynamicDnsRepository {
     fun findAll(): List<DynamicDns>
     fun findByDomain(domain: String): DynamicDns?
     fun delete(domain: String)
+    fun findByType(type: String): List<DynamicDns>
 }

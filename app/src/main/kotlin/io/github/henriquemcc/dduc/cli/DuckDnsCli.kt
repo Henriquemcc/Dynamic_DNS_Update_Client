@@ -76,10 +76,10 @@ class DuckDnsCli(
         println("java -jar $jarFileName help DuckDns\n\t\t\t\t\t\t\t\t\tShows this help menu.")
         println("java -jar $jarFileName add DuckDns <subdomain> <token> [<enableIpv4> <enableIpv6> <updateDelayTime> <retryDelayTime>]\n\t\t\t\t\t\t\t\t\tAdds a new DuckDns subdomain.")
         println("java -jar $jarFileName list DuckDns\t\t\t\t\t\tLists all DuckDns subdomains.")
-        println("java -jar $jarFileName alter DuckDns <subdomain> <attribute> <value>\tAlters the value of a DuckDns subdomain attribute.")
-        println("java -jar $jarFileName delete DuckDns <subdomain>\t\t\tDeletes a DuckDns subdomain.")
-        println("java -jar $jarFileName force-update DuckDns [<subdomain>]\t\tForces the update of the IP address of a DuckDns subdomain, ignoring the updateDelayTime.")
-        println("java -jar $jarFileName force-clean DuckDns [<subdomain>]\t\tForces the cleaning of the IP address of a DuckDns subdomain.")
+        println("java -jar $jarFileName alter DuckDns <subdomain> <attribute> <value>\t\tAlters the value of a DuckDns subdomain attribute.")
+        println("java -jar $jarFileName delete DuckDns <subdomain>\t\t\t\tDeletes a DuckDns subdomain.")
+        println("java -jar $jarFileName force-update DuckDns [<subdomain>]\t\t\tForces the update of the IP address of a DuckDns subdomain, ignoring the updateDelayTime.")
+        println("java -jar $jarFileName force-clean DuckDns [<subdomain>]\t\t\tForces the cleaning of the IP address of a DuckDns subdomain.")
         println("java -jar $jarFileName test-auth DuckDns [<subdomain>]\t\t\tTests the authentication with DuckDns.")
     }
 

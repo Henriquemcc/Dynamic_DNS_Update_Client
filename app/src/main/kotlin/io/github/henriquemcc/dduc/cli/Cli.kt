@@ -61,8 +61,8 @@ class Cli: KoinComponent {
         val updatedDynamicDns = when (attribute) {
             "enableIpv4" -> dynamicDns.copy(enableIpv4 = value.toBooleanStrict())
             "enableIpv6" -> dynamicDns.copy(enableIpv6 = value.toBooleanStrict())
-            "updateDelayTime" -> dynamicDns.copy(updateDelayTime = Duration.parse(value))
-            "retryDelayTime" -> dynamicDns.copy(retryDelayTime = Duration.parse(value))
+            "updateDelayTime" -> dynamicDns.copy(updateDelayTime = value.toLong())
+            "retryDelayTime" -> dynamicDns.copy(retryDelayTime = value.toLong())
             "token" -> dynamicDns.copy(token = value)
             "networkInterfaceName" -> dynamicDns.copy(networkInterfaceNames = value.split(","))
             else -> {
@@ -99,8 +99,8 @@ class Cli: KoinComponent {
 
         val enableIpv4 = args.getOrNull(4)?.toBooleanStrictOrNull() ?: true
         val enableIpv6 = args.getOrNull(5)?.toBooleanStrictOrNull() ?: true
-        val updateDelayTime = Duration.parse(args[6])
-        val retryDelayTime = Duration.parse(args[7])
+        val updateDelayTime = args.getOrNull(6)?.toLongOrNull() ?: 300000L // Default 5 minutes
+        val retryDelayTime = args.getOrNull(7)?.toLongOrNull() ?: 60000L // Default 1 minute
         val networkInterfaceNames = args.getOrNull(8)?.split(",") ?: emptyList()
 
         val dynamicDns = DynamicDns(
@@ -165,7 +165,7 @@ class Cli: KoinComponent {
         while (true) {
             repository.findAll().forEach {
                 service.updateIpAddress(it)
-                Thread.sleep(it.updateDelayTime.toMillis())
+                Thread.sleep(it.updateDelayTime)
             }
         }
     }

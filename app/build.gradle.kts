@@ -11,6 +11,8 @@ plugins {
     // Apply the Kotlinx Serialization plugin
     alias(libs.plugins.kotlin.serialization)
 
+    id("com.netflix.nebula.ospackage") version "12.3.0"
+
     // Apply the application plugin to add support for building a CLI application in Java.
     application
 }

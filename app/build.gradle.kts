@@ -78,7 +78,4 @@ ospackage {
     release = "1"
     archStr = "NOARCH"
     os = Os.LINUX
-
-    // Entering directory
-    into("/opt/dduc")
 }

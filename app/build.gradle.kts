@@ -79,9 +79,6 @@ ospackage {
     archStr = "NOARCH"
     os = Os.LINUX
 
-    // Adding dependencies
-    requires("java-latest-openjdk-headless")
-
     // Entering directory
     into("/opt/dduc")
 }

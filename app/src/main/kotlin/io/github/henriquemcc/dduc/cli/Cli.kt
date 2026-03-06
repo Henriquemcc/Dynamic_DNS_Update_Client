@@ -6,7 +6,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.io.File
 
-class Cli: KoinComponent {
+class Cli : KoinComponent {
     private val repository: DynamicDnsRepository by inject()
     private val service: DynamicDnsService by inject()
     private val dynamicDnsCli: List<DynamicDnsCli> by inject()
@@ -109,11 +109,14 @@ class Cli: KoinComponent {
 
     private fun daemon() {
         println("INFO: Running as a daemon...")
-        while (true) {
-            repository.findAll().forEach {
-                service.updateIpAddress(it)
-                Thread.sleep(it.updateDelayTime)
+        repository.findAll().forEach {
+            val thread = object : Thread() {
+                override fun run() {
+                    service.updateIpAddress(it)
+                    sleep(it.updateDelayTime)
+                }
             }
+            thread.start()
         }
     }
 

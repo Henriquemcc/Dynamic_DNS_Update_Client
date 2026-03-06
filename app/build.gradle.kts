@@ -92,8 +92,8 @@ tasks.named<Deb>("buildDeb") {
     vendor = maintainer
     license = "EUPL-1.2"
     requires("java-common")
-    postInstall("../scripts/deb/postinstall.sh")
-    preUninstall("../scripts/deb/preuninstall.sh")
+    postInstall(file("../scripts/deb/postinstall.sh"))
+    preUninstall(file("../scripts/deb/preuninstall.sh"))
 
     // Copying the .jar to the .deb package
     from(tasks.jar.get().outputs.files) {
@@ -109,8 +109,8 @@ tasks.named<Rpm>("buildRpm") {
     vendor = packager
     license = "EUPL-1.2"
     requires("(java-latest-openjdk-headless or java-21-openjdk-headless or java-25-openjdk-headless or java-17-openjdk-headless)")
-    postInstall("../scripts/rpm/postinstall.sh")
-    preUninstall("../scripts/rpm/preuninstall.sh")
+    postInstall(file("../scripts/rpm/postinstall.sh"))
+    preUninstall(file("../scripts/rpm/preuninstall.sh"))
 
     // Copying the .jar to the .rpm package
     from(tasks.jar.get().outputs.files) {

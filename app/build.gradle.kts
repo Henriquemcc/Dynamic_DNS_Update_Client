@@ -108,7 +108,7 @@ tasks.named<Rpm>("buildRpm") {
     packager = "Henrique Mendonça Castelar Campos <henriquemendonacastelar@gmail.com>"
     vendor = packager
     license = "EUPL-1.2"
-    requires("java-latest-openjdk-headless")
+    requires("(java-latest-openjdk-headless or java-21-openjdk-headless or java-25-openjdk-headless or java-17-openjdk-headless)")
     postInstall("../scripts/rpm/postinstall.sh")
     preUninstall("../scripts/rpm/preuninstall.sh")
 

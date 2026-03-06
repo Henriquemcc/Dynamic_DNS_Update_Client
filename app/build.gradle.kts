@@ -92,6 +92,7 @@ tasks.named<Deb>("buildDeb") {
     vendor = maintainer
     license = "EUPL-1.2"
     requires("java-common")
+    postInstall("scripts/deb/postinstall.sh")
 }
 
 tasks.named<Rpm>("buildRpm") {
@@ -101,4 +102,5 @@ tasks.named<Rpm>("buildRpm") {
     vendor = packager
     license = "EUPL-1.2"
     requires("java-latest-openjdk-headless")
+    postInstall("scripts/rpm/postinstall.sh")
 }

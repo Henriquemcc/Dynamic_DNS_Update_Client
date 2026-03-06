@@ -1,3 +1,6 @@
+import com.netflix.gradle.plugins.deb.Deb
+import com.netflix.gradle.plugins.rpm.Rpm
+import com.sun.imageio.plugins.jpeg.JPEG.vendor
 import org.redline_rpm.header.Os
 
 /*
@@ -78,4 +81,24 @@ ospackage {
     release = "1"
     archStr = "NOARCH"
     os = Os.LINUX
+}
+
+// DEB Package Configuration
+tasks.named<Deb>("buildDeb") {
+    archStr = "all"
+    distribution = "stable"
+    priority = "optional"
+    maintainer = "Henrique Mendonça Castelar Campos <henriquemendonacastelar@gmail.com>"
+    vendor = maintainer
+    license = "EUPL-1.2"
+    requires("java-common")
+}
+
+tasks.named<Rpm>("buildRpm") {
+    archStr = "NOARCH"
+    distribution = "el9"
+    packager = "Henrique Mendonça Castelar Campos <henriquemendonacastelar@gmail.com>"
+    vendor = packager
+    license = "EUPL-1.2"
+    requires("java-latest-openjdk-headless")
 }

@@ -27,6 +27,12 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
+      - name: Generate installation package for Red Hat based distros
+        run: ./gradlew buildRpm
+
+      - name: Generate installation package for Debian based distros
+        run: ./gradlew buildDeb
+
       - name: Create GitHub Release
         id: create_release
         uses: softprops/action-gh-release@v2
@@ -35,6 +41,8 @@ jobs:
         with:
           files: |
             build/libs/*.jar
+            build/distributions/*.rpm
+            build/distributions/*.deb
           draft: false
           prerelease: false
           generate_release_notes: true

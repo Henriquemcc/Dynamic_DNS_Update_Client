@@ -112,8 +112,10 @@ class Cli : KoinComponent {
         repository.findAll().forEach {
             val thread = object : Thread() {
                 override fun run() {
-                    service.updateIpAddress(it)
-                    sleep(it.updateDelayTime)
+                    while (true) {
+                        service.updateIpAddress(it)
+                        sleep(it.updateDelayTime)
+                    }
                 }
             }
             thread.start()

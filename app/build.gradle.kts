@@ -91,7 +91,7 @@ tasks.named<Deb>("buildDeb") {
     maintainer = "Henrique Mendonça Castelar Campos <henriquemendonacastelar@gmail.com>"
     vendor = maintainer
     license = "EUPL-1.2"
-    requires("java-common")
+    requires("default-jre-headless | openjdk-17-jre-headless | openjdk-21-jre-headless")
     postInstall(file("../scripts/deb/postinstall.sh"))
     preUninstall(file("../scripts/deb/preuninstall.sh"))
 

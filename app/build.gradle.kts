@@ -94,6 +94,12 @@ tasks.named<Deb>("buildDeb") {
     requires("java-common")
     postInstall("../scripts/deb/postinstall.sh")
     preUninstall("../scripts/deb/preuninstall.sh")
+
+    // Copying the .jar to the .deb package
+    from(tasks.jar.get().outputs.files) {
+        into("/opt/dduc")
+        rename { "app.jar" }
+    }
 }
 
 tasks.named<Rpm>("buildRpm") {
@@ -105,4 +111,10 @@ tasks.named<Rpm>("buildRpm") {
     requires("java-latest-openjdk-headless")
     postInstall("../scripts/rpm/postinstall.sh")
     preUninstall("../scripts/rpm/preuninstall.sh")
+
+    // Copying the .jar to the .rpm package
+    from(tasks.jar.get().outputs.files) {
+        into("/opt/dduc")
+        rename { "app.jar" }
+    }
 }

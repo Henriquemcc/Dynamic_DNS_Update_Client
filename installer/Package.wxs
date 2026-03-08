@@ -1,0 +1,26 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+    <Package Name="Dynamic DNS Update Client" Manufacturer="Henrique Mendonça Castelar Campos" Version="0.0.1">
+    <MediaTemplate EmbedCab="yes" />
+
+    <Feature Id="Main">
+      <ComponentGroupRef Id="AppComponents" />
+    </Feature>
+
+    <!-- Check of the environment variable JAVA_HOME is defined. If it is not, blocks the installation. -->
+    <Launch Message="Java Runtime Environment version 17 or later is needed to install this application. To download, access: https://adoptium.net/temurin/releases" Condition="Installed OR %JAVA_HOME" />
+  </Package>
+
+  <Fragment>
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="INSTALLFOLDER" Name="Dynamic DNS Update Client" />
+    </StandardDirectory>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="AppComponents" Directory="INSTALLFOLDER">
+      <Component>
+        <File Source="..\app\build\libs\app.jar" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

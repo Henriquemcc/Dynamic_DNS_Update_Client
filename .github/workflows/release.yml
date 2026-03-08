@@ -40,9 +40,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: |
-            build/libs/*.jar
-            build/distributions/*.rpm
-            build/distributions/*.deb
+            app/build/libs/*.jar
+            app/build/distributions/*.rpm
+            app/build/distributions/*.deb
           draft: false
           prerelease: false
           generate_release_notes: true

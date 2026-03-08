@@ -71,7 +71,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-      - name: Generate installation package for Windows based distros
+      - name: Generate installation package for Windows
         working-directory: installer
         run: powershell.exe -File .\Build.ps1 -Version ${{ github.ref_name }}
 

@@ -7,4 +7,4 @@ param(
 $ProductVersion = $Version.TrimStart('v')
 
 # Building MSI Package
-dotnet build /p:ProductVersion=$ProductVersion
+dotnet build /p:ProductVersion=$ProductVersion /p:DefineConstants="ProductVersion=$ProductVersion"

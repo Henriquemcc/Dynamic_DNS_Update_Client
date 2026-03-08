@@ -1,5 +1,5 @@
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
-    <Package Name="Dynamic DNS Update Client" Manufacturer="Henrique Mendonça Castelar Campos" Version="!(bind.PackageVersion)">
+    <Package Name="Dynamic DNS Update Client" Manufacturer="Henrique Mendonça Castelar Campos" Version="$(var.ProductVersion)" UpgradeCode="5368c52b-c334-4269-a36c-1d8b2d615e90">
     <MediaTemplate EmbedCab="yes" />
 
     <Feature Id="Main">

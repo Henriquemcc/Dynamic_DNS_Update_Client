@@ -6,7 +6,7 @@
       <ComponentGroupRef Id="AppComponents" />
     </Feature>
 
-    <!-- Check of the environment variable JAVA_HOME is defined. If it is not, blocks the installation. -->
+    <!-- Checks if the environment variable JAVA_HOME is defined. If it's not, blocks the installation. -->
     <Launch Message="Java Runtime Environment version 17 or later is needed to install this application. To download, access: https://adoptium.net/temurin/releases" Condition="Installed OR %JAVA_HOME" />
   </Package>
 

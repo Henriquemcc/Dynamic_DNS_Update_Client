@@ -100,6 +100,11 @@ tasks.named<Deb>("buildDeb") {
         into("/opt/dduc")
         rename { "app.jar" }
     }
+
+    // Copying the dduc script to the .deb package
+    from("../scripts/deb/dduc") {
+        into("/usr/bin")
+    }
 }
 
 tasks.named<Rpm>("buildRpm") {
@@ -116,6 +121,11 @@ tasks.named<Rpm>("buildRpm") {
     from(tasks.jar.get().outputs.files) {
         into("/opt/dduc")
         rename { "app.jar" }
+    }
+
+    // Copying the dduc script to the .rpm package
+    from("../scripts/deb/dduc") {
+        into("/usr/bin")
     }
 }
 

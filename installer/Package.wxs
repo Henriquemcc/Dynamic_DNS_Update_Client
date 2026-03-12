@@ -1,5 +1,8 @@
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
-    <Package Name="Dynamic DNS Update Client" Manufacturer="Henrique Mendonça Castelar Campos" Version="$(var.ProductVersion)" UpgradeCode="5368c52b-c334-4269-a36c-1d8b2d615e90">
+    <Package Name="Dynamic DNS Update Client"
+    Manufacturer="Henrique Mendonça Castelar Campos"
+    Version="$(var.ProductVersion)"
+    UpgradeCode="5368c52b-c334-4269-a36c-1d8b2d615e90">
     
     <!-- Manages the removal of old versions automatically -->
     <MajorUpgrade DowngradeErrorMessage="A recent version is already installed." />
@@ -24,6 +27,26 @@
     <ComponentGroup Id="AppComponents" Directory="INSTALLFOLDER">
       <Component>
         <File Source="..\app\build\libs\app.jar" />
+      </Component>
+      <Component Id="ServiceComponent">
+        <File Source="..\scripts\msi\ddns-service.bat"/>
+        <ServiceInstall
+        Id="DDUCServiceInstaller"
+        Type="ownProcess"
+        Name="DynamicDnsUpdateClientService"
+        DisplayName="Dynamic DNS Update Client"
+        Description="Automatically updates the IP address of Dynamic DNS services."
+        Start="auto"
+        ErrorControl="normal"
+        Account="LocalSystem"
+        Interactive="no"/>
+        <ServiceControl
+        Id="DDUCStartService"
+        Name="DynamicDnsUpdateClientService"
+        Start="install"
+        Stop="both"
+        Remove="uninstall"
+        Wait="yes"/>
       </Component>
     </ComponentGroup>
   </Fragment>

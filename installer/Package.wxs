@@ -36,7 +36,8 @@
         Start="auto"
         ErrorControl="normal"
         Account="LocalSystem"
-        Interactive="no"/>
+        Interactive="no"
+        Arguments="daemon" />
         <ServiceControl
         Id="DDUCStartService"
         Name="DynamicDnsUpdateClientService"

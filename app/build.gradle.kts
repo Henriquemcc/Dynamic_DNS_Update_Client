@@ -1,5 +1,6 @@
 import com.netflix.gradle.plugins.deb.Deb
 import com.netflix.gradle.plugins.rpm.Rpm
+import java.net.URL
 import org.redline_rpm.header.Os
 
 /*
@@ -16,9 +17,6 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 
     id("com.netflix.nebula.ospackage") version "12.3.0"
-
-    // Plugin for the generation of the .exe file
-    id("edu.sc.seis.launch4j") version "4.0.0"
 
     // Apply the application plugin to add support for building a CLI application in Java.
     application
@@ -121,8 +119,67 @@ tasks.named<Rpm>("buildRpm") {
     }
 }
 
-launch4j {
-    mainClassName = "io.github.henriquemcc.dduc.AppKt"
-    headerType="console"
-    outfile = "app.exe"
+val downloadWinSw = tasks.register("downloadWinSw") {
+    group = "build setup"
+    description = "Downloads the WinSW executables."
+
+    val winSwVersion = "v2.12.0"
+    val downloadDir = layout.buildDirectory.dir("winsw-download")
+    val downloads = mapOf(
+        "WinSW-x64.exe" to "https://github.com/winsw/winsw/releases/download/$winSwVersion/WinSW-x64.exe",
+        "WinSW-x86.exe" to "https://github.com/winsw/winsw/releases/download/$winSwVersion/WinSW-x86.exe"
+    )
+
+    outputs.dir(downloadDir)
+
+    doLast {
+        val targetDir = downloadDir.get().asFile
+        targetDir.mkdirs()
+
+        downloads.forEach { (fileName, urlString) ->
+            val targetFile = targetDir.resolve(fileName)
+            if (!targetFile.exists()) {
+                logger.lifecycle("Downloading $fileName from $urlString...")
+                URL(urlString).openStream().use { input ->
+                    targetFile.outputStream().use { output ->
+                        input.copyTo(output)
+                    }
+                }
+            } else {
+                logger.lifecycle("$fileName already exists. Skipping download.")
+            }
+        }
+    }
+}
+
+tasks.register<Copy>("prepareInstallerFiles") {
+    group = "distribution"
+    description = "Gathers all files needed for the WiX installer into a staging directory."
+    dependsOn(tasks.jar, downloadWinSw)
+
+    // 1. Copy the fat JAR
+    from(tasks.jar) {
+        rename { "app.jar" }
+    }
+
+    // 2. Copy WinSW files from the download task and the local XML config
+    // Using the 64-bit version for this installer
+    from(downloadWinSw) {
+
+        include("WinSW-x64.exe")
+        rename("WinSW-x64.exe", "dduc-service-x64.exe")
+    }
+    // Using the 32-bit version for this installer
+    from(downloadWinSw) {
+        include("WinSW-x86.exe")
+        rename("WinSW-x86.exe", "dduc-service-x86.exe")
+    }
+
+    from("../installer/winsw") {
+        // The XML config still lives locally as it's part of your project's source
+        include("dduc-service.xml")
+    }
+
+    // 3. Put everything into a staging directory that WiX can use
+    into(layout.buildDirectory.dir("installer-stage"))
 }

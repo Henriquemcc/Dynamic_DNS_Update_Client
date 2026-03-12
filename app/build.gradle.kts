@@ -177,7 +177,7 @@ tasks.register<Copy>("prepareInstallerFiles") {
 
     from("../installer/winsw") {
         // The XML config still lives locally as it's part of your project's source
-        include("dduc-service.xml")
+        include("../scripts/msi/dduc-service.xml")
     }
 
     // 3. Put everything into a staging directory that WiX can use

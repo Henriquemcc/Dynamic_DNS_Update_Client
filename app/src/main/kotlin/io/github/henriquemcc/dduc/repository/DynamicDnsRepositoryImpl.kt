@@ -12,7 +12,14 @@ import java.nio.file.Paths
 
 class DynamicDnsRepositoryImpl: DynamicDnsRepository {
 
-    private val configFolder = Paths.get(System.getProperty("user.home"), ".dduc").toString()
+    private val configFolder = Paths.get(
+        when {
+            System.getProperty("os.name").lowercase().contains("win") -> System.getenv("ProgramData")
+            System.getProperty("os.name").lowercase().contains("mac") -> "/Library/Application Support"
+            else -> "/etc" // Default for Linux/Unix
+        },
+        "DynamicDnsUpdateClient"
+    ).toString()
     private val configFile = File(configFolder, "config.json")
 
     private val json = Json {

@@ -29,6 +29,9 @@ class Cli : KoinComponent {
             "test-auth" -> testAuth(args)
             "daemon" -> daemon()
             "help" -> help(args)
+            "-h" -> help(args)
+            "--help" -> help(args)
+            "/?" -> help(args)
             else -> println("Unknown command: $command")
         }
     }

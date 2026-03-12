@@ -26,7 +26,7 @@
   <Fragment>
     <ComponentGroup Id="AppComponents" Directory="INSTALLFOLDER">
       <Component Id="ServiceComponent">
-        <File Source="../app/build/launch4j/app.exe"/>
+        <File Source="../app/build/launch4j/app.exe" KeyPath="yes" />
         <ServiceInstall
         Id="DDUCServiceInstaller"
         Type="ownProcess"
@@ -41,7 +41,6 @@
         <ServiceControl
         Id="DDUCStartService"
         Name="DynamicDnsUpdateClientService"
-        Start="install"
         Stop="both"
         Remove="uninstall"
         Wait="yes"/>

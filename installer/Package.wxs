@@ -25,11 +25,8 @@
 
   <Fragment>
     <ComponentGroup Id="AppComponents" Directory="INSTALLFOLDER">
-      <Component>
-        <File Source="..\app\build\libs\app.jar" />
-      </Component>
       <Component Id="ServiceComponent">
-        <File Source="..\scripts\msi\ddns-service.bat"/>
+        <File Source="../app/build/launch4j/app.exe"/>
         <ServiceInstall
         Id="DDUCServiceInstaller"
         Type="ownProcess"

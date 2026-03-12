@@ -1,6 +1,6 @@
 import com.netflix.gradle.plugins.deb.Deb
 import com.netflix.gradle.plugins.rpm.Rpm
-import java.net.URL
+import java.net.URI
 import org.redline_rpm.header.Os
 
 /*
@@ -150,7 +150,7 @@ val downloadWinSw = tasks.register("downloadWinSw") {
             val targetFile = targetDir.resolve(fileName)
             if (!targetFile.exists()) {
                 logger.lifecycle("Downloading $fileName from $urlString...")
-                URL(urlString).openStream().use { input ->
+                URI(urlString).toURL().openStream().use { input ->
                     targetFile.outputStream().use { output ->
                         input.copyTo(output)
                     }

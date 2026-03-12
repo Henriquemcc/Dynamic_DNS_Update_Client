@@ -71,8 +71,11 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-      - name: Build .exe file with Gradle
-        run: ./gradlew createExe
+      - name: Downloads WinSW executables with Gradle
+        run: ./gradlew downloadWinSw
+
+      - name: Prepares installer files with Gradle
+        run: ./gradlew prepareInstallerFiles
 
       - name: Generate installation package for Windows
         working-directory: installer

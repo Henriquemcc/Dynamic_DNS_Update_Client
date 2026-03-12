@@ -9,7 +9,6 @@ class DuckDnsCli(
     private val repository: DynamicDnsRepository,
     private val service: DynamicDnsService
     ): DynamicDnsCli {
-    private val jarFileName = File(object {}.javaClass.protectionDomain.codeSource.location.path).name
 
     override fun add(args: Array<String>) {
         val type = args[1]
@@ -70,17 +69,17 @@ class DuckDnsCli(
     }
 
     override fun help(args: Array<String>) {
-        println("Usage: java -jar $jarFileName <command> [options]")
+        println("Usage: dduc <command> [options]")
         println()
         println("Commands:")
-        println("java -jar $jarFileName help DuckDns\n\t\t\t\t\t\t\t\t\tShows this help menu.")
-        println("java -jar $jarFileName add DuckDns <subdomain> <token> [<enableIpv4> <enableIpv6> <updateDelayTime> <retryDelayTime>]\n\t\t\t\t\t\t\t\t\tAdds a new DuckDns subdomain.")
-        println("java -jar $jarFileName list DuckDns\t\t\t\t\t\tLists all DuckDns subdomains.")
-        println("java -jar $jarFileName alter DuckDns <subdomain> <attribute> <value>\t\tAlters the value of a DuckDns subdomain attribute.")
-        println("java -jar $jarFileName delete DuckDns <subdomain>\t\t\t\tDeletes a DuckDns subdomain.")
-        println("java -jar $jarFileName force-update DuckDns [<subdomain>]\t\t\tForces the update of the IP address of a DuckDns subdomain, ignoring the updateDelayTime.")
-        println("java -jar $jarFileName force-clean DuckDns [<subdomain>]\t\t\tForces the cleaning of the IP address of a DuckDns subdomain.")
-        println("java -jar $jarFileName test-auth DuckDns [<subdomain>]\t\t\tTests the authentication with DuckDns.")
+        println("dduc help DuckDns\n\t\t\t\t\t\t\t\tShows this help menu.")
+        println("dduc add DuckDns <subdomain> <token> [<enableIpv4> <enableIpv6> <updateDelayTime> <retryDelayTime>]\n\t\t\t\t\t\t\t\tAdds a new DuckDns subdomain.")
+        println("dduc list DuckDns\t\t\t\t\t\tLists all DuckDns subdomains.")
+        println("dduc alter DuckDns <subdomain> <attribute> <value>\t\tAlters the value of a DuckDns subdomain attribute.")
+        println("dduc delete DuckDns <subdomain>\t\t\t\t\tDeletes a DuckDns subdomain.")
+        println("dduc force-update DuckDns [<subdomain>]\t\t\t\tForces the update of the IP address of a DuckDns subdomain, ignoring the updateDelayTime.")
+        println("dduc force-clean DuckDns [<subdomain>]\t\t\t\tForces the cleaning of the IP address of a DuckDns subdomain.")
+        println("dduc test-auth DuckDns [<subdomain>]\t\t\t\tTests the authentication with DuckDns.")
     }
 
     override fun testAuth(args: Array<String>) {

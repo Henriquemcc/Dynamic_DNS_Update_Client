@@ -10,11 +10,10 @@ class Cli : KoinComponent {
     private val repository: DynamicDnsRepository by inject()
     private val service: DynamicDnsService by inject()
     private val dynamicDnsCli: List<DynamicDnsCli> by inject()
-    private val jarFileName = File(object {}.javaClass.protectionDomain.codeSource.location.path).name
 
     fun run(args: Array<String>) {
         if (args.isEmpty()) {
-            println("Usage: java -jar $jarFileName <command> [options]")
+            println("Usage: dduc <command> [options]")
             return
         }
 
@@ -38,7 +37,7 @@ class Cli : KoinComponent {
 
     private fun add(args: Array<String>) {
         if (args.size < 4) {
-            println("Usage: java -jar $jarFileName add <type> <domain/subdomain> <...> [<enableIpv4> <enableIpv6> <delayTime> <retryDelayTime> <networkInterfaceName>]")
+            println("Usage: dduc add <type> <domain/subdomain> <...> [<enableIpv4> <enableIpv6> <delayTime> <retryDelayTime> <networkInterfaceName>]")
             return
         }
 
@@ -65,7 +64,7 @@ class Cli : KoinComponent {
 
     private fun alter(args: Array<String>) {
         if (args.size < 5) {
-            println("Usage: java -jar $jarFileName alter <type> <domain/subdomain> <attribute> <value>")
+            println("Usage: dduc alter <type> <domain/subdomain> <attribute> <value>")
             return
         }
 
@@ -75,7 +74,7 @@ class Cli : KoinComponent {
 
     private fun delete(args: Array<String>) {
         if (args.size < 3) {
-            println("Usage: java -jar $jarFileName delete <type> <domain/subdomain>")
+            println("Usage: dduc delete <type> <domain/subdomain>")
             return
         }
 
@@ -127,18 +126,18 @@ class Cli : KoinComponent {
 
     private fun help(args: Array<String>) {
         if (args.size < 2) {
-            println("Usage: java -jar $jarFileName <command> [options]")
+            println("Usage: dduc <command> [options]")
             println()
             println("Commands:")
-            println("java -jar $jarFileName help <type>\t\t\t\t\t\tShows the help menu for a specific type of dynamic DNS.")
-            println("java -jar $jarFileName add <type> <domain/subdomain> <...> [<enableIpv4> <enableIpv6> <updateDelayTime> <retryDelayTime>]\n\t\t\t\t\t\t\t\t\tAdds a new domain/subdomain.")
-            println("java -jar $jarFileName list [<type>]\t\t\t\t\t\tLists all subdomains.")
-            println("java -jar $jarFileName alter <type> <domain/subdomain> <attribute> <value>\tAlters the value of an attribute.")
-            println("java -jar $jarFileName delete <type> <domain/subdomain>\t\t\tDeletes a domain/subdomain.")
-            println("java -jar $jarFileName force-update [<type> <domain/subdomain>]\t\tForces the update of the IP address of a domain/subdomain, ignoring the updateDelayTime.")
-            println("java -jar $jarFileName force-clean [<type> <domain/subdomain>]\t\tForces the cleaning (set to NULL or 0.0.0.0, ::0) of the IP address of a domain/subdomain.")
-            println("java -jar $jarFileName test-auth [<type> <domain/subdomain>]\t\t\tTests the authentication with the dynamic dns provider.")
-            println("java -jar $jarFileName daemon\t\t\t\t\t\tRuns as a daemon.")
+            println("dduc help <type>\t\t\t\t\t\tShows the help menu for a specific type of dynamic DNS.")
+            println("dduc add <type> <domain/subdomain> <...> [<enableIpv4> <enableIpv6> <updateDelayTime> <retryDelayTime>]\n\t\t\t\t\t\t\t\tAdds a new domain/subdomain.")
+            println("dduc list [<type>]\t\t\t\t\t\tLists all subdomains.")
+            println("dduc alter <type> <domain/subdomain> <attribute> <value>\tAlters the value of an attribute.")
+            println("dduc delete <type> <domain/subdomain>\t\t\t\tDeletes a domain/subdomain.")
+            println("dduc force-update [<type> <domain/subdomain>]\t\t\tForces the update of the IP address of a domain/subdomain, ignoring the updateDelayTime.")
+            println("dduc force-clean [<type> <domain/subdomain>]\t\t\tForces the cleaning (set to NULL or 0.0.0.0, ::0) of the IP address of a domain/subdomain.")
+            println("dduc test-auth [<type> <domain/subdomain>]\t\t\tTests the authentication with the dynamic dns provider.")
+            println("dduc daemon\t\t\t\t\t\t\tRuns as a daemon.")
         } else {
             val dynamicDnsCli = getDynamicDnsCli(args)
             dynamicDnsCli?.help(args)

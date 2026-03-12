@@ -1,0 +1,11 @@
+<service>
+    <id>dduc</id>
+    <name>DynamicDnsUpdateClientService</name>
+    <description>Automatically updates the IP address of Dynamic DNS services.</description>
+    <executable>java</executable>
+    <arguments>-jar "%BASE%\app.jar" daemon</arguments>
+    <log mode="roll-by-size">
+        <sizeThreshold>10240</sizeThreshold> <!-- 10 MB -->
+        <keepFiles>8</keepFiles>
+    </log>
+</service>

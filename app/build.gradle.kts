@@ -1,6 +1,5 @@
 import com.netflix.gradle.plugins.deb.Deb
 import com.netflix.gradle.plugins.rpm.Rpm
-import com.sun.imageio.plugins.jpeg.JPEG.vendor
 import org.redline_rpm.header.Os
 
 /*
@@ -17,6 +16,9 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 
     id("com.netflix.nebula.ospackage") version "12.3.0"
+
+    // Plugin for the generation of the .exe file
+    id("edu.sc.seis.launch4j") version "4.0.0"
 
     // Apply the application plugin to add support for building a CLI application in Java.
     application
@@ -117,4 +119,10 @@ tasks.named<Rpm>("buildRpm") {
         into("/opt/dduc")
         rename { "app.jar" }
     }
+}
+
+launch4j {
+    mainClassName = "io.github.henriquemcc.dduc.AppKt"
+    headerType="console"
+    outfile = "app.exe"
 }

@@ -10,7 +10,10 @@
     <MediaTemplate EmbedCab="yes" />
 
     <Feature Id="Main">
-      <ComponentGroupRef Id="AppComponents" />
+      <ComponentRef Id="AppComponent_Jar" />
+      <ComponentRef Id="AppComponent_Xml" />
+      <ComponentRef Id="ServiceComponent_x64" />
+      <ComponentRef Id="ServiceComponent_x86" />
     </Feature>
 
     <!-- Checks if the environment variable JAVA_HOME is defined. If it's not, blocks the installation. -->
@@ -18,33 +21,38 @@
   </Package>
 
   <Fragment>
-    <StandardDirectory Id="ProgramFiles64Folder">
+    <!-- Use ProgramFilesFolder with a 32-bit package to correctly target 
+         C:\Program Files (x86) on 64-bit systems and C:\Program Files on 32-bit systems -->
+    <StandardDirectory Id="ProgramFilesFolder">
       <Directory Id="INSTALLFOLDER" Name="Dynamic DNS Update Client" />
     </StandardDirectory>
   </Fragment>
 
   <Fragment>
-    <ComponentGroup Id="AppComponents" Directory="INSTALLFOLDER">
-      <Component Id="ServiceComponent">
-        <File Source="../app/build/launch4j/app.exe" KeyPath="yes" />
-        <ServiceInstall
-        Id="DDUCServiceInstaller"
-        Type="ownProcess"
-        Name="DynamicDnsUpdateClientService"
-        DisplayName="Dynamic DNS Update Client"
-        Description="Automatically updates the IP address of Dynamic DNS services."
-        Start="auto"
-        ErrorControl="normal"
-        Account="LocalSystem"
-        Interactive="no"
-        Arguments="daemon" />
-        <ServiceControl
-        Id="DDUCStartService"
-        Name="DynamicDnsUpdateClientService"
-        Stop="both"
-        Remove="uninstall"
-        Wait="yes"/>
-      </Component>
-    </ComponentGroup>
+    <!-- Component for the application JAR file -->
+    <Component Id="AppComponent_Jar" Directory="INSTALLFOLDER">
+      <File Source="../app/build/installer-stage/app.jar" />
+    </Component>
+
+    <!-- Component for the WinSW XML configuration file -->
+    <Component Id="AppComponent_Xml" Directory="INSTALLFOLDER">
+      <File Source="../app/build/installer-stage/dduc-service.xml" />
+    </Component>
+  </Fragment>
+
+  <Fragment>
+    <!-- Component for the 64-bit service executable. Installs only on 64-bit Windows. -->
+    <Component Id="ServiceComponent_x64" Directory="INSTALLFOLDER" Condition="VersionNT64">
+      <File Id="ServiceExecutable_x64" Source="../app/build/installer-stage/dduc-service-x64.exe" Name="dduc-service.exe" KeyPath="yes" />
+      <ServiceInstall Id="ServiceInstaller_x64" Name="DynamicDnsUpdateClientService" DisplayName="Dynamic DNS Update Client" Description="Automatically updates the IP address of Dynamic DNS services." Type="ownProcess" Start="auto" ErrorControl="normal" Account="LocalSystem" />
+      <ServiceControl Id="ServiceControl_x64" Name="DynamicDnsUpdateClientService" Start="install" Stop="both" Remove="uninstall" Wait="yes" />
+    </Component>
+
+    <!-- Component for the 32-bit service executable. Installs only on 32-bit Windows. -->
+    <Component Id="ServiceComponent_x86" Directory="INSTALLFOLDER" Condition="NOT VersionNT64">
+      <File Id="ServiceExecutable_x86" Source="../app/build/installer-stage/dduc-service-x86.exe" Name="dduc-service.exe" KeyPath="yes" />
+      <ServiceInstall Id="ServiceInstaller_x86" Name="DynamicDnsUpdateClientService" DisplayName="Dynamic DNS Update Client" Description="Automatically updates the IP address of Dynamic DNS services." Type="ownProcess" Start="auto" ErrorControl="normal" Account="LocalSystem" />
+      <ServiceControl Id="ServiceControl_x86" Name="DynamicDnsUpdateClientService" Start="install" Stop="both" Remove="uninstall" Wait="yes" />
+    </Component>
   </Fragment>
 </Wix>

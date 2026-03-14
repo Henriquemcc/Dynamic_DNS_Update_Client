@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Executing Dynamic DNS Update Client
+java -jar /opt/dduc/app.jar "$@"

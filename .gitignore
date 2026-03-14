@@ -4,8 +4,5 @@
 # Ignore Gradle build output directory
 build
 
-# Ignore IntelliJ Idea project settings folder
-.idea
-
-# Ignore IntelliJ Idea running settings
-.run
+# Ignore Kotlin plugin data
+.kotlin

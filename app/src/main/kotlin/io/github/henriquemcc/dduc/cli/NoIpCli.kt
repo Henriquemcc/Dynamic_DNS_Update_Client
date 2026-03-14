@@ -75,17 +75,17 @@ class NoIpCli(
     }
 
     override fun help(args: Array<String>) {
-        println("Usage: java -jar $jarFileName <command> [options]")
+        println("Usage: dduc <command> [options]")
         println()
         println("Commands:")
-        println("java -jar $jarFileName help NoIp\n\t\t\t\t\t\t\t\t\tShows this help menu.")
-        println("java -jar $jarFileName add NoIp <domain> <username> <password> [<enableIpv4> <enableIpv6> <updateDelayTime> <retryDelayTime>]\n\t\t\t\t\t\t\t\t\tAdds a new NoIp domain.")
-        println("java -jar $jarFileName list NoIp\t\t\t\t\t\tLists all NoIp domains.")
-        println("java -jar $jarFileName alter NoIp <domain> <attribute> <value>\t\tAlters the value of a NoIp domain attribute.")
-        println("java -jar $jarFileName delete NoIp <domain>\t\t\t\tDeletes a NoIp domain.")
-        println("java -jar $jarFileName force-update NoIp [<domain>]\t\t\tForces the update of the IP address of a NoIp domain, ignoring the updateDelayTime.")
-        println("java -jar $jarFileName force-clean NoIp [<domain>]\t\t\tForces the cleaning of the IP address of a NoIp domain.")
-        println("java -jar $jarFileName test-auth NoIp [<domain>]\t\t\tTests the authentication with NoIp.")
+        println("dduc help NoIp\n\t\t\t\t\t\t\tShows this help menu.")
+        println("dduc add NoIp <domain> <username> <password> [<enableIpv4> <enableIpv6> <updateDelayTime> <retryDelayTime>]\n\t\t\t\t\t\t\tAdds a new NoIp domain.")
+        println("dduc list NoIp\t\t\t\t\t\tLists all NoIp domains.")
+        println("dduc alter NoIp <domain> <attribute> <value>\t\tAlters the value of a NoIp domain attribute.")
+        println("dduc delete NoIp <domain>\t\t\t\tDeletes a NoIp domain.")
+        println("dduc force-update NoIp [<domain>]\t\t\tForces the update of the IP address of a NoIp domain, ignoring the updateDelayTime.")
+        println("dduc force-clean NoIp [<domain>]\t\t\tForces the cleaning of the IP address of a NoIp domain.")
+        println("dduc test-auth NoIp [<domain>]\t\t\t\tTests the authentication with NoIp.")
     }
 
     override fun testAuth(args: Array<String>) {

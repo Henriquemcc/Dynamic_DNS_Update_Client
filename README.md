@@ -31,6 +31,21 @@ A lightweight Dynamic DNS (DDNS) client to automatically update domain and subdo
 
 To install this program, go to the [release page](https://github.com/Henriquemcc/Dynamic_DNS_Update_Client/releases) and download the installation package for your operating system.
 
+## Quick Start
+
+1. [Install the package for you operating system](#download-and-installation).
+2. Add your domain/subdomain:
+    - For DuckDNS subdomain: On a terminal or command prompt run ```dduc add DuckDns your-domain your-token```
+    - For No-IP domain/subdomain: On a terminal or command prompt run ```dduc add NoIp your-domain your-username your-password```
+3. Restart the Dynamic DNS Update Client service:
+   - On Linux (with Systemd): ```sudo systemctl restart dynamic-dns-update-client.service```
+   - On Windows (with Windows Service Manager):
+     - Open ```services.msc```.
+     - Open the service ```Dynamic DNS Update Client```.
+     - Click on the buttons ```Stop``` and then ```Start```.
+   - On Windows (with PowerShell):
+     - On PowerShell, as administrator, type: ```Restart-Service -Name DynamicDnsUpdateClientService```.
+
 ## Usage
 
 ### Command Line

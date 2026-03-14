@@ -1,7 +1,7 @@
 # Dynamic DNS Update Client
 
 ![GitHub License](https://img.shields.io/github/license/Henriquemcc/Dynamic_DNS_Update_Client)
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Henriquemcc/Dynamic_DNS_Update_Client/ci.yml)
+![GitHub Release Workflow Status](https://img.shields.io/github/actions/workflow/status/Henriquemcc/Dynamic_DNS_Update_Client/release.yml)
 ![GitHub release (latest by severity)](https://img.shields.io/github/v/release/Henriquemcc/Dynamic_DNS_Update_Client)
 ![Kotlin](https://img.shields.io/badge/kotlin-2.3.0-blue.svg?logo=kotlin)
 

@@ -1,6 +1,9 @@
 # Dynamic DNS Update Client
 
 ![GitHub License](https://img.shields.io/github/license/Henriquemcc/Dynamic_DNS_Update_Client)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Henriquemcc/Dynamic_DNS_Update_Client/ci.yml)
+![GitHub release (latest by severity)](https://img.shields.io/github/v/release/Henriquemcc/Dynamic_DNS_Update_Client)
+![Kotlin](https://img.shields.io/badge/kotlin-2.3.0-blue.svg?logo=kotlin)
 
 A lightweight Dynamic DNS (DDNS) client to automatically update domain and subdomain IP addresses across multiple providers.
 

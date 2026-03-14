@@ -23,7 +23,7 @@ Description: A program that updates the IP address of a domain/subdomain of a pr
 
 ## Non-Functional Requirements
 
-- The program must be written in Kotlin for Java Virtual Machine 8 with the framework Koin (for dependency injection).
+- The program must be written in Kotlin for Java Virtual Machine 17 with the framework Koin (for dependency injection).
 - The program must be built using Gradle KTS.
   - The Gradle KTS must have a task to run all the unit tests.
   - The Gradle KTS must have a task to generate a fat-jar with all dependencies included.

@@ -5,7 +5,7 @@ on:
       - 'v*'
 
 jobs:
-  build-linux:
+  build-and-release-linux:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -33,16 +33,21 @@ jobs:
       - name: Generate installation package for Debian based distros
         run: ./gradlew buildDeb
 
-      - name: Upload Linux Artifacts
-        uses: actions/upload-artifact@v4
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: linux-artifacts
-          path: |
+          files: |
             app/build/libs/*.jar
             app/build/distributions/*.rpm
             app/build/distributions/*.deb
+          draft: false
+          prerelease: false
+          generate_release_notes: true
 
-  build-windows:
+  build-and-release-windows:
     runs-on: windows-latest
     permissions:
       contents: write
@@ -76,42 +81,14 @@ jobs:
         working-directory: installer
         run: powershell.exe -File .\Build.ps1 -Version ${{ github.ref_name }}
 
-      - name: Upload Windows Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows-artifacts
-          path: |
-            installer/**/*.msi
-
-  release:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    needs: [build-linux, build-windows]
-
-    steps:
-      - name: Download Linux Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: linux-artifacts
-          path: ./dist/linux
-
-      - name: Download Windows Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: windows-artifacts
-          path: ./dist/windows
-
       - name: Create GitHub Release
+        id: create_release
         uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: |
-            ./dist/linux/app/build/libs/*.jar
-            ./dist/linux/app/build/distributions/*.rpm
-            ./dist/linux/app/build/distributions/*.deb
-            ./dist/windows/installer/**/*.msi
+            installer/**/*.msi
           draft: false
           prerelease: false
           generate_release_notes: true

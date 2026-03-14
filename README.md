@@ -1,5 +1,7 @@
 # Dynamic DNS Update Client
 
+![GitHub License](https://img.shields.io/github/license/Henriquemcc/Dynamic_DNS_Update_Client)
+
 A program that updates the IP address of a domain/subdomain of a provider of dynamic DNS.
 
 ## Features

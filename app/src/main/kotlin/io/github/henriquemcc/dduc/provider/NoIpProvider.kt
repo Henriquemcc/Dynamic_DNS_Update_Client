@@ -56,9 +56,15 @@ class NoIpProvider: DynamicDnsProvider {
     }
 
     override fun cleanIpAddress(dynamicDns: DynamicDns): Boolean {
-        return updateIpAddress(dynamicDns, Inet4Address.getByName("0.0.0.0") as Inet4Address?,
+        val success = updateIpAddress(dynamicDns, Inet4Address.getByName("0.0.0.0") as Inet4Address?,
             Inet6Address.getByName("::0") as Inet6Address?
         )
+
+        if (success) {
+            println("INFO: Successfully cleaned the IP address of ${dynamicDns.domain} with ${dynamicDns.type} provider.")
+        }
+
+        return success
     }
 
     override fun testAuthentication(dynamicDns: DynamicDns): Boolean {

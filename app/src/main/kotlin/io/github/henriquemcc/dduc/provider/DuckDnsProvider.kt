@@ -33,7 +33,13 @@ class DuckDnsProvider: DynamicDnsProvider {
             .append("&token=${(dynamicDns as DuckDnsDynamicDns).token}")
             .append("&clear=true")
 
-        return openConnection(urlString, dynamicDns)
+        val success = openConnection(urlString, dynamicDns)
+
+        if (success) {
+            println("INFO: Successfully cleaned the IP address of ${dynamicDns.domain} with ${dynamicDns.type} provider.")
+        }
+
+        return success
     }
 
     override fun testAuthentication(dynamicDns: DynamicDns): Boolean {

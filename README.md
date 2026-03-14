@@ -2,7 +2,7 @@
 
 ![GitHub License](https://img.shields.io/github/license/Henriquemcc/Dynamic_DNS_Update_Client)
 
-A program that updates the IP address of a domain/subdomain of a provider of dynamic DNS.
+A lightweight Dynamic DNS (DDNS) client to automatically update domain and subdomain IP addresses across multiple providers.
 
 ## Features
 

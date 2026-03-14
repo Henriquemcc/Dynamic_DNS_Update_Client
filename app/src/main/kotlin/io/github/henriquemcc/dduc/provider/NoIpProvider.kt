@@ -62,7 +62,13 @@ class NoIpProvider: DynamicDnsProvider {
     }
 
     override fun testAuthentication(dynamicDns: DynamicDns): Boolean {
-        return updateIpAddress(dynamicDns, null, null)
+        val success =  updateIpAddress(dynamicDns, null, null)
+
+        if (success) {
+            println("INFO: Successfully authenticated the domain/subdomain ${dynamicDns.domain} with ${dynamicDns.type} provider.")
+        }
+
+        return success
     }
 
     override fun getType(): String {

@@ -41,7 +41,13 @@ class DuckDnsProvider: DynamicDnsProvider {
             .append("domains=${dynamicDns.domain.substringBefore(".duckdns.org")}")
             .append("&token=${(dynamicDns as DuckDnsDynamicDns).token}")
 
-        return openConnection(urlString, dynamicDns)
+        val success = openConnection(urlString, dynamicDns)
+
+        if (success) {
+            println("INFO: Successfully authenticated the subdomain ${dynamicDns.domain} with ${dynamicDns.type} provider.")
+        }
+
+        return success
     }
 
     override fun getType(): String {

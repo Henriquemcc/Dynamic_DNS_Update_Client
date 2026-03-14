@@ -17,7 +17,7 @@ A lightweight Dynamic DNS (DDNS) client to automatically update domain and subdo
 ### How it was built
 
 - Stack: Developed in Kotlin (for JVM 17), using the framework Koin for dependency injection.
-- Asynchronism: The updates of the IP address happen independently for each domain/subdomin, preventing an error in one domain/subdomain from locking up the others.   
+- Asynchronism: IP address updates are performed asynchronously for each domain/subdomin, preventing an error in one domain/subdomain from locking up the others.   
 
 ### Delivery and Automation (DevOps)
 

@@ -1,2 +1,2 @@
 @echo off
-java -jar "app.jar" %*
+java -jar "%~dp0app.jar" %*

@@ -12,6 +12,7 @@
     <Feature Id="Main">
       <ComponentRef Id="AppComponent_Jar" />
       <ComponentRef Id="AppComponent_Xml" />
+      <ComponentRef Id="AppComponent_Bat" />
       <ComponentRef Id="ServiceComponent_x64" />
       <ComponentRef Id="ServiceComponent_x86" />
     </Feature>
@@ -38,6 +39,12 @@
     <Component Id="AppComponent_Xml" Directory="INSTALLFOLDER">
       <File Source="../app/build/installer-stage/dduc-service.xml" />
     </Component>
+
+    <!-- Component for the dduc.bat script file -->
+    <Component Id="AppComponent_Bat" Directory="INSTALLFOLDER">
+      <File Source="../scripts/msi/dduc.bat" />
+    </Component>
+
   </Fragment>
 
   <Fragment>

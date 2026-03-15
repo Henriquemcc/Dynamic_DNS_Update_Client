@@ -105,10 +105,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: |
-            build-linux/app/build/libs/*.jar
-            build-linux/app/build/distributions/*.rpm
-            build-linux/app/build/distributions/*.deb
-            build-windows/installer/windows/bin/x86/Debug/*.msi
+            build-linux/libs/*.jar
+            build-linux/distributions/*.rpm
+            build-linux/distributions/*.deb
+            build-windows/*.msi
           draft: false
           prerelease: false
           generate_release_notes: true

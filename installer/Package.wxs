@@ -43,6 +43,7 @@
     <!-- Component for the dduc.bat script file -->
     <Component Id="AppComponent_Bat" Directory="INSTALLFOLDER">
       <File Source="../scripts/msi/dduc.bat" />
+      <Environment Id="UpdatePath" Name="PATH" Value="[INSTALLFOLDER]" Permanent="no" Part="last" Action="set" System="yes" />
     </Component>
 
   </Fragment>

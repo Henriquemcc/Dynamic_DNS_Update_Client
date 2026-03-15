@@ -56,7 +56,7 @@
     <Component Id="ServiceComponent_x64" Directory="INSTALLFOLDER" Condition="VersionNT64">
       <File Id="ServiceExecutable_x64" Source="../app/build/installer-stage/dduc-service-x64.exe" Name="dduc-service.exe" KeyPath="yes" />
       <ServiceInstall Id="ServiceInstaller_x64" Name="DynamicDnsUpdateClientService" DisplayName="Dynamic DNS Update Client" Description="Automatically updates the IP address of Dynamic DNS services." Type="ownProcess" Start="auto" ErrorControl="normal" Account="LocalSystem" />
-      <ServiceControl Id="ServiceControl_x64" Name="DynamicDnsUpdateClientService" Start="install" Stop="both" Remove="uninstall" Wait="yes" />
+      <ServiceControl Id="ServiceControl_x64" Name="DynamicDnsUpdateClientService" Start="install" Stop="both" Remove="uninstall" Wait="no" />
       <RemoveFile Id="RemoveServiceExe_x64" Name="dduc-service.exe" On="uninstall" />
     </Component>
 
@@ -64,7 +64,7 @@
     <Component Id="ServiceComponent_x86" Directory="INSTALLFOLDER" Condition="NOT VersionNT64">
       <File Id="ServiceExecutable_x86" Source="../app/build/installer-stage/dduc-service-x86.exe" Name="dduc-service.exe" KeyPath="yes" />
       <ServiceInstall Id="ServiceInstaller_x86" Name="DynamicDnsUpdateClientService" DisplayName="Dynamic DNS Update Client" Description="Automatically updates the IP address of Dynamic DNS services." Type="ownProcess" Start="auto" ErrorControl="normal" Account="LocalSystem" />
-      <ServiceControl Id="ServiceControl_x86" Name="DynamicDnsUpdateClientService" Start="install" Stop="both" Remove="uninstall" Wait="yes" />
+      <ServiceControl Id="ServiceControl_x86" Name="DynamicDnsUpdateClientService" Start="install" Stop="both" Remove="uninstall" Wait="no" />
       <RemoveFile Id="RemoveServiceExe_x86" Name="dduc-service.exe" On="uninstall" />
     </Component>
   </Fragment>

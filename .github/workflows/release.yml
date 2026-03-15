@@ -67,7 +67,7 @@ jobs:
         run: New-Item -Path app\build\libs -ItemType Directory -Force
 
       - name: Copying app.jar file
-        run: Copy-Item -Path build-linux\app\build\libs\app.jar -Destination app\build\libs\app.jar
+        run: Copy-Item -Path build-linux\app\build\libs\*.jar -Destination app\build\libs\app.jar
 
       - name: Generate installation package for Windows
         working-directory: installer/windows

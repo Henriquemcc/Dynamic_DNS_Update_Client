@@ -12,6 +12,7 @@
     <Feature Id="Main">
       <ComponentRef Id="AppComponent_Jar" />
       <ComponentRef Id="AppComponent_Xml" />
+      <ComponentRef Id="AppComponent_Bat" />
       <ComponentRef Id="ServiceComponent_x64" />
       <ComponentRef Id="ServiceComponent_x86" />
     </Feature>
@@ -32,12 +33,22 @@
     <!-- Component for the application JAR file -->
     <Component Id="AppComponent_Jar" Directory="INSTALLFOLDER">
       <File Source="../app/build/installer-stage/app.jar" />
+      <RemoveFile Id="RemoveJar" Name="app.jar" On="uninstall" />
     </Component>
 
     <!-- Component for the WinSW XML configuration file -->
     <Component Id="AppComponent_Xml" Directory="INSTALLFOLDER">
       <File Source="../app/build/installer-stage/dduc-service.xml" />
+      <RemoveFile Id="RemoveXml" Name="dduc-service.xml" On="uninstall" />
     </Component>
+
+    <!-- Component for the dduc.bat script file -->
+    <Component Id="AppComponent_Bat" Directory="INSTALLFOLDER">
+      <File Source="../scripts/msi/dduc.bat" />
+      <Environment Id="UpdatePath" Name="PATH" Value="[INSTALLFOLDER]" Permanent="no" Part="last" Action="set" System="yes" />
+      <RemoveFile Id="RemoveBat" Name="dduc.bat" On="uninstall" />
+    </Component>
+
   </Fragment>
 
   <Fragment>
@@ -45,14 +56,16 @@
     <Component Id="ServiceComponent_x64" Directory="INSTALLFOLDER" Condition="VersionNT64">
       <File Id="ServiceExecutable_x64" Source="../app/build/installer-stage/dduc-service-x64.exe" Name="dduc-service.exe" KeyPath="yes" />
       <ServiceInstall Id="ServiceInstaller_x64" Name="DynamicDnsUpdateClientService" DisplayName="Dynamic DNS Update Client" Description="Automatically updates the IP address of Dynamic DNS services." Type="ownProcess" Start="auto" ErrorControl="normal" Account="LocalSystem" />
-      <ServiceControl Id="ServiceControl_x64" Name="DynamicDnsUpdateClientService" Start="install" Stop="both" Remove="uninstall" Wait="yes" />
+      <ServiceControl Id="ServiceControl_x64" Name="DynamicDnsUpdateClientService" Start="install" Stop="both" Remove="uninstall" Wait="no" />
+      <RemoveFile Id="RemoveServiceExe_x64" Name="dduc-service.exe" On="uninstall" />
     </Component>
 
     <!-- Component for the 32-bit service executable. Installs only on 32-bit Windows. -->
     <Component Id="ServiceComponent_x86" Directory="INSTALLFOLDER" Condition="NOT VersionNT64">
       <File Id="ServiceExecutable_x86" Source="../app/build/installer-stage/dduc-service-x86.exe" Name="dduc-service.exe" KeyPath="yes" />
       <ServiceInstall Id="ServiceInstaller_x86" Name="DynamicDnsUpdateClientService" DisplayName="Dynamic DNS Update Client" Description="Automatically updates the IP address of Dynamic DNS services." Type="ownProcess" Start="auto" ErrorControl="normal" Account="LocalSystem" />
-      <ServiceControl Id="ServiceControl_x86" Name="DynamicDnsUpdateClientService" Start="install" Stop="both" Remove="uninstall" Wait="yes" />
+      <ServiceControl Id="ServiceControl_x86" Name="DynamicDnsUpdateClientService" Start="install" Stop="both" Remove="uninstall" Wait="no" />
+      <RemoveFile Id="RemoveServiceExe_x86" Name="dduc-service.exe" On="uninstall" />
     </Component>
   </Fragment>
 </Wix>

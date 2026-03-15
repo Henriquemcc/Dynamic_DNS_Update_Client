@@ -4,9 +4,6 @@
     <description>Automatically updates the IP address of Dynamic DNS services.</description>
     <executable>java</executable>
     <arguments>-jar "%BASE%\app.jar" daemon</arguments>
-
-    <!-- Define um tempo limite para o encerramento gracioso do serviço. Se excedido, o processo será forçado a parar. -->
-    <stoptimeout>15s</stoptimeout>
     <log mode="roll-by-size">
         <sizeThreshold>10240</sizeThreshold> <!-- 10 MB -->
         <keepFiles>8</keepFiles>

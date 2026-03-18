@@ -74,10 +74,10 @@ class DynAddrToolsCli(
         println("dduc add DynAddrTools <secret> [<enableIpv4> <enableIpv6> <updateDelayTime> <retryDelayTime>]\n\t\t\t\t\t\t\t\tAdds a new DynAddrTools subdomain.")
         println("dduc list DynAddrTools\t\t\t\t\t\tLists all DynAddrTools subdomains.")
         println("dduc alter DynAddrTools <subdomain> <attribute> <value>\t\tAlters the value of a DynAddrTools subdomain attribute.")
-        println("dduc delete DynAddrTools <subdomain>\t\t\t\t\tDeletes a DynAddrTools subdomain.")
-        println("dduc force-update DynAddrTools [<subdomain>]\t\t\t\tForces the update of the IP address of a DynAddrTools subdomain, ignoring the updateDelayTime.")
-        println("dduc force-clean DynAddrTools [<subdomain>]\t\t\t\tForces the cleaning of the IP address of a DynAddrTools subdomain.")
-        println("dduc test-auth DynAddrTools [<subdomain>]\t\t\t\tTests the authentication with DynAddrTools.")
+        println("dduc delete DynAddrTools <subdomain>\t\t\t\tDeletes a DynAddrTools subdomain.")
+        println("dduc force-update DynAddrTools [<subdomain>]\t\t\tForces the update of the IP address of a DynAddrTools subdomain, ignoring the updateDelayTime.")
+        println("dduc force-clean DynAddrTools [<subdomain>]\t\t\tForces the cleaning of the IP address of a DynAddrTools subdomain.")
+        println("dduc test-auth DynAddrTools [<subdomain>]\t\t\tTests the authentication with DynAddrTools.")
     }
 
     override fun testAuth(args: Array<String>) {

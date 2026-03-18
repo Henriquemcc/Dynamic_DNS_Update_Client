@@ -2,6 +2,7 @@ package io.github.henriquemcc.dduc.provider
 
 import io.github.henriquemcc.dduc.model.DynAddrToolsDynamicDns
 import io.github.henriquemcc.dduc.model.DynamicDns
+import io.github.henriquemcc.dduc.util.formatHostAddress
 import java.net.Inet4Address
 import java.net.Inet6Address
 import java.net.URL
@@ -17,16 +18,16 @@ class DynAddrToolsProvider: DynamicDnsProvider {
         var success = false
 
         if (dynamicDns.enableIpv4 && ipv4Address != null) {
-            val urlStringIpv4 = StringBuilder("ipv4.dyn.addr.tools/?")
+            val urlStringIpv4 = StringBuilder("https://ipv4.dyn.addr.tools/?")
                 .append("secret=${dynAddrToolsDynamicDns.secret}")
-                .append("ip=${ipv4Address}")
+                .append("&ip=${formatHostAddress(ipv4Address)}")
             success = openConnection(urlStringIpv4, dynamicDns)
         }
 
         if (dynamicDns.enableIpv6 && ipv6Address != null) {
-            val urlStringIpv6 = StringBuilder("ipv6.dyn.addr.tools/?")
+            val urlStringIpv6 = StringBuilder("https://ipv6.dyn.addr.tools/?")
                 .append("secret=${dynAddrToolsDynamicDns.secret}")
-                .append("ip=${ipv6Address}")
+                .append("&ip=${formatHostAddress(ipv6Address)}")
             success = (openConnection(urlStringIpv6, dynamicDns) && success)
         }
 
@@ -47,7 +48,7 @@ class DynAddrToolsProvider: DynamicDnsProvider {
 
     override fun testAuthentication(dynamicDns: DynamicDns): Boolean {
         val dynAddrToolsDynamicDns = dynamicDns as DynAddrToolsDynamicDns
-        val urlString = StringBuilder("ipv4.dyn.addr.tools/?")
+        val urlString = StringBuilder("https://ipv4.dyn.addr.tools/?")
             .append("secret=${dynAddrToolsDynamicDns.secret}")
 
         val success = openConnection(urlString, dynamicDns)

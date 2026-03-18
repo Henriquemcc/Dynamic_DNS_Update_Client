@@ -1,11 +1,9 @@
 package io.github.henriquemcc.dduc
 
 import io.github.henriquemcc.dduc.cli.DuckDnsCli
-import io.github.henriquemcc.dduc.cli.DynAddrToolsCli
 import io.github.henriquemcc.dduc.cli.DynamicDnsCli
 import io.github.henriquemcc.dduc.cli.NoIpCli
 import io.github.henriquemcc.dduc.provider.DuckDnsProvider
-import io.github.henriquemcc.dduc.provider.DynAddrToolsProvider
 import io.github.henriquemcc.dduc.provider.DynamicDnsProvider
 import io.github.henriquemcc.dduc.provider.NoIpProvider
 import io.github.henriquemcc.dduc.repository.DynamicDnsRepository
@@ -24,12 +22,10 @@ val koinModule = module {
     single<NetworkService> { NetworkServiceImpl() }
     single<DynamicDnsProvider>(named("DuckDns")) { DuckDnsProvider() }
     single<DynamicDnsProvider>(named("NoIp")) { NoIpProvider() }
-    single<DynamicDnsProvider>(named("DynAddrTools")) { DynAddrToolsProvider() }
 
     // Register individual DynamicDnsCli implementations
     singleOf(::DuckDnsCli) { bind<DynamicDnsCli>() }
     singleOf(::NoIpCli) { bind<DynamicDnsCli>() }
-    singleOf(::DynAddrToolsCli) { bind<DynamicDnsCli>() }
     // If you had other implementations, you'd add them here:
     // singleOf(::AnotherDnsCli) { bind<DynamicDnsCli>() }
 

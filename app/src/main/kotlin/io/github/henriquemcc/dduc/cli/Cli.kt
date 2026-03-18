@@ -36,7 +36,7 @@ class Cli : KoinComponent {
     }
 
     private fun add(args: Array<String>) {
-        if (args.size < 4) {
+        if (args.size < 3) {
             println("Usage: dduc add <type> <domain/subdomain> <...> [<enableIpv4> <enableIpv6> <delayTime> <retryDelayTime> <networkInterfaceName>]")
             return
         }

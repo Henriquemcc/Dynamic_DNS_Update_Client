@@ -1,6 +1,7 @@
 package io.github.henriquemcc.dduc
 
 import io.github.henriquemcc.dduc.cli.DuckDnsCli
+import io.github.henriquemcc.dduc.cli.DynAddrToolsCli
 import io.github.henriquemcc.dduc.cli.DynamicDnsCli
 import io.github.henriquemcc.dduc.cli.NoIpCli
 import io.github.henriquemcc.dduc.provider.DuckDnsProvider
@@ -26,6 +27,7 @@ val koinModule = module {
     // Register individual DynamicDnsCli implementations
     singleOf(::DuckDnsCli) { bind<DynamicDnsCli>() }
     singleOf(::NoIpCli) { bind<DynamicDnsCli>() }
+    singleOf(::DynAddrToolsCli) { bind<DynamicDnsCli>() }
     // If you had other implementations, you'd add them here:
     // singleOf(::AnotherDnsCli) { bind<DynamicDnsCli>() }
 

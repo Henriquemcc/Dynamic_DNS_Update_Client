@@ -11,11 +11,9 @@ data class DynAddrToolsDynamicDns(
     override var updateDelayTime: Long,
     override var retryDelayTime: Long,
     override var networkInterfaceNames: List<String>,
-    var secret: String
+    var secret: String,
+    override val domain: String = "${secret.toSha224()}.dyn.addr.tools"
 ) : DynamicDns {
-
-    override val domain: String
-        get() = "${secret.toSha224()}.dyn.addr.tools"
 
     override fun clone(): DynAddrToolsDynamicDns {
         return copy();

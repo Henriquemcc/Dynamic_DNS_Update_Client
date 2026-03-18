@@ -3,7 +3,6 @@ package io.github.henriquemcc.dduc.cli
 import io.github.henriquemcc.dduc.model.DynAddrToolsDynamicDns
 import io.github.henriquemcc.dduc.repository.DynamicDnsRepository
 import io.github.henriquemcc.dduc.service.DynamicDnsService
-import io.github.henriquemcc.dduc.util.toSha224
 
 class DynAddrToolsCli(
     private val repository: DynamicDnsRepository,
@@ -60,8 +59,7 @@ class DynAddrToolsCli(
     }
 
     override fun delete(args: Array<String>) {
-        val secret = args[2]
-        val domain = "${secret.toSha224()}.dyn.addr.tools"
+        val domain = args[2]
         repository.delete(domain)
         println("INFO: Dynamic DNS entry for $domain deleted successfully.")
     }

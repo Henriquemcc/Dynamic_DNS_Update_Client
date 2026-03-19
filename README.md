@@ -27,6 +27,14 @@ A lightweight Dynamic DNS (DDNS) client to automatically update domain and subdo
 - Interface control: Allows the user to specify which network interface (ex: ```eth0```, ```wlan0```) the IP address should be extracted.
 - Customized scheduling: Individual configuration of the delay time between updates and reattempt after failures.
 
+### Compatibility with Dynamic DNS providers
+
+The Dynamic DNS Providers it has compatibility with:
+
+- [DuckDNS](https://www.duckdns.org)
+- [No-IP](https://www.noip.com)
+- [DYN.ADDR.TOOLS](https://dyn.addr.tools)
+
 ### How it was built
 
 - Stack: Developed in Kotlin (for JVM 17), using the framework Koin for dependency injection.

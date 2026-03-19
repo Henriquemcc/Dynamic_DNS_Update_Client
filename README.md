@@ -169,6 +169,31 @@ Example:
 
 ```dduc add NoIp example.com myusername mypassword```: Adds a No-IP domain ```example.com``` with username ```myusername``` and password ```mypassword```.
 
+##### Adding a DYN.ADDR.TOOLS domain
+
+```
+dduc add DynAddrTools <secret> [<enableIpv4> <enableIpv6> <updateDelayTime> <retryDelayTime>]
+```
+
+The required arguments are:
+
+```<secret>```: The DYN.ADDR.TOOLS secret. With this argument the subdomain name will be generated automatically by hashing its secret with SHA-224.
+
+The optional arguments are:
+
+```<enableIpv4>```: Whether to enable IPv6 IP update for this domain/subdomain. The default value is ```true```.
+
+```<enableIpv6>```: Whether to enable IPv4 IP update for this domain/subdomain. The default value is ```true```.
+
+```<delayTime>```: The amount of time in milliseconds to wait between each IP update. The default value is ```300000```.
+
+```<retryDelayTime>```: The amount of time in milliseconds to wait to reattempt to update in case of failure. The default value is ```60000```.
+
+Example:
+
+```dduc add DynAddrTools 1SuperSecret```: Adds a DYN.ADDR.TOOLS domain with secret ```1SuperSecret```.
+
+
 #### Listing domains/subdomains
 
 ```
@@ -186,6 +211,8 @@ Examples:
 ```dduc list DuckDns```: Lists all DuckDns domains/subdomains.
 
 ```dduc list NoIp```: Lists all No-IP domains/subdomains.
+
+```dduc list DynAddrTools```: Lists all DYN.ADDR.TOOLS domains/subdomains.
 
 #### Altering the value of a domain/subdomain attribute
 

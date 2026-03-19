@@ -7,6 +7,16 @@
 
 A lightweight Dynamic DNS (DDNS) client to automatically update domain and subdomain IP addresses across multiple providers.
 
+## Table of contents
+
+- [Features](#features)
+- [Download and Installation](#download-and-installation)
+- [Quick Start](#quick-start)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+
+
 ## Features
 
 ### Main Features

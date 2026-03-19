@@ -7,6 +7,16 @@
 
 A lightweight Dynamic DNS (DDNS) client to automatically update domain and subdomain IP addresses across multiple providers.
 
+## Table of contents
+
+- [Features](#features)
+- [Download and Installation](#download-and-installation)
+- [Quick Start](#quick-start)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+
+
 ## Features
 
 ### Main Features
@@ -16,6 +26,14 @@ A lightweight Dynamic DNS (DDNS) client to automatically update domain and subdo
 - Dual-Stack support: Both IPv4 and IPv6 updates are supported.
 - Interface control: Allows the user to specify which network interface (ex: ```eth0```, ```wlan0```) the IP address should be extracted.
 - Customized scheduling: Individual configuration of the delay time between updates and reattempt after failures.
+
+### Compatibility with Dynamic DNS providers
+
+The Dynamic DNS Providers it has compatibility with:
+
+- [DuckDNS](https://www.duckdns.org)
+- [No-IP](https://www.noip.com)
+- [DYN.ADDR.TOOLS](https://dyn.addr.tools)
 
 ### How it was built
 
@@ -55,7 +73,9 @@ To install this program, go to the [release page](https://github.com/Henriquemcc
 
 #### Showing the help menu
 
-```dduc help [<type>]```
+```
+dduc help [<type>]
+```
 
 The optional arguments are:
 
@@ -71,7 +91,9 @@ Examples:
 
 #### Adding a domain/subdomain
 
-```dduc add <type> <domain/subdomain> <...> [<enableIpv4> <enableIpv6> <delayTime> <retryDelayTime>]```
+```
+dduc add <type> <domain/subdomain> <...> [<enableIpv4> <enableIpv6> <delayTime> <retryDelayTime>]
+```
 
 The required arguments are:
 
@@ -93,7 +115,9 @@ The optional arguments are:
 
 ##### Adding a DuckDns subdomain
 
-```dduc add DuckDns <subdomain> <token> [<enableIpv4> <enableIpv6> <delayTime> <retryDelayTime>]```
+```
+dduc add DuckDns <subdomain> <token> [<enableIpv4> <enableIpv6> <delayTime> <retryDelayTime>]
+```
 
 The required arguments are:
 
@@ -113,11 +137,15 @@ The optional arguments are:
 
 Example:
 
-```dduc add DuckDns example.duckdns.org MySecretToken```
+```
+dduc add DuckDns example.duckdns.org MySecretToken
+```
 
 ##### Adding a No-IP domain
 
-```dduc add NoIp <domain> <username> <password> [<enableIpv4> <enableIpv6> <updateDelayTime> <retryDelayTime>]```
+```
+dduc add NoIp <domain> <username> <password> [<enableIpv4> <enableIpv6> <updateDelayTime> <retryDelayTime>]
+```
 
 The required arguments are:
 
@@ -141,9 +169,36 @@ Example:
 
 ```dduc add NoIp example.com myusername mypassword```: Adds a No-IP domain ```example.com``` with username ```myusername``` and password ```mypassword```.
 
+##### Adding a DYN.ADDR.TOOLS domain
+
+```
+dduc add DynAddrTools <secret> [<enableIpv4> <enableIpv6> <updateDelayTime> <retryDelayTime>]
+```
+
+The required arguments are:
+
+```<secret>```: The DYN.ADDR.TOOLS secret. With this argument the subdomain name will be generated automatically by hashing its secret with SHA-224.
+
+The optional arguments are:
+
+```<enableIpv4>```: Whether to enable IPv6 IP update for this domain/subdomain. The default value is ```true```.
+
+```<enableIpv6>```: Whether to enable IPv4 IP update for this domain/subdomain. The default value is ```true```.
+
+```<delayTime>```: The amount of time in milliseconds to wait between each IP update. The default value is ```300000```.
+
+```<retryDelayTime>```: The amount of time in milliseconds to wait to reattempt to update in case of failure. The default value is ```60000```.
+
+Example:
+
+```dduc add DynAddrTools 1SuperSecret```: Adds a DYN.ADDR.TOOLS domain with secret ```1SuperSecret```.
+
+
 #### Listing domains/subdomains
 
-```dduc list [<type>]```
+```
+dduc list [<type>]
+```
 
 The optional arguments are:
 
@@ -157,9 +212,13 @@ Examples:
 
 ```dduc list NoIp```: Lists all No-IP domains/subdomains.
 
+```dduc list DynAddrTools```: Lists all DYN.ADDR.TOOLS domains/subdomains.
+
 #### Altering the value of a domain/subdomain attribute
 
-```dduc alter <type> <domain/subdomain> <attribute> <value>```
+```
+dduc alter <type> <domain/subdomain> <attribute> <value>
+```
 
 The required arguments are:
 
@@ -177,7 +236,9 @@ Example:
 
 #### Deleting a domain/subdomain
 
-```dduc delete <type> <domain/subdomain>```
+```
+dduc delete <type> <domain/subdomain>
+```
 
 The required arguments are:
 
@@ -191,7 +252,9 @@ Example:
 
 #### Forcing the update of the IP address of a domain/subdomain
 
-```dduc force-update [<type> <domain/subdomain>]```
+```
+dduc force-update [<type> <domain/subdomain>]
+```
 
 The optional arguments are:
 
@@ -209,7 +272,9 @@ Examples:
 
 #### Forcing the cleaning (set to NULL or 0.0.0.0, ::0) of the IP address of a domain/subdomain
 
-```dduc force-clean [<type> <domain/subdomain>]```
+```
+dduc force-clean [<type> <domain/subdomain>]
+```
 
 The optional arguments are:
 
@@ -227,7 +292,9 @@ Examples:
 
 #### Testing the authentication with the Dynamic DNS Provider
 
-```dduc test-auth [<type> <domain/subdomain>]```
+```
+dduc test-auth [<type> <domain/subdomain>]
+```
 
 The optional arguments are:
 
@@ -245,7 +312,9 @@ Examples:
 
 #### Running as a daemon
 
-```dduc daemon```
+```
+dduc daemon
+```
 
 ## Contributing
 

@@ -73,7 +73,9 @@ To install this program, go to the [release page](https://github.com/Henriquemcc
 
 #### Showing the help menu
 
-```dduc help [<type>]```
+```
+dduc help [<type>]
+```
 
 The optional arguments are:
 
@@ -89,7 +91,9 @@ Examples:
 
 #### Adding a domain/subdomain
 
-```dduc add <type> <domain/subdomain> <...> [<enableIpv4> <enableIpv6> <delayTime> <retryDelayTime>]```
+```
+dduc add <type> <domain/subdomain> <...> [<enableIpv4> <enableIpv6> <delayTime> <retryDelayTime>]
+```
 
 The required arguments are:
 
@@ -111,7 +115,9 @@ The optional arguments are:
 
 ##### Adding a DuckDns subdomain
 
-```dduc add DuckDns <subdomain> <token> [<enableIpv4> <enableIpv6> <delayTime> <retryDelayTime>]```
+```
+dduc add DuckDns <subdomain> <token> [<enableIpv4> <enableIpv6> <delayTime> <retryDelayTime>]
+```
 
 The required arguments are:
 
@@ -131,11 +137,15 @@ The optional arguments are:
 
 Example:
 
-```dduc add DuckDns example.duckdns.org MySecretToken```
+```
+dduc add DuckDns example.duckdns.org MySecretToken
+```
 
 ##### Adding a No-IP domain
 
-```dduc add NoIp <domain> <username> <password> [<enableIpv4> <enableIpv6> <updateDelayTime> <retryDelayTime>]```
+```
+dduc add NoIp <domain> <username> <password> [<enableIpv4> <enableIpv6> <updateDelayTime> <retryDelayTime>]
+```
 
 The required arguments are:
 
@@ -161,7 +171,9 @@ Example:
 
 #### Listing domains/subdomains
 
-```dduc list [<type>]```
+```
+dduc list [<type>]
+```
 
 The optional arguments are:
 
@@ -177,7 +189,9 @@ Examples:
 
 #### Altering the value of a domain/subdomain attribute
 
-```dduc alter <type> <domain/subdomain> <attribute> <value>```
+```
+dduc alter <type> <domain/subdomain> <attribute> <value>
+```
 
 The required arguments are:
 
@@ -195,7 +209,9 @@ Example:
 
 #### Deleting a domain/subdomain
 
-```dduc delete <type> <domain/subdomain>```
+```
+dduc delete <type> <domain/subdomain>
+```
 
 The required arguments are:
 
@@ -209,7 +225,9 @@ Example:
 
 #### Forcing the update of the IP address of a domain/subdomain
 
-```dduc force-update [<type> <domain/subdomain>]```
+```
+dduc force-update [<type> <domain/subdomain>]
+```
 
 The optional arguments are:
 
@@ -227,7 +245,9 @@ Examples:
 
 #### Forcing the cleaning (set to NULL or 0.0.0.0, ::0) of the IP address of a domain/subdomain
 
-```dduc force-clean [<type> <domain/subdomain>]```
+```
+dduc force-clean [<type> <domain/subdomain>]
+```
 
 The optional arguments are:
 
@@ -245,7 +265,9 @@ Examples:
 
 #### Testing the authentication with the Dynamic DNS Provider
 
-```dduc test-auth [<type> <domain/subdomain>]```
+```
+dduc test-auth [<type> <domain/subdomain>]
+```
 
 The optional arguments are:
 
@@ -263,7 +285,9 @@ Examples:
 
 #### Running as a daemon
 
-```dduc daemon```
+```
+dduc daemon
+```
 
 ## Contributing
 

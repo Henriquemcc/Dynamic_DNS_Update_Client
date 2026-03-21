@@ -6,4 +6,5 @@ jpackage \
   --add-launcher dduc=launcher.properties \
   --type pkg \
   --resource-dir ./resource-dir \
+  --mac-package-identifier io.github.henriquemcc.dduc \
   --dest build

@@ -1,4 +1,7 @@
 jpackage \
+  --about-url https://github.com/Henriquemcc/Dynamic_DNS_Update_Client \
+  --license-file ../../LICENSE \
+  --launcher-as-service \
   --input ../../app/build/libs \
   --name "Dynamic DNS Update Client" \
   --main-jar app.jar \

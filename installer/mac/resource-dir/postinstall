@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Adding symbolic link for the command dduc
+ln -sf "/Applications/Dynamic DNS Update Client.app/Contents/MacOS/dduc" /usr/local/bin/dduc

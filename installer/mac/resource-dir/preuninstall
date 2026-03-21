@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Removing symbolic link for the command dduc
+rm -f /usr/local/bin/dduc

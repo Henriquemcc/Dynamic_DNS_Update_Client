@@ -1,10 +1,9 @@
 #!/bin/bash
-CURRENT_USER=$(stat -f "%Su" /dev/console)
 
 # Stopping and removing service
 if [ -f "/Library/LaunchAgents/io.github.henriquemcc.dduc.daemon.plist" ]; then
     echo "Stopping service dduc..."
-    sudo -u "$CURRENT_USER" launchctl unload /Library/LaunchAgents/io.github.henriquemcc.dduc.daemon.plist
+    launchctl unload /Library/LaunchAgents/io.github.henriquemcc.dduc.daemon.plist
     rm -f "/Library/LaunchAgents/io.github.henriquemcc.dduc.daemon.plist"
 fi
 

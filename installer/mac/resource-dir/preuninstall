@@ -1,4 +1,15 @@
 #!/bin/bash
+CURRENT_USER=$(stat -f "%Su" /dev/console)
+
+# Stopping and removing service
+if [ -f "/Library/LaunchAgents/io.github.henriquemcc.dduc.daemon.plist" ]; then
+    echo "Stopping service dduc..."
+    sudo -u "$CURRENT_USER" launchctl unload /Library/LaunchAgents/io.github.henriquemcc.dduc.daemon.plist
+    rm -f "/Library/LaunchAgents/io.github.henriquemcc.dduc.daemon.plist"
+fi
 
 # Removing symbolic link for the command dduc
-rm -f /usr/local/bin/dduc
+if [ -L "/usr/local/bin/dduc" ]; then
+    echo "Removing the command dduc from /usr/local/bin..."
+    rm -f /usr/local/bin/dduc
+fi

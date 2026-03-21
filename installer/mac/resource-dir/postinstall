@@ -1,4 +1,14 @@
 #!/bin/bash
 
-# Adding symbolic link for the command dduc
+# Creating symbolic link for the command dduc
 ln -sf "/Applications/Dynamic DNS Update Client.app/Contents/MacOS/dduc" /usr/local/bin/dduc
+
+# Adding service
+RESOURCE_DIR="$1/Contents/Resources"
+cp "$RESOURCE_DIR/io.github.henriquemcc.dduc.daemon.plist" /Library/LaunchAgents/
+chown root:wheel /Library/LaunchAgents/io.github.henriquemcc.dduc.daemon.plist
+chmod 644 /Library/LaunchAgents/io.github.henriquemcc.dduc.daemon.plist
+
+# Loading service
+CURRENT_USER=$(stat -f "%Su" /dev/console)
+sudo -u "$CURRENT_USER" launchctl load /Library/LaunchAgents/io.github.henriquemcc.dduc.daemon.plist

@@ -1,11 +1,19 @@
 #!/bin/bash
 
-# Stopping and removing service
-if [ -f "/Library/LaunchAgents/io.github.henriquemcc.dduc.daemon.plist" ]; then
-    echo "Stopping service dduc..."
-    launchctl unload /Library/LaunchAgents/io.github.henriquemcc.dduc.daemon.plist
-    rm -f "/Library/LaunchAgents/io.github.henriquemcc.dduc.daemon.plist"
-fi
+# Stops and removes a Launch service
+function stop_and_remove_service() {
+    if [ -f $1 ]; then
+        echo "Stopping service $1..."
+        launchctl unload $1
+        rm -f "$1"
+    fi
+}
+
+# Stopping and removing service io.github.henriquemcc.dduc-Dynamic_DNS_Update_Client.plist
+stop_and_remove_service "/Library/LaunchDaemons/io.github.henriquemcc.dduc-Dynamic_DNS_Update_Client.plist"
+
+# Stopping and removing service io.github.henriquemcc.dduc-dduc.plist
+stop_and_remove_service "/Library/LaunchDaemons/io.github.henriquemcc.dduc-dduc.plist"
 
 # Removing symbolic link for the command dduc
 if [ -L "/usr/local/bin/dduc" ]; then

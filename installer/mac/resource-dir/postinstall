@@ -1,4 +1,11 @@
 #!/bin/bash
 
-# Creating symbolic link for the command dduc
-ln -sf "/Applications/Dynamic DNS Update Client.app/Contents/MacOS/dduc" /usr/local/bin/dduc
+# Getting the app path
+INSTALL_TARGET="$3"
+APP_PATH="${INSTALL_TARGET}Applications/Dynamic DNS Update Client.app"
+
+# Ensures the directory /usr/local/bin exists
+mkdir -p /usr/local/bin
+
+# Creates the symbolic link
+ln -sf "${APP_PATH}/Contents/MacOS/dduc" /usr/local/bin/dduc
